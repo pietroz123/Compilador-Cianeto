@@ -6,7 +6,7 @@
 package ast;
 
 /**
- * AssignExpr ::= Expression [ “=” Expression ]
+ * AssignExpr ::= Expression [ "=" Expression ]
  */
 public class AssignExpr {
 

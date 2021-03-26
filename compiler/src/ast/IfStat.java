@@ -6,7 +6,7 @@
 package ast;
 
 /**
- * IfStat ::= if” Expression “{” Statement “}” [ “else” “{” Statement “}” ]
+ * IfStat ::= if" Expression "{" Statement "}" [ "else" "{" Statement "}" ]
  */
 public class IfStat {
 

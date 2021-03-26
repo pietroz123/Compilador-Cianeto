@@ -7,7 +7,7 @@
 package ast;
 
 /**
- * AssertStat ::= “assert” Expression “,” StringValue
+ * AssertStat ::= "assert" Expression "," StringValue
  */
 public class AssertStat {
 

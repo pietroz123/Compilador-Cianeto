@@ -6,7 +6,7 @@
 package ast;
 
 /**
- * ClassDec ::= [ “open” ] “class” Id [ “extends” Id ] MemberList “end”
+ * ClassDec ::= [ "open" ] "class" Id [ "extends" Id ] MemberList "end"
  */
 public class ClassDec {
 

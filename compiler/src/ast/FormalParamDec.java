@@ -6,7 +6,7 @@
 package ast;
 
 /**
- * FormalParamDec ::= ParamDec { “,” ParamDec }
+ * FormalParamDec ::= ParamDec { "," ParamDec }
  */
 public class FormalParamDec {
 

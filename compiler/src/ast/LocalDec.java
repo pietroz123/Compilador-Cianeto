@@ -6,7 +6,7 @@
 package ast;
 
 /**
- * LocalDec ::= “var” Type IdList [ “=” Expression ]
+ * LocalDec ::= "var" Type IdList [ "=" Expression ]
  */
 public class LocalDec {
 

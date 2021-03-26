@@ -6,7 +6,7 @@
 package ast;
 
 /**
- * FieldDec ::= “var” Type IdList [ “;” ]
+ * FieldDec ::= "var" Type IdList [ ";" ]
  */
 public class FieldDec {
 

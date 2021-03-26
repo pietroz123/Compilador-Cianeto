@@ -38,32 +38,43 @@ public class Compiler {
 		ArrayList<TypeCianetoClass> cianetoClassList = new ArrayList<>();
 		Program program = new Program(cianetoClassList, metaobjectCallList, compilationErrorList);
 		boolean thereWasAnError = false;
+
 		while ( lexer.token == Token.CLASS ||
 				(lexer.token == Token.ID && lexer.getStringValue().equals("open") ) ||
 				lexer.token == Token.ANNOT ) {
 			try {
+				// { Annot }
 				while ( lexer.token == Token.ANNOT ) {
 					metaobjectAnnotation(metaobjectCallList);
 				}
-				classDec();
+
+				// ClassDec
+				cianetoClassList.add(classDec());
 			}
 			catch( CompilerError e) {
 				// if there was an exception, there is a compilation error
 				thereWasAnError = true;
+
 				return program;
 			}
 			catch ( Exception e ) {
 				e.printStackTrace();
+
 				thereWasAnError = true;
-				error("Exception '" + e.getClass().getName() + "' was thrown and not caught. "
-						+ "Its message is '" + e.getMessage() + "'");
+				error("Exception '" + e.getClass().getName() + "' was thrown and not caught. " + "Its message is '" + e.getMessage() + "'");
+
 				return program; // add this line
 			}
 
 		}
+
+		// Verificar se existe uma classe Program
+		// TODO
+
 		if ( !thereWasAnError && lexer.token != Token.EOF ) {
 			error("End of file expected");
 		}
+
 		return program;
 	}
 
@@ -156,16 +167,24 @@ public class Compiler {
 		if ( getNextToken ) lexer.nextToken();
 	}
 
-	private void classDec() {
+	/**
+	 * ClassDec ::= [ "open" ] "class" Id [ "extends" Id ] MemberList "end"
+	 */
+	private TypeCianetoClass classDec() {
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 		}
+
 		if ( lexer.token != Token.CLASS ) error("'class' expected");
+
 		lexer.nextToken();
+
 		if ( lexer.token != Token.ID )
 			error("Identifier expected");
+
 		String className = lexer.getStringValue();
 		lexer.nextToken();
+
 		if ( lexer.token == Token.EXTENDS ) {
 			lexer.nextToken();
 			if ( lexer.token != Token.ID )
@@ -180,6 +199,7 @@ public class Compiler {
 			error("'end' expected");
 		lexer.nextToken();
 
+		return null;
 	}
 
 	private void memberList() {

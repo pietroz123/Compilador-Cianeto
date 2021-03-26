@@ -6,9 +6,9 @@
 package ast;
 
 /**
- * MethodDec ::= “func” IdColon FormalParamDec [ “->” Type ]
- * “{” StatementList “}” |
- * “func” Id [ “->” Type ] “{” StatementList “}”
+ * MethodDec ::= "func" IdColon FormalParamDec [ "->" Type ]
+ * "{" StatementList "}" |
+ * "func" Id [ "->" Type ] "{" StatementList "}"
  */
 public class MethodDec {
 
