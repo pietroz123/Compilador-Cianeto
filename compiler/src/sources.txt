@@ -1,6 +1,7 @@
 ./ast/AssertStat.java
 ./ast/AssignExpr.java
 ./ast/ClassDec.java
+./ast/CompositeExpr.java
 ./ast/Expr.java
 ./ast/FieldDec.java
 ./ast/FormalParamDec.java
@@ -27,6 +28,7 @@
 ./ast/TypeString.java
 ./ast/TypeUndefined.java
 ./ast/Variable.java
+./ast/VariableExpr.java
 ./comp/Comp.java
 ./comp/CompilationError.java
 ./comp/Compiler.java

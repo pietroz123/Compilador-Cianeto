@@ -2,16 +2,16 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  35            I: 7              PI: 20            Exc: 3
-Dev: 5/136/3%      LE: 57/136/41%    SSE: 40/47/85%    
+MI:  35            I: 6              PI: 19            Exc: 15
+Dev: 5/126/3%      LE: 55/126/43%    SSE: 38/57/66%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
 Número de testes 'Muito importantes' em que o compilador falhou: 35
-Número de testes 'Importantes' em que o compilador falhou: 7
-Número de testes 'Pouco importantes' em que o compilador falhou: 20
+Número de testes 'Importantes' em que o compilador falhou: 6
+Número de testes 'Pouco importantes' em que o compilador falhou: 19
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -99,7 +99,6 @@ Testes 'importantes' em que o compilador falhou:
 
     breakOutsideWhileRepeatUntil
         ER_SEM26.ci
-        ER_SEM50.ci
 
     localVarSameClassName
         OK_SEM12.ci
@@ -127,9 +126,6 @@ Testes 'pouco importantes' em que o compilador falhou
 
     privateMethodRunOfClassProgram
         ER_SEM81.ci
-
-    whileBreak
-        OK_SEM07.ci
 
     assert
         OK_SEM17.ci
@@ -199,9 +195,6 @@ Testes 'Muito importantes' em que o compilador acertou:
     typeNotFound
         ER_SEM18.ci
 
-    missingClassInNew
-        ER_SEM86.ci
-
 
 Testes 'importantes' em que o compilador acertou:
     superWithoutSuperclass
@@ -224,9 +217,6 @@ Testes 'pouco importantes' em que o compilador acertou
     exprRightHandSideAssignment
         ER_SEM06.ci
 
-    while
-        ER_SEM11.ci
-
     illegalTypeOrIdentifier
         ER_SEM20.ci
         ER_SEM21.ci
@@ -244,16 +234,28 @@ Testes 'pouco importantes' em que o compilador acertou
         ER_SEM02.ci
 
 
-3 arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. A maioria delas é provavelmente NullPointerException. Estes arquivos são:
+15 arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. A maioria delas é provavelmente NullPointerException. Estes arquivos são:
+    ER_SEM11.ci
+    ER_SEM50.ci
+    ER_SEM86.ci
+    ER_SIN09.CI
     ER_SIN14.ci
     ER_SIN15.ci
     ER_SIN16.ci
+    ER_SIN24.CI
+    ER_SIN25.CI
+    ER_SIN26.CI
+    ER_SIN27.CI
+    ER_SIN37.CI
+    ER_SIN38.CI
+    OK_SEM07.ci
+    OK_SIN04.CI
 
 _________________________________________________________________________
 
-5 de um total de 136 erros que deveriam ser sinalizados não o foram (3%)
-57 erros foram sinalizados na linha errada (41%)
-40 erros foram sinalizados em 47 arquivos sem erro (85%)
+5 de um total de 126 erros que deveriam ser sinalizados não o foram (3%)
+55 erros foram sinalizados na linha errada (43%)
+38 erros foram sinalizados em 57 arquivos sem erro (66%)
 _________________________________________________________________________
 
 Erros que deveriam ser sinalizados mas não foram:
@@ -350,10 +352,6 @@ ER_SEM44.ci
 ER_SEM47.ci
     correto:    26, Method 'm' was not found in superclass 'B' or its superclasses (comp.Compiler.factor())
     sinalizado: 5, 'class' expected
-
-ER_SEM50.ci
-    correto:    19, Command 'break' outside a command 'while' or repeat-until (comp.Compiler.breakStatement())
-    sinalizado: 10, missing '{' after the 'while' expression
 
 ER_SEM51.ci
     correto:    22, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
@@ -463,10 +461,6 @@ ER_SIN22.CI
     correto:    10, ';' missing 
     sinalizado: 8, ';' expected
 
-ER_SIN38.CI
-    correto:    17, '}' expected (comp.Compiler.classDec())
-    sinalizado: 13, missing '{' after the 'while' expression
-
 ER_SIN42.ci
     correto:    10,  
     sinalizado: 9, 'end' expected
@@ -536,8 +530,6 @@ OK_SEM05.ci, 13, 'class' expected
 
 OK_SEM06.ci, 13, 'end' expected
 
-OK_SEM07.ci, 14, missing '{' after the 'while' expression
-
 OK_SEM08.ci, 11, 'class' expected
 
 OK_SEM09.ci, 12, '{' expected
@@ -563,8 +555,6 @@ OK_SEM18.ci, 21, ';' expected
 OK_SIN02.CI, 21, ';' expected
 
 OK_SIN03.CI, 20, ';' expected
-
-OK_SIN04.CI, 19, '{' expected after the 'if' expression
 
 OK_SIN08.CI, 14, '{' expected
 
@@ -655,11 +645,6 @@ The 'cep' message is:      "type boolean does not support operation '+'"
 ER_SEM09.ci
 The compiler message was: "';' expected"
 The 'cep' message is:      "type 'int' does not support operator '&&'"
-
-
-ER_SEM11.ci
-The compiler message was: "missing '{' after the 'while' expression"
-The 'cep' message is:      "non-boolean expression in 'while' command"
 
 
 ER_SEM12.ci
@@ -767,11 +752,6 @@ The compiler message was: "'{' expected"
 The 'cep' message is:      "Method 'run:' of class 'Program' cannot take parameters"
 
 
-ER_SEM86.ci
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "Class 'A' was not found"
-
-
 ER_SIN01.CI
 The compiler message was: "'{' expected"
 The 'cep' message is:      "'{' expected"
@@ -800,11 +780,6 @@ The 'cep' message is:      "Command 'In.' without arguments"
 ER_SIN08.CI
 The compiler message was: "';' expected"
 The 'cep' message is:      "Command ' Out.print' without arguments"
-
-
-ER_SIN09.CI
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "'{' expected"
 
 
 ER_SIN10.CI
@@ -845,26 +820,6 @@ The 'cep' message is:      "';' missing"
 ER_SIN23.CI
 The compiler message was: "';' expected"
 The 'cep' message is:      "Statement expected"
-
-
-ER_SIN24.CI
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
-
-
-ER_SIN25.CI
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
-
-
-ER_SIN26.CI
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
-
-
-ER_SIN27.CI
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
 
 
 ER_SIN28.CI
@@ -910,11 +865,6 @@ The 'cep' message is:      "'{' expected"
 ER_SIN36.CI
 The compiler message was: "'{' expected"
 The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN37.CI
-The compiler message was: "'{' expected after the 'if' expression"
-The 'cep' message is:      "Expression expected"
 
 
 ER_SIN39.CI

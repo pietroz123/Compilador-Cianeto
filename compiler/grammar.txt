@@ -40,4 +40,4 @@ StatementList ::= { Statement }
 Term ::= SignalFactor { HighOperator SignalFactor }
 Type ::= BasicType | Id
 WriteStat ::= "Out" "." [ "print:" | "println:" ] Expression
-WhileStat ::= "while" Expression "{" StatementList "}"\
+WhileStat ::= "while" Expression "{" StatementList "}"

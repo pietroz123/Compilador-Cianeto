@@ -364,26 +364,49 @@ public class Compiler {
 		expr();
 	}
 
+	/**
+	 * WhileStat ::= "while" Expression "{" StatementList "}"
+	 */
 	private void whileStat() {
 		next();
-		expr();
+
+		// Conferência de tipo da expressão
+		Expr e = expr();
+		if ( e.getType() != Type.booleanType ) {
+			error("Boolean expression expected");
+		}
+
 		check(Token.LEFTCURBRACKET, "missing '{' after the 'while' expression");
 		next();
+
+
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
 			statement();
 		}
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 	}
 
+	/**
+	 * IfStat ::= if" Expression "{" Statement "}" [ "else" "{" Statement "}" ]
+	 */
 	private void ifStat() {
 		next();
-		expr();
+
+		// Conferência de tipo da expressão
+		Expr e = expr();
+		if ( e.getType() != Type.booleanType ) {
+			error("Boolean expression expected");
+		}
+
 		check(Token.LEFTCURBRACKET, "'{' expected after the 'if' expression");
 		next();
+
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
 			statement();
 		}
+
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
+
 		if ( lexer.token == Token.ELSE ) {
 			next();
 			check(Token.LEFTCURBRACKET, "'{' expected after 'else'");
@@ -407,8 +430,8 @@ public class Compiler {
 		expr();
 	}
 
-	private void expr() {
-
+	private Expr expr() {
+		return null;
 	}
 
 	private void fieldDec() {
