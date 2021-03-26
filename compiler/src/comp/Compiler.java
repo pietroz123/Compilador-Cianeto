@@ -1,3 +1,7 @@
+/**
+ * Integrantes:
+ * Pietro Zuntini Bonfim    RA: 743588
+ */
 
 package comp;
 
@@ -31,6 +35,9 @@ public class Compiler {
 		return program;
 	}
 
+	/**
+	 * Program ::= { Annot } ClassDec { { Annot } ClassDec }
+	 */
 	private Program program(ArrayList<CompilationError> compilationErrorList) {
 		ArrayList<MetaobjectAnnotation> metaobjectCallList = new ArrayList<>();
 		ArrayList<TypeCianetoClass> cianetoClassList = new ArrayList<>();
@@ -499,6 +506,8 @@ public class Compiler {
 
 	}
 
+	private ClassDec		currentClass; 		// Classe corrente
+	private MethodDec		currentMethod; 		// Método corrente
 	private SymbolTable		symbolTable;
 	private Lexer			lexer;
 	private ErrorSignaler	errorSignaler;
