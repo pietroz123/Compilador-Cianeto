@@ -7,13 +7,8 @@ package comp;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;  // may use Vector too
-import ast.LiteralIntExpr;
-import ast.MetaobjectAnnotation;
-import ast.Program;
-import ast.Statement;
-import ast.TypeCianetoClass;
-import lexer.Lexer;
-import lexer.Token;
+import ast.*;
+import lexer.*;
 
 public class Compiler {
 
