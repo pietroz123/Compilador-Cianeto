@@ -20,6 +20,7 @@
 ./ast/RepeatStat.java
 ./ast/ReturnStat.java
 ./ast/Statement.java
+./ast/StatementList.java
 ./ast/Type.java
 ./ast/TypeBoolean.java
 ./ast/TypeCianetoClass.java
@@ -29,6 +30,7 @@
 ./ast/TypeUndefined.java
 ./ast/Variable.java
 ./ast/VariableExpr.java
+./ast/WhileStat.java
 ./comp/Comp.java
 ./comp/CompilationError.java
 ./comp/Compiler.java

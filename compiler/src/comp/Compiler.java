@@ -25,7 +25,7 @@ public class Compiler {
 		errorSignaler.setLexer(lexer);
 
 		Program program = null;
-		lexer.nextToken();
+		next();
 		program = program(compilationErrorList);
 		return program;
 	}
@@ -92,12 +92,12 @@ public class Compiler {
 	private void metaobjectAnnotation(ArrayList<MetaobjectAnnotation> metaobjectAnnotationList) {
 		String name = lexer.getMetaobjectName();
 		int lineNumber = lexer.getLineNumber();
-		lexer.nextToken();
+		next();
 		ArrayList<Object> metaobjectParamList = new ArrayList<>();
 		boolean getNextToken = false;
 		if ( lexer.token == Token.LEFTPAR ) {
 			// metaobject call with parameters
-			lexer.nextToken();
+			next();
 			while ( lexer.token == Token.LITERALINT || lexer.token == Token.LITERALSTRING ||
 					lexer.token == Token.ID ) {
 				switch ( lexer.token ) {
@@ -110,9 +110,9 @@ public class Compiler {
 				case ID:
 					metaobjectParamList.add(lexer.getStringValue());
 				}
-				lexer.nextToken();
+				next();
 				if ( lexer.token == Token.COMMA )
-					lexer.nextToken();
+					next();
 				else
 					break;
 			}
@@ -164,7 +164,7 @@ public class Compiler {
 			error("Annotation '" + name + "' is illegal");
 		}
 		metaobjectAnnotationList.add(new MetaobjectAnnotation(name, metaobjectParamList));
-		if ( getNextToken ) lexer.nextToken();
+		if ( getNextToken ) next();
 	}
 
 	/**
@@ -177,27 +177,27 @@ public class Compiler {
 
 		if ( lexer.token != Token.CLASS ) error("'class' expected");
 
-		lexer.nextToken();
+		next();
 
 		if ( lexer.token != Token.ID )
 			error("Identifier expected");
 
 		String className = lexer.getStringValue();
-		lexer.nextToken();
+		next();
 
 		if ( lexer.token == Token.EXTENDS ) {
-			lexer.nextToken();
+			next();
 			if ( lexer.token != Token.ID )
 				error("Identifier expected");
 			String superclassName = lexer.getStringValue();
 
-			lexer.nextToken();
+			next();
 		}
 
 		memberList();
 		if ( lexer.token != Token.END)
 			error("'end' expected");
-		lexer.nextToken();
+		next();
 
 		return null;
 	}
@@ -244,12 +244,24 @@ public class Compiler {
 		}
 	}
 
-	private void methodDec() {
-		lexer.nextToken();
+	/**
+	 * MethodDec ::= "func" IdColon FormalParamDec [ "->" Type ] "{" StatementList "}"
+	 * 				 | "func" Id [ "->" Type ] "{" StatementList "}"
+	 */
+	private MethodDec methodDec() {
+		this.currentMethod = new MethodDec();
+
+		StatementList statementList = null;
+		Type type = null;
+		String id = null;
+
+		next();
 		if ( lexer.token == Token.ID ) {
 			// unary method
-			lexer.nextToken();
+			id = lexer.getStringValue();
+			this.currentMethod.setId(id);
 
+			next();
 		}
 		else if ( lexer.token == Token.IDCOLON ) {
 			// keyword method. It has parameters
@@ -260,69 +272,81 @@ public class Compiler {
 		}
 		if ( lexer.token == Token.MINUS_GT ) {
 			// method declared a return type
-			lexer.nextToken();
-			type();
+			next();
+			type = type();
+			this.currentMethod.setReturnType(type);
 		}
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
 			error("'{' expected");
 		}
 		next();
-		statementList();
+
+		statementList = statementList();
+		this.currentMethod.setStatements(statementList);
+
 		if ( lexer.token != Token.RIGHTCURBRACKET ) {
 			error("'{' expected");
 		}
 		next();
 
+		return new MethodDec(id, type, statementList);
 	}
 
-	private void statementList() {
+	private StatementList statementList() {
 		  // only '}' is necessary in this test
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
 			statement();
 		}
+
+		return null;
 	}
 
-	private void statement() {
+	private Statement statement() {
 		boolean checkSemiColon = true;
-		switch ( lexer.token ) {
-		case IF:
-			ifStat();
-			checkSemiColon = false;
-			break;
-		case WHILE:
-			whileStat();
-			checkSemiColon = false;
-			break;
-		case RETURN:
-			returnStat();
-			break;
-		case BREAK:
-			breakStat();
-			break;
-		case SEMICOLON:
-			next();
-			break;
-		case REPEAT:
-			repeatStat();
-			break;
-		case VAR:
-			localDec();
-			break;
-		case ASSERT:
-			assertStat();
-			break;
-		default:
-			if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
-				writeStat();
-			}
-			else {
-				expr();
-			}
 
+		Statement s = null;
+
+		switch ( lexer.token ) {
+			case IF:
+				ifStat();
+				checkSemiColon = false;
+				break;
+			case WHILE:
+				s = whileStat();
+				checkSemiColon = false;
+				break;
+			case RETURN:
+				returnStat();
+				break;
+			case BREAK:
+				breakStat();
+				break;
+			case SEMICOLON:
+				next();
+				break;
+			case REPEAT:
+				repeatStat();
+				break;
+			case VAR:
+				localDec();
+				break;
+			case ASSERT:
+				assertStat();
+				break;
+			default:
+				if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
+					writeStat();
+				}
+				else {
+					expr();
+				}
 		}
+
 		if ( checkSemiColon ) {
 			check(Token.SEMICOLON, "';' expected");
 		}
+
+		return s;
 	}
 
 	private void localDec() {
@@ -359,15 +383,28 @@ public class Compiler {
 
 	}
 
+	/**
+	 * ReturnStat ::= "return" Expression
+	 */
 	private void returnStat() {
 		next();
-		expr();
+		Expr e = expr();
+
+		// Verifica se o método deve retornar algum valor
+		if ( this.currentMethod.getReturnType() == Type.nullType ) {
+			error("This method cannot return any value");
+		}
+
+		// Verifica se o método tem retorno correto
+		if ( !e.getType().isCompatible(this.currentMethod.getReturnType()) ) {
+			error("This expression is not compatible with the method return type");
+		}
 	}
 
 	/**
 	 * WhileStat ::= "while" Expression "{" StatementList "}"
 	 */
-	private void whileStat() {
+	private WhileStat whileStat() {
 		next();
 
 		// Conferência de tipo da expressão
@@ -380,10 +417,14 @@ public class Compiler {
 		next();
 
 
+		Statement s = null;
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			statement();
+			s = statement();
 		}
+
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
+
+		return new WhileStat(e, s);
 	}
 
 	/**
@@ -430,21 +471,24 @@ public class Compiler {
 		expr();
 	}
 
+	/**
+	 * Expression ::= SimpleExpression [ Relation SimpleExpression ]
+	 */
 	private Expr expr() {
 		return null;
 	}
 
 	private void fieldDec() {
-		lexer.nextToken();
+		next();
 		type();
 		if ( lexer.token != Token.ID ) {
 			this.error("A field name was expected");
 		}
 		else {
 			while ( lexer.token == Token.ID  ) {
-				lexer.nextToken();
+				next();
 				if ( lexer.token == Token.COMMA ) {
-					lexer.nextToken();
+					next();
 				}
 				else {
 					break;
@@ -454,7 +498,7 @@ public class Compiler {
 
 	}
 
-	private void type() {
+	private Type type() {
 		if ( lexer.token == Token.INT || lexer.token == Token.BOOLEAN || lexer.token == Token.STRING ) {
 			next();
 		}
@@ -465,6 +509,7 @@ public class Compiler {
 			this.error("A type was expected");
 		}
 
+		return null;
 	}
 
 
@@ -501,20 +546,20 @@ public class Compiler {
 	 */
 	public Statement assertStat() {
 
-		lexer.nextToken();
+		next();
 		int lineNumber = lexer.getLineNumber();
 		expr();
 		if ( lexer.token != Token.COMMA ) {
 			this.error("',' expected after the expression of the 'assert' statement");
 		}
-		lexer.nextToken();
+		next();
 		if ( lexer.token != Token.LITERALSTRING ) {
 			this.error("A literal string expected after the ',' of the 'assert' statement");
 		}
 		String message = lexer.getLiteralStringValue();
-		lexer.nextToken();
+		next();
 		if ( lexer.token == Token.SEMICOLON )
-			lexer.nextToken();
+			next();
 
 		return null;
 	}
@@ -530,7 +575,7 @@ public class Compiler {
 		// Integer.
 		// Method intValue returns that value as an value of type int.
 		int value = lexer.getNumberValue();
-		lexer.nextToken();
+		next();
 		return new LiteralIntExpr(value);
 	}
 

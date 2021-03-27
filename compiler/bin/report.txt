@@ -2,8 +2,8 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  35            I: 6              PI: 19            Exc: 15
-Dev: 5/126/3%      LE: 55/126/43%    SSE: 38/57/66%    
+MI:  35            I: 6              PI: 17            Exc: 23
+Dev: 5/118/4%      LE: 48/118/40%    SSE: 38/65/58%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -11,7 +11,7 @@ _________________________________________________________________________
 
 Número de testes 'Muito importantes' em que o compilador falhou: 35
 Número de testes 'Importantes' em que o compilador falhou: 6
-Número de testes 'Pouco importantes' em que o compilador falhou: 19
+Número de testes 'Pouco importantes' em que o compilador falhou: 17
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -148,9 +148,6 @@ Testes 'pouco importantes' em que o compilador falhou
     classExtendsItself
         ER_SEM27.ci
 
-    returnTypeInMethodRunOfClassProgram
-        ER_SEM80.ci
-
     repeatUntil
         OK_SEM18.ci
 
@@ -159,9 +156,6 @@ Testes 'pouco importantes' em que o compilador falhou
 
     repeatUntilBreak
         OK_SEM16.ci
-
-    methodReturnValueNotUsed
-        ER_SEM34.ci
 
     missingReturn
         ER_SEM01.ci
@@ -174,11 +168,6 @@ Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o com
 Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador acertou:
-    typeError
-        ER_SEM08.ci
-        ER_SEM09.ci
-        ER_SEM12.ci
-
     typeErrorAssignRightSideNotSubtypeLeftSide
         ER_SEM04.ci
         ER_SEM05.ci
@@ -192,6 +181,11 @@ Testes 'Muito importantes' em que o compilador acertou:
         ER_SEM17.ci
         ER_SEM68.ci
 
+    typeError
+        ER_SEM08.ci
+        ER_SEM09.ci
+        ER_SEM12.ci
+
     typeNotFound
         ER_SEM18.ci
 
@@ -199,9 +193,6 @@ Testes 'Muito importantes' em que o compilador acertou:
 Testes 'importantes' em que o compilador acertou:
     superWithoutSuperclass
         ER_SEM46.ci
-
-    illegalReturnStatement
-        ER_SEM35.ci
 
     variableRedeclaration
         ER_SEM03.ci
@@ -213,6 +204,13 @@ Testes 'importantes' em que o compilador acertou:
 Testes 'pouco importantes' em que o compilador acertou
     parametersInMethodRunOfClassProgram
         ER_SEM79.ci
+
+    illegalClassName
+        ER_SEM48.ci
+        ER_SEM49.ci
+
+    lowerUpperCaseIdentifiers
+        ER_SEM02.ci
 
     exprRightHandSideAssignment
         ER_SEM06.ci
@@ -226,18 +224,17 @@ Testes 'pouco importantes' em que o compilador acertou
         ER_SEM25.ci
         ER_SEM45.ci
 
-    illegalClassName
-        ER_SEM48.ci
-        ER_SEM49.ci
 
-    lowerUpperCaseIdentifiers
-        ER_SEM02.ci
-
-
-15 arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. A maioria delas é provavelmente NullPointerException. Estes arquivos são:
+23 arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. A maioria delas é provavelmente NullPointerException. Estes arquivos são:
+    ER_LEX_EXTRA01.ci
     ER_SEM11.ci
+    ER_SEM34.ci
+    ER_SEM35.ci
     ER_SEM50.ci
+    ER_SEM80.ci
     ER_SEM86.ci
+    ER_SEM_EXTRA01.CI
+    ER_SEM_EXTRA02.CI
     ER_SIN09.CI
     ER_SIN14.ci
     ER_SIN15.ci
@@ -248,14 +245,16 @@ Testes 'pouco importantes' em que o compilador acertou
     ER_SIN27.CI
     ER_SIN37.CI
     ER_SIN38.CI
+    ER_SIN_EXTRA01.CI
+    ER_SIN_EXTRA02.CI
     OK_SEM07.ci
     OK_SIN04.CI
 
 _________________________________________________________________________
 
-5 de um total de 126 erros que deveriam ser sinalizados não o foram (3%)
-55 erros foram sinalizados na linha errada (43%)
-38 erros foram sinalizados em 57 arquivos sem erro (66%)
+5 de um total de 118 erros que deveriam ser sinalizados não o foram (4%)
+48 erros foram sinalizados na linha errada (40%)
+38 erros foram sinalizados em 65 arquivos sem erro (58%)
 _________________________________________________________________________
 
 Erros que deveriam ser sinalizados mas não foram:
@@ -272,10 +271,6 @@ ER_SEM81.ci, 13, Method 'run' of class 'Program' cannot be private (comp.Compile
 
 ######################################################
 Erros que foram sinalizados na linha errada:
-
-ER_LEX_EXTRA01.ci
-    correto:    29, ';' expected 
-    sinalizado: 13, ';' expected
 
 ER_SEM01.ci
     correto:    18, Missing 'return' statement in method 'm' (comp.Compiler.methodDec())
@@ -320,10 +315,6 @@ ER_SEM31.ci
 ER_SEM32.ci
     correto:    18, Method 'm' is being redeclared (comp.Compiler.methodDec())
     sinalizado: 28, ';' expected
-
-ER_SEM34.ci
-    correto:    24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
-    sinalizado: 14, ';' expected
 
 ER_SEM36.ci
     correto:    26, Expression expected in the right-hand side of assignment (comp.Compiler.assignExprLocalDec())
@@ -405,10 +396,6 @@ ER_SEM71.ci
     correto:    21, Method 'set:' was not found in class 'A' or its superclasses (comp.Compiler.factor())
     sinalizado: 20, ';' expected
 
-ER_SEM80.ci
-    correto:    13, Method 'run' of class 'Program' with a return value type (comp.Compiler.methodDec())
-    sinalizado: 14, ';' expected
-
 ER_SEM82.ci
     correto:    13,  
     sinalizado: 11, 'end' expected
@@ -424,14 +411,6 @@ ER_SEM89.ci
 ER_SEM91.ci
     correto:    12,  
     sinalizado: 10, 'end' expected
-
-ER_SEM_EXTRA01.CI
-    correto:    13,  
-    sinalizado: 12, ';' expected
-
-ER_SEM_EXTRA02.CI
-    correto:    36,  
-    sinalizado: 13, ';' expected
 
 ER_SIN02.CI
     correto:    7, Missing identifier (comp.Compiler.localDec())
@@ -484,14 +463,6 @@ ER_SIN62.CI
 ER_SIN63.CI
     correto:    15, ';' expected ()
     sinalizado: 14, ';' expected
-
-ER_SIN_EXTRA01.CI
-    correto:    28,  
-    sinalizado: 13, ';' expected
-
-ER_SIN_EXTRA02.CI
-    correto:    40,  
-    sinalizado: 13, ';' expected
 
 ######################################################
 Erros que foram sinalizados mas não deveriam ter sido:
@@ -695,11 +666,6 @@ The 'cep' message is:      "Identifier expected"
 ER_SEM25.ci
 The compiler message was: "A variable name was expected"
 The 'cep' message is:      "Identifier expected"
-
-
-ER_SEM35.ci
-The compiler message was: "';' expected"
-The 'cep' message is:      "Illegal 'return' statement. Method returns 'void'"
 
 
 ER_SEM41.ci
