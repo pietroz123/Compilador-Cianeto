@@ -367,9 +367,14 @@ public class Compiler {
 	private ParamDec paramDec() {
 		// Type
         Type type = type();
+
+		if ( lexer.token != Token.ID ) {
+			error("Identifier expected");
+		}
+
         // Id
         String id = lexer.getStringValue();
-        lexer.nextToken();
+        next();
 
         // Adiciona o parâmetro da função na tabela local de variáveis
         Variable var = new Variable(id, type);
@@ -387,6 +392,9 @@ public class Compiler {
 		return null;
 	}
 
+	/**
+	 * Statement ::= AssignExpr ";" | IfStat | WhileStat | ReturnStat ";" | WriteStat ";" | "break" ";" | ";" | RepeatStat ";" | LocalDec ";" | AssertStat ";"
+	 */
 	private Statement statement() {
 		boolean checkSemiColon = true;
 
@@ -414,7 +422,7 @@ public class Compiler {
 				repeatStat();
 				break;
 			case VAR:
-				localDec();
+				s = localDec();
 				break;
 			case ASSERT:
 				assertStat();
@@ -435,12 +443,32 @@ public class Compiler {
 		return s;
 	}
 
-	private void localDec() {
+	/**
+	 * LocalDec ::= "var" Type IdList [ "=" Expression ]
+	 */
+	private LocalDec localDec() {
 		next();
-		type();
+
+		Type type = type();
+		IdList idlList = new IdList();
+		Expression expr = null;
+
 		check(Token.ID, "A variable name was expected");
+
+		// IdList
 		while ( lexer.token == Token.ID ) {
+			String id = lexer.getStringValue();
+			idlList.addId(id);
+
+			// Verifica se variável já foi declarada
+			if (symbolTable.getInLocal(id) != null) {
+				error("Variable " + id + " was already declared");
+			} else {
+				symbolTable.putInLocal(id, new Variable(id, type));
+			}
+
 			next();
+
 			if ( lexer.token == Token.COMMA ) {
 				next();
 			}
@@ -448,12 +476,15 @@ public class Compiler {
 				break;
 			}
 		}
+
+		// [ "=" Expression ]
 		if ( lexer.token == Token.ASSIGN ) {
 			next();
 			// check if there is just one variable
-			expr();
+			expr = expr();
 		}
 
+		return new LocalDec(type, idlList, expr);
 	}
 
 	private void repeatStat() {
@@ -474,7 +505,7 @@ public class Compiler {
 	 */
 	private void returnStat() {
 		next();
-		Expr e = expr();
+		Expression e = expr();
 
 		// Verifica se o método deve retornar algum valor
 		if ( this.currentMethod.getReturnType() == Type.nullType ) {
@@ -494,7 +525,7 @@ public class Compiler {
 		next();
 
 		// Conferência de tipo da expressão
-		Expr e = expr();
+		Expression e = expr();
 		if ( e.getType() != Type.booleanType ) {
 			error("Boolean expression expected");
 		}
@@ -520,7 +551,7 @@ public class Compiler {
 		next();
 
 		// Conferência de tipo da expressão
-		Expr e = expr();
+		Expression e = expr();
 		if ( e.getType() != Type.booleanType ) {
 			error("Boolean expression expected");
 		}
@@ -560,7 +591,147 @@ public class Compiler {
 	/**
 	 * Expression ::= SimpleExpression [ Relation SimpleExpression ]
 	 */
-	private Expr expr() {
+	private Expression expr() {
+		return null;
+	}
+
+	/**
+	 * Factor ::= BasicValue | "(" Expression ")" | "!" Factor | "nil" | ObjectCreation | PrimaryExpr
+	 *
+	 * BasicValue ::= IntValue | BooleanValue | StringValue
+	 * ObjectCreation ::= Id "." "new"
+	 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList | "super" "." Id |
+	 *                  Id | Id "." Id | Id "." IdColon ExpressionList |
+	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
+	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+	 */
+	private Expression factor() {
+		Expression expr;
+		// ExpressionList exprList;
+		String messageName, id;
+
+		switch (lexer.token) {
+			/**
+			 * BasicValue
+			 */
+			case LITERALINT:
+				return literalInt();
+			case FALSE:
+				next();
+				return LiteralBooleanExpr.False;
+			case TRUE:
+				next();
+				return LiteralBooleanExpr.True;
+			case LITERALSTRING:
+				String literalString = lexer.getLiteralStringValue();
+				next();
+				return new LiteralStringExpr(literalString);
+			/**
+			 * "(" Expression ")"
+			 */
+			case LEFTPAR:
+				next();
+				expr = expr();
+
+				if (lexer.token != Token.RIGHTPAR) { error(") expected"); }
+
+				next();
+				return new ParenthesisExpr(expr);
+			/**
+			 * "!" Factor
+			 */
+			case NOT:
+				next();
+				return factor();
+			/**
+			 * "nil"
+			 */
+			case NIL:
+				next();
+				return new NullExpr();
+			/**
+			 * Se é Token.ID, pode ser:
+			 *
+			 * ObjectCreation => Id "." "new"
+			 * OU
+			 * PrimaryExpr => Id | Id "." Id | Id "." IdColon ExpressionList
+			 */
+			case ID:
+				String firstId = lexer.getStringValue();
+				next();
+
+				if (lexer.token != Token.DOT) {
+					// PrimaryExpr ::= Id
+					if (symbolTable.getInLocal(firstId) == null) {
+						error("Identifier '" + firstId + "' does not exist");
+					}
+
+					// ...
+					// TODO
+				}
+				else {
+					next();
+
+					/**
+					 * ObjectCreation => Id "." "new"
+					 */
+					if (lexer.token == Token.NEW) {
+						return objectCreation(firstId);
+					}
+
+					/**
+					 * A partir daqui pode ser:
+					 *
+					 * PrimaryExpr => Id "." Id | Id "." IdColon ExpressionList
+					 */
+					return primaryExpr();
+				}
+			/**
+			 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList | "super" "." Id |
+			 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
+			 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+			 */
+			case SUPER:
+			case SELF:
+				break;
+
+			default:
+				break;
+		}
+
+		return null;
+	}
+
+	/**
+	 * ObjectCreation ::= Id "." "new"
+	 */
+	private ObjectCreation objectCreation(String id) {
+		if (symbolTable.getInGlobal(id) == null) {
+			error("Class '" + id + "' does not exist");
+		}
+
+		next();
+
+		if (lexer.token != Token.DOT) {
+			error(". expected");
+		}
+
+		next();
+
+		if (lexer.token != Token.NEW) {
+			error("'new' expected. Object initialization is required");
+		}
+
+		return new ObjectCreation(id);
+	}
+
+	/**
+	 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList |
+	 * 				   	"super" "." Id | Id | Id "." Id | Id "." IdColon ExpressionList |
+	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
+	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+	*/
+	private PrimaryExpr primaryExpr() {
 		return null;
 	}
 

@@ -7,7 +7,7 @@ package ast;
 
 import lexer.Token;
 
-public class CompositeExpr extends Expr {
+public class CompositeExpr extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
@@ -33,7 +33,7 @@ public class CompositeExpr extends Expr {
 
     }
 
-    private Expr left, right;
+    private Expression left, right;
     private Token oper;
 
 }

@@ -1,6 +1,6 @@
 package ast;
 
-abstract public class Expr extends Statement {
+abstract public class Expression extends Statement {
     abstract public void genC( PW pw, boolean putParenthesis );
 	@Override
 	public void genC(PW pw) {

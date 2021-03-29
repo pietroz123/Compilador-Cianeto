@@ -8,7 +8,7 @@ package ast;
 /**
  * Ex: v + 1 => v é o VariableExpr
  */
-public class VariableExpr extends Expr {
+public class VariableExpr extends Expression {
 
     private VariableExpr(Variable var) {
         this.var = var;

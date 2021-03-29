@@ -1,6 +1,6 @@
 package ast;
 
-public class LiteralIntExpr extends Expr {
+public class LiteralIntExpr extends Expression {
 
     public LiteralIntExpr( int value ) {
         this.value = value;

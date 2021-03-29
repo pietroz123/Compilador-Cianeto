@@ -55,7 +55,8 @@ public enum Token {
     TRUE("true"),
     UNTIL("until"),
     VAR("var"),
-    WHILE("while");
+    WHILE("while"),
+    NEW("new");
 
 	Token(String name) {
 		this.name = name;

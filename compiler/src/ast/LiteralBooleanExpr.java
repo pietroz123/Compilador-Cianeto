@@ -1,6 +1,6 @@
 package ast;
 
-public class LiteralBooleanExpr extends Expr {
+public class LiteralBooleanExpr extends Expression {
 
     public LiteralBooleanExpr( boolean value ) {
         this.value = value;

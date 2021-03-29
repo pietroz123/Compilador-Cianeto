@@ -2,7 +2,7 @@ package ast;
 
 public class WhileStat extends Statement {
 
-    public WhileStat(Expr e, Statement s) {
+    public WhileStat(Expression e, Statement s) {
         this.expr = e;
         this.statement = s;
     }
@@ -10,7 +10,7 @@ public class WhileStat extends Statement {
     /**
      * Getters
      */
-    public Expr getExpr() {
+    public Expression getExpr() {
         return expr;
     }
     public Statement getStatement() {
@@ -26,6 +26,6 @@ public class WhileStat extends Statement {
         // TODO Auto-generated method stub
     }
 
-    private Expr expr;
+    private Expression expr;
     private Statement statement;
 }

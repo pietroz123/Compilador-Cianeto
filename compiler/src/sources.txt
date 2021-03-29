@@ -2,7 +2,8 @@
 ./ast/AssignExpr.java
 ./ast/ClassDec.java
 ./ast/CompositeExpr.java
-./ast/Expr.java
+./ast/Expression.java
+./ast/Factor.java
 ./ast/FieldDec.java
 ./ast/FormalParamDec.java
 ./ast/IdList.java
@@ -16,7 +17,10 @@
 ./ast/MetaobjectAnnotation.java
 ./ast/MethodDec.java
 ./ast/NullExpr.java
+./ast/ObjectCreation.java
 ./ast/ParamDec.java
+./ast/ParenthesisExpr.java
+./ast/PrimaryExpr.java
 ./ast/Program.java
 ./ast/PW.java
 ./ast/Qualifier.java
