@@ -10,4 +10,9 @@ package ast;
  */
 public class ParamDec {
 
+    public ParamDec(Variable var) {
+        this.var = var;
+    }
+
+    private Variable var;
 }

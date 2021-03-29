@@ -1,0 +1,18 @@
+package ast;
+
+import java.util.ArrayList;
+import lexer.Token;
+
+/**
+ * Qualifier ::= "private" | "public" | "override" | "override" "public" |
+ *               "final" | "final" "public" | "final" "override" | "final" "override" "public" |
+ *               "shared" "private" | "shared" "public"
+ */
+public class Qualifier {
+
+    public Qualifier(ArrayList<Token> tokens) {
+        this.tokens = tokens;
+    }
+
+    private ArrayList<Token> tokens = new ArrayList<Token>();
+}

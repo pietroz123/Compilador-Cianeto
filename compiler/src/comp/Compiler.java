@@ -171,50 +171,87 @@ public class Compiler {
 	 * ClassDec ::= [ "open" ] "class" Id [ "extends" Id ] MemberList "end"
 	 */
 	private TypeCianetoClass classDec() {
+		this.currentClass = null;
+
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 		}
 
-		if ( lexer.token != Token.CLASS ) error("'class' expected");
+		// Verifica token "class"
+		if ( lexer.token != Token.CLASS ) {
+			error("'class' expected");
+		}
 
 		next();
 
-		if ( lexer.token != Token.ID )
+		// Verifica "id" da classe
+		if ( lexer.token != Token.ID ) {
 			error("Identifier expected");
+		}
 
 		String className = lexer.getStringValue();
+		currentClass = new TypeCianetoClass(className);
+
+		// Coloca na tabela global
+		symbolTable.putInGlobal(className, currentClass);
+
 		next();
 
 		if ( lexer.token == Token.EXTENDS ) {
 			next();
+
 			if ( lexer.token != Token.ID )
 				error("Identifier expected");
+
 			String superclassName = lexer.getStringValue();
+			TypeCianetoClass superclass = new TypeCianetoClass(superclassName);
+
+			// Verificar se a superclasse existe
+			if ( symbolTable.getInGlobal(superclassName) == null ) {
+				error("Superclass does not exist");
+			}
+
+			currentClass.setSuperclass(superclass);
 
 			next();
 		}
 
-		memberList();
+		MemberList memberList = memberList();
+		currentClass.setMemberList(memberList);
+
 		if ( lexer.token != Token.END)
 			error("'end' expected");
+
 		next();
 
-		return null;
+		return currentClass;
 	}
 
-	private void memberList() {
+	/**
+	 * MemberList ::= { [ Qualifier ] Member }
+	 * Member ::= FieldDec | MethodDec
+	 */
+	private MemberList memberList() {
+		MemberList memberList = new MemberList();
+
 		while ( true ) {
-			qualifier();
+			Qualifier q = qualifier();
+			Member member = null;
+
 			if ( lexer.token == Token.VAR ) {
-				fieldDec();
+				member = fieldDec();
 			}
 			else if ( lexer.token == Token.FUNC ) {
-				methodDec();
+				member = methodDec();
 			}
 			else {
 				break;
 			}
+
+			memberList.add(q, member);
 		}
+
+		return memberList;
 	}
 
 	private void error(String msg) {
@@ -251,34 +288,49 @@ public class Compiler {
 	private MethodDec methodDec() {
 		this.currentMethod = new MethodDec();
 
-		StatementList statementList = null;
-		Type type = null;
 		String id = null;
+		FormalParamDec formalParamDec = null;
+		Type returnType = null;
+		StatementList statementList = null;
 
 		next();
+
+		// Verifica "Id" ou "IdColon"
+		if (lexer.token != Token.ID || lexer.token != Token.IDCOLON) {
+			error("An identifier or identifer: was expected after 'func'");
+		}
+
+		id = lexer.getStringValue();
+		this.currentMethod.setId(id);
+
+		// Verifica se o método já não foi declarado
+		// TODO
+
 		if ( lexer.token == Token.ID ) {
 			// unary method
-			id = lexer.getStringValue();
-			this.currentMethod.setId(id);
-
 			next();
 		}
 		else if ( lexer.token == Token.IDCOLON ) {
 			// keyword method. It has parameters
+			next();
+			formalParamDec = formalParamDec();
+			this.currentMethod.setFormalParamDec(formalParamDec);
+			next();
+		}
 
-		}
-		else {
-			error("An identifier or identifer: was expected after 'func'");
-		}
+		// Verifica [ "->" Type ]
 		if ( lexer.token == Token.MINUS_GT ) {
 			// method declared a return type
 			next();
-			type = type();
-			this.currentMethod.setReturnType(type);
+			returnType = type();
+			this.currentMethod.setReturnType(returnType);
 		}
+
+		// Verifica "{"
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
 			error("'{' expected");
 		}
+
 		next();
 
 		statementList = statementList();
@@ -289,7 +341,41 @@ public class Compiler {
 		}
 		next();
 
-		return new MethodDec(id, type, statementList);
+		return new MethodDec(id, formalParamDec, returnType, statementList);
+	}
+
+	/**
+	 * FormalParamDec ::= ParamDec { "," ParamDec }
+	 */
+	private FormalParamDec formalParamDec() {
+		FormalParamDec formalParamDec = new FormalParamDec();
+
+		formalParamDec.addParam(paramDec());
+
+		// { "," ParamDec }
+        while (lexer.token == Token.COMMA) {
+            next();
+            formalParamDec.addParam(paramDec());
+        }
+
+        return formalParamDec;
+	}
+
+	/**
+	 * ParamDec ::= Type Id
+	 */
+	private ParamDec paramDec() {
+		// Type
+        Type type = type();
+        // Id
+        String id = lexer.getStringValue();
+        lexer.nextToken();
+
+        // Adiciona o parâmetro da função na tabela local de variáveis
+        Variable var = new Variable(id, type);
+        symbolTable.putInLocal(id, var);
+
+        return new ParamDec(var);
 	}
 
 	private StatementList statementList() {
@@ -478,15 +564,28 @@ public class Compiler {
 		return null;
 	}
 
-	private void fieldDec() {
+	/**
+	 * FieldDec ::= "var" Type IdList [ ";" ]
+	 */
+	private FieldDec fieldDec() {
 		next();
-		type();
+
+		Type type = type();
+		IdList idList = new IdList();
+
 		if ( lexer.token != Token.ID ) {
 			this.error("A field name was expected");
 		}
 		else {
 			while ( lexer.token == Token.ID  ) {
+				String id = lexer.getStringValue();
+
+				// Verificar se a variável já não foi declarada
+				// TODO
+
+				idList.addId(id);
 				next();
+
 				if ( lexer.token == Token.COMMA ) {
 					next();
 				}
@@ -496,48 +595,79 @@ public class Compiler {
 			}
 		}
 
+		return new FieldDec(type, idList);
 	}
 
+	/**
+	 * Type ::= BasicType | Id
+	 * BasicType ::= "Int" | "Boolean" | "String"
+	 */
 	private Type type() {
-		if ( lexer.token == Token.INT || lexer.token == Token.BOOLEAN || lexer.token == Token.STRING ) {
-			next();
-		}
-		else if ( lexer.token == Token.ID ) {
-			next();
-		}
-		else {
-			this.error("A type was expected");
+		Type type = null;
+
+		switch (lexer.token) {
+			case INT:
+				type = Type.intType;
+				break;
+			case BOOLEAN:
+				type = Type.booleanType;
+				break;
+			case STRING:
+				type = Type.stringType;
+				break;
+			case ID:
+				type = Type.nullType;
+				type.setName(lexer.getStringValue());
+			default:
+				error("Type not supported");
+				break;
 		}
 
-		return null;
+		return type;
 	}
 
+	/**
+	 * Qualifier ::= "private" | "public" | "override" | "override" "public" |
+	 *               "final" | "final" "public" | "final" "override" | "final" "override" "public" |
+	 *               "shared" "private" | "shared" "public"
+	 */
+	private Qualifier qualifier() {
+		ArrayList<Token> tokens = new ArrayList<>();
 
-	private void qualifier() {
 		if ( lexer.token == Token.PRIVATE ) {
+			tokens.add(Token.PRIVATE);
 			next();
 		}
 		else if ( lexer.token == Token.PUBLIC ) {
+			tokens.add(Token.PUBLIC);
 			next();
 		}
 		else if ( lexer.token == Token.OVERRIDE ) {
+			tokens.add(Token.OVERRIDE);
 			next();
 			if ( lexer.token == Token.PUBLIC ) {
+				tokens.add(Token.PUBLIC);
 				next();
 			}
 		}
 		else if ( lexer.token == Token.FINAL ) {
+			tokens.add(Token.FINAL);
 			next();
 			if ( lexer.token == Token.PUBLIC ) {
+				tokens.add(Token.PUBLIC);
 				next();
 			}
 			else if ( lexer.token == Token.OVERRIDE ) {
+				tokens.add(Token.OVERRIDE);
 				next();
 				if ( lexer.token == Token.PUBLIC ) {
+					tokens.add(Token.PUBLIC);
 					next();
 				}
 			}
 		}
+
+		return new Qualifier(tokens);
 	}
 	/**
 	 * change this method to 'private'.
@@ -589,10 +719,10 @@ public class Compiler {
 
 	}
 
-	private ClassDec		currentClass; 		// Classe corrente
-	private MethodDec		currentMethod; 		// Método corrente
-	private SymbolTable		symbolTable;
-	private Lexer			lexer;
-	private ErrorSignaler	errorSignaler;
+	private TypeCianetoClass	currentClass; 		// Classe corrente
+	private MethodDec			currentMethod; 		// Método corrente
+	private SymbolTable			symbolTable;
+	private Lexer				lexer;
+	private ErrorSignaler		errorSignaler;
 
 }

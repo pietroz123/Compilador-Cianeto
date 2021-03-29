@@ -8,6 +8,13 @@ package ast;
 /**
  * FieldDec ::= "var" Type IdList [ ";" ]
  */
-public class FieldDec {
+public class FieldDec extends Member {
 
+    public FieldDec(Type type, IdList idList) {
+        this.type = type;
+        this.idList = idList;
+    }
+
+    private Type type;
+    private IdList idList;
 }

@@ -5,8 +5,8 @@
 
 package ast;
 
-/*
- * Krakatoa Class
+/**
+ * ClassDec ::= [ "open" ] "class" Id [ "extends" Id ] MemberList "end"
  */
 public class TypeCianetoClass extends Type {
 
@@ -24,8 +24,15 @@ public class TypeCianetoClass extends Type {
     public TypeCianetoClass getSuperclass() {
         return superclass;
     }
+
+    /**
+     * Setters
+     */
     public void setSuperclass(TypeCianetoClass superclass) {
         this.superclass = superclass;
+    }
+    public void setMemberList(MemberList memberList) {
+        this.memberList = memberList;
     }
 
     /**
@@ -48,8 +55,9 @@ public class TypeCianetoClass extends Type {
 
     private String name;
     private TypeCianetoClass superclass;
-    // private FieldList fieldList;
-    // private MethodList publicMethodList, privateMethodList;
+    private MemberList memberList;
+    // private FieldList fieldList; // ?
+    // private MethodList publicMethodList, privateMethodList; // ?
     // m�todos p�blicos get e set para obter e iniciar as vari�veis acima,
     // entre outros m�todos
 }

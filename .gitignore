@@ -86,4 +86,4 @@ nb-configuration.xml
 .DS_Store
 
 # Exceções
-!bin/
+!bin/report.txt

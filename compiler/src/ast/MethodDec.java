@@ -10,10 +10,11 @@ package ast;
  * "{" StatementList "}" |
  * "func" Id [ "->" Type ] "{" StatementList "}"
  */
-public class MethodDec {
+public class MethodDec extends Member {
 
-    public MethodDec(String id, Type returnType, StatementList statements) {
+    public MethodDec(String id, FormalParamDec formalParamDec, Type returnType, StatementList statements) {
         this.id = id;
+        this.formalParamDec = formalParamDec;
         this.returnType = returnType;
         this.statements = statements;
     }
@@ -26,6 +27,9 @@ public class MethodDec {
      */
     public String getId() {
         return id;
+    }
+    public FormalParamDec getFormalParamDec() {
+        return formalParamDec;
     }
     public Type getReturnType() {
         return returnType;
@@ -40,6 +44,9 @@ public class MethodDec {
     public void setId(String id) {
         this.id = id;
     }
+    public void setFormalParamDec(FormalParamDec formalParamDec) {
+        this.formalParamDec = formalParamDec;
+    }
     public void setReturnType(Type returnType) {
         this.returnType = returnType;
     }
@@ -48,6 +55,7 @@ public class MethodDec {
     }
 
     private String id;
+    private FormalParamDec formalParamDec;
     private Type returnType;
     private StatementList statements;
 }

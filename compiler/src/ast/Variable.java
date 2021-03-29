@@ -9,14 +9,16 @@ package ast;
  * Classe para as variáveis
  */
 public class Variable {
-    private String name;
-    private Type type;
+    public Variable(String id, Type type) {
+        this.id = id;
+        this.type = type;
+    }
 
     /**
      * Getters
      */
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
     public Type getType() {
         return type;
@@ -25,10 +27,13 @@ public class Variable {
     /**
      * Setters
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String id) {
+        this.id = id;
     }
     public void setType(Type type) {
         this.type = type;
     }
+
+    private String id;
+    private Type type;
 }
