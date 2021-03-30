@@ -68,8 +68,21 @@ public class Compiler {
 
 		}
 
+		/**
+		 * Verificações da classe Program
+		 */
+		TypeCianetoClass programClass = (TypeCianetoClass) symbolTable.getInGlobal("Program");
+
 		// Verificar se existe uma classe Program
-		// TODO
+		if (programClass == null) {
+			error("Every program in the Cianeto Language must have a class with name 'Program'");
+		}
+
+		// Verifica se existe um método sem parâmetros chamado 'run'
+		MethodDec runMethod = programClass.searchPublicMethod("run");
+ 		if (runMethod == null || runMethod.getFormalParamDec() != null) {
+			error("The Program class must have a parameterless method called 'run'");
+		}
 
 		if ( !thereWasAnError && lexer.token != Token.EOF ) {
 			error("End of file expected");

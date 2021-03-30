@@ -28,6 +28,9 @@ public class TypeCianetoClass extends Type {
         return getName();
     }
 
+    /**
+     * Getters
+     */
     public TypeCianetoClass getSuperclass() {
         return superclass;
     }
