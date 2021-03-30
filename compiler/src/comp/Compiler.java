@@ -834,7 +834,9 @@ public class Compiler {
 				String id = lexer.getStringValue();
 
 				// Verificar se a variável já não foi declarada
-				// TODO
+				if ( symbolTable.getInLocal(id) != null ) {
+					error("Duplicate local variable '" + id + "'");
+				}
 
 				idList.addId(id);
 				next();
