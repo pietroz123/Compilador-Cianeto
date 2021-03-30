@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.ArrayList;
+
 /**
  * ClassDec ::= [ "open" ] "class" Id [ "extends" Id ] MemberList "end"
  */
@@ -14,6 +16,9 @@ public class TypeCianetoClass extends Type {
     // classe
     public TypeCianetoClass(String name) {
         super(name);
+        this.publicMethodList = new ArrayList<>();
+        this.privateMethodList = new ArrayList<>();
+        this.fieldList = new ArrayList<>();
     }
 
     @Override
@@ -53,11 +58,35 @@ public class TypeCianetoClass extends Type {
         return true;
     }
 
+    /**
+     * Insere um método
+     *
+     * TODO : Verificar se o método é público ou privado
+     *
+     * @param method
+     */
+    public void addMethod(MethodDec method) {
+        publicMethodList.add(method);
+    }
+
+    /**
+     * Verifica se um método existe na lista de métodos públicos
+     * @param methodId : Identificador do método
+     * @return
+     */
+    public MethodDec searchPublicMethod(String methodId) {
+        for (MethodDec method : this.publicMethodList) {
+            if (method.getId().equals(methodId)) {
+                return method;
+            }
+        }
+
+        return null;
+    }
+
     private String name;
     private TypeCianetoClass superclass;
     private MemberList memberList;
-    // private FieldList fieldList; // ?
-    // private MethodList publicMethodList, privateMethodList; // ?
-    // m�todos p�blicos get e set para obter e iniciar as vari�veis acima,
-    // entre outros m�todos
+    private ArrayList<MethodDec> publicMethodList, privateMethodList;
+    private ArrayList<FieldDec> fieldList;
 }

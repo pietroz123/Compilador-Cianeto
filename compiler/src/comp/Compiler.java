@@ -173,7 +173,7 @@ public class Compiler {
 	private TypeCianetoClass classDec() {
 		this.currentClass = null;
 
-		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
+		if ( lexer.token == Token.OPEN ) {
 			// open class
 		}
 
@@ -590,8 +590,12 @@ public class Compiler {
 
 	/**
 	 * Expression ::= SimpleExpression [ Relation SimpleExpression ]
+	 *
+	 * SimpleExpression ::= SumSubExpression { "++" SumSubExpression }
+	 * Relation ::= "==" | "<" | ">" | "<=" | ">=" | "! ="
 	 */
 	private Expression expr() {
+		// TODO
 		return null;
 	}
 
@@ -684,16 +688,16 @@ public class Compiler {
 					 *
 					 * PrimaryExpr => Id "." Id | Id "." IdColon ExpressionList
 					 */
-					return primaryExpr();
+					return primaryExpr(firstId);
 				}
 			/**
-			 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList | "super" "." Id |
+			 * PrimaryExpr  => 	"super" "." IdColon ExpressionList | "super" "." Id |
 			 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
 			 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
 			 */
 			case SUPER:
 			case SELF:
-				break;
+				return primaryExpr(null);
 
 			default:
 				break;
@@ -727,11 +731,63 @@ public class Compiler {
 
 	/**
 	 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList |
-	 * 				   	"super" "." Id | Id | Id "." Id | Id "." IdColon ExpressionList |
+	 * 				   	"super" "." Id |
+	 * 				    Id | Id "." Id | Id "." IdColon ExpressionList |
 	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
 	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+	 *
+	 * Id já foi coberto em factor()
 	*/
-	private PrimaryExpr primaryExpr() {
+	private PrimaryExpr primaryExpr(String firstId) {
+		/**
+		 * Id "." Id | Id "." IdColon ExpressionList
+		 *
+		 * Id "." Id => acesso à variável, deve ser pública
+		 * Id "." IdColon ExpressionList => chamada de método da classe, deve ser público
+		 */
+		if (firstId != null)
+		{
+			// Verifica "Id" ou "IdColon"
+			if (lexer.token != Token.ID || lexer.token != Token.IDCOLON) {
+				error("An identifier or identifer: was expected after 'func'");
+			}
+
+			String secondId = lexer.getStringValue();
+
+			/**
+			 * Se chegou aqui é porque estamos chamando um método de uma classe,
+			 * necessário então verificar se a classe existe e se o método existe
+			 */
+			// Verifica classe
+			TypeCianetoClass cianetoClass = (TypeCianetoClass) symbolTable.getInGlobal(firstId);
+			if (cianetoClass == null) {
+				error("Class ''" + firstId + "' does not exist");
+			}
+
+			// Verifica método
+			MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
+			if (classMethod == null) {
+				error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
+			}
+
+			// TODO: ExpressionList
+			ExpressionList exprList = null;
+
+			if (lexer.token == Token.IDCOLON) {
+				// TODO
+			}
+
+		}
+
+		/**
+		 * "super" "." IdColon ExpressionList |
+		 * "super" "." Id |
+		 * "self" | "self" "." Id | "self" "." IdColon ExpressionList |
+		 * "self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+		 */
+		// TODO
+
+
 		return null;
 	}
 
