@@ -11,21 +11,21 @@ public class MemberList {
         this.memberList = new ArrayList<>();
     }
 
-    public void add(Qualifier q, Member member) {
-        memberList.add(new MemberListPair(q, member));
+    /**
+     * Getters
+     */
+    public ArrayList<MemberListPair> getMemberList() {
+        return memberList;
     }
 
-    // Classe de utilidade para guardar os pares de Qualifier/Member
-    private class MemberListPair {
-        public MemberListPair(Qualifier qualifier, Member member) {
-            this.qualifier = qualifier;
-            this.member = member;
-        }
-
-        private Qualifier qualifier;
-        private Member member;
+    /**
+     * Adiciona um par qualifier/member na lista de members
+     * @param qualifier
+     * @param member
+     */
+    public void add(Qualifier qualifier, Member member) {
+        memberList.add(new MemberListPair(qualifier, member));
     }
 
     private ArrayList<MemberListPair> memberList;
-
 }

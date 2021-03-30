@@ -14,6 +14,7 @@
 ./ast/LocalDec.java
 ./ast/Member.java
 ./ast/MemberList.java
+./ast/MemberListPair.java
 ./ast/MetaobjectAnnotation.java
 ./ast/MethodDec.java
 ./ast/NullExpr.java

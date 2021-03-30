@@ -172,9 +172,11 @@ public class Compiler {
 	 */
 	private TypeCianetoClass classDec() {
 		this.currentClass = null;
+		Boolean isOpenClass = false;
 
 		if ( lexer.token == Token.OPEN ) {
 			// open class
+			isOpenClass = true;
 		}
 
 		// Verifica token "class"
@@ -191,12 +193,14 @@ public class Compiler {
 
 		String className = lexer.getStringValue();
 		currentClass = new TypeCianetoClass(className);
+		currentClass.setIsOpen(isOpenClass);
 
 		// Coloca na tabela global
 		symbolTable.putInGlobal(className, currentClass);
 
 		next();
 
+		// [ "extends" Id ]
 		if ( lexer.token == Token.EXTENDS ) {
 			next();
 
@@ -216,9 +220,11 @@ public class Compiler {
 			next();
 		}
 
+		// MemberList
 		MemberList memberList = memberList();
 		currentClass.setMemberList(memberList);
 
+		// "end"
 		if ( lexer.token != Token.END)
 			error("'end' expected");
 
@@ -229,18 +235,38 @@ public class Compiler {
 
 	/**
 	 * MemberList ::= { [ Qualifier ] Member }
+	 * Qualifier ::= "private" | "public" | "override" | "override" "public" | "final" | "final" "public" | "final" "override" | "final" "override" "public" | "shared" "private" | "shared" "public"
 	 * Member ::= FieldDec | MethodDec
+	 * FieldDec ::= "var" Type IdList [ ";" ]
+	 * MethodDec ::= "func" IdColon FormalParamDec [ "->" Type ] "{" StatementList "}" | "func" Id [ "->" Type ] "{" StatementList "}"
 	 */
 	private MemberList memberList() {
 		MemberList memberList = new MemberList();
 
 		while ( true ) {
-			Qualifier q = qualifier();
+			ArrayList<Token> qualifierTokens = new ArrayList<>();
+
+			while (
+				lexer.token == Token.PRIVATE || lexer.token == Token.PUBLIC
+				|| lexer.token == Token.OVERRIDE || lexer.token == Token.FINAL
+				|| lexer.token == Token.SHARED
+			) {
+				qualifierTokens.add(lexer.token);
+				next();
+			}
+
+			Qualifier qualifier = qualifierTokens.isEmpty() ? null : new Qualifier(qualifierTokens);
 			Member member = null;
 
+			/**
+			 * FieldDec
+			 */
 			if ( lexer.token == Token.VAR ) {
 				member = fieldDec();
 			}
+			/**
+			 * MethodDec
+			 */
 			else if ( lexer.token == Token.FUNC ) {
 				member = methodDec();
 			}
@@ -248,7 +274,7 @@ public class Compiler {
 				break;
 			}
 
-			memberList.add(q, member);
+			memberList.add(qualifier, member);
 		}
 
 		return memberList;
@@ -771,7 +797,7 @@ public class Compiler {
 			}
 
 			// TODO: ExpressionList
-			ExpressionList exprList = null;
+			// ExpressionList exprList = null;
 
 			if (lexer.token == Token.IDCOLON) {
 				// TODO

@@ -7,6 +7,8 @@ package ast;
 
 import java.util.ArrayList;
 
+import lexer.Token;
+
 /**
  * ClassDec ::= [ "open" ] "class" Id [ "extends" Id ] MemberList "end"
  */
@@ -33,10 +35,31 @@ public class TypeCianetoClass extends Type {
     /**
      * Setters
      */
+    public void setIsOpen(Boolean isOpen) {
+        this.isOpen = isOpen;
+    }
     public void setSuperclass(TypeCianetoClass superclass) {
         this.superclass = superclass;
     }
     public void setMemberList(MemberList memberList) {
+        // Coloca os membros nas váriaveis de instância também
+        for (MemberListPair pair : memberList.getMemberList()) {
+            ArrayList<Token> qualifierTokens = pair.getQualifier().getTokens();
+
+            // MethodDec
+            if (pair.getMember() instanceof MethodDec) {
+                if (qualifierTokens.contains(Token.PRIVATE)) {
+                    privateMethodList.add((MethodDec) pair.getMember());
+                } else {
+                    publicMethodList.add((MethodDec) pair.getMember());
+                }
+            }
+            // FieldDec
+            if (pair.getMember() instanceof FieldDec) {
+                fieldList.add((FieldDec) pair.getMember());
+            }
+        }
+
         this.memberList = memberList;
     }
 
@@ -84,6 +107,7 @@ public class TypeCianetoClass extends Type {
         return null;
     }
 
+    private Boolean isOpen = false;
     private String name;
     private TypeCianetoClass superclass;
     private MemberList memberList;

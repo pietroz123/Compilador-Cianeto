@@ -14,5 +14,12 @@ public class Qualifier {
         this.tokens = tokens;
     }
 
+    /**
+     * Getters
+     */
+    public ArrayList<Token> getTokens() {
+        return tokens;
+    }
+
     private ArrayList<Token> tokens = new ArrayList<Token>();
 }
