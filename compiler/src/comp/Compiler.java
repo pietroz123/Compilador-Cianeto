@@ -330,7 +330,9 @@ public class Compiler {
 		this.currentMethod.setId(id);
 
 		// Verifica se o método já não foi declarado
-		// TODO
+		if ( symbolTable.getInLocal(id) != null ) {
+			error("Duplicate method " + id + "' in type '" + currentClass.getName() + "'");
+		}
 
 		if ( lexer.token == Token.ID ) {
 			// unary method
@@ -359,9 +361,11 @@ public class Compiler {
 
 		next();
 
+		// StatementList
 		statementList = statementList();
 		this.currentMethod.setStatements(statementList);
 
+		// Verifica "}"
 		if ( lexer.token != Token.RIGHTCURBRACKET ) {
 			error("'{' expected");
 		}
@@ -849,6 +853,9 @@ public class Compiler {
 				}
 			}
 		}
+
+		// Coloca os campos na tabela local
+		// TODO?
 
 		return new FieldDec(type, idList);
 	}
