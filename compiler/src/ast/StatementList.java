@@ -5,9 +5,24 @@
 
 package ast;
 
+import java.util.ArrayList;
+
 /**
  * StatementList ::= { Statement }
  */
 public class StatementList {
 
+    public StatementList() {
+        this.statementList = new ArrayList<Statement>();
+    }
+
+    /**
+     * Adiciona um Statement na lista de Statement's
+     * @param statement
+     */
+    public void addStatement(Statement statement) {
+        statementList.add(statement);
+    }
+
+    private ArrayList<Statement> statementList;
 }

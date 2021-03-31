@@ -415,17 +415,31 @@ public class Compiler {
         return new ParamDec(var);
 	}
 
+	/**
+	 * StatementList ::= { Statement }
+	 */
 	private StatementList statementList() {
-		  // only '}' is necessary in this test
-		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			statement();
+		StatementList statementList = new StatementList();
+
+		// only '}' is necessary in this test // !?
+		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
+			statementList.addStatement(statement());
 		}
 
-		return null;
+		return statementList;
 	}
 
 	/**
-	 * Statement ::= AssignExpr ";" | IfStat | WhileStat | ReturnStat ";" | WriteStat ";" | "break" ";" | ";" | RepeatStat ";" | LocalDec ";" | AssertStat ";"
+	 * Statement ::= AssignExpr ";" | IfStat | WhileStat | ReturnStat ";" | PrintStat ";" | "break" ";" | ";" | RepeatStat ";" | LocalDec ";" | AssertStat ";"
+	 *
+	 * AssignExpr ::= Expression [ "=" Expression ]
+	 * IfStat ::= "if" Expression "{" StatementList "}" [ "else" "{" StatementList "}" ]
+	 * WhileStat ::= "while" Expression "{" StatementList "}"
+	 * ReturnStat ::= "return" Expression
+	 * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
+	 * RepeatStat ::= "repeat" StatementList "until" Expression
+	 * LocalDec ::= "var" Type IdList [ "=" Expression ]
+	 * AssertStat ::= "assert" Expression "," StringValue
 	 */
 	private Statement statement() {
 		boolean checkSemiColon = true;
@@ -433,8 +447,11 @@ public class Compiler {
 		Statement s = null;
 
 		switch ( lexer.token ) {
+			/**
+			 * IfStat
+			 */
 			case IF:
-				ifStat();
+				s = ifStat();
 				checkSemiColon = false;
 				break;
 			case WHILE:
@@ -577,23 +594,28 @@ public class Compiler {
 	}
 
 	/**
-	 * IfStat ::= if" Expression "{" Statement "}" [ "else" "{" Statement "}" ]
+	 * IfStat ::= "if" Expression "{" StatementList "}" [ "else" "{" StatementList "}" ]
 	 */
-	private void ifStat() {
+	private IfStat ifStat() {
 		next();
 
+		// Expression
+		Expression expr = expr();
+		StatementList leftList, rightList = null;
+
 		// Conferência de tipo da expressão
-		Expression e = expr();
-		if ( e.getType() != Type.booleanType ) {
+		if ( expr.getType() != Type.booleanType ) {
 			error("Boolean expression expected");
 		}
 
 		check(Token.LEFTCURBRACKET, "'{' expected after the 'if' expression");
 		next();
 
-		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
-			statement();
-		}
+		leftList = statementList();
+		//! modifiquei
+		// while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
+		// 	statement();
+		// }
 
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
 
@@ -601,11 +623,17 @@ public class Compiler {
 			next();
 			check(Token.LEFTCURBRACKET, "'{' expected after 'else'");
 			next();
-			while ( lexer.token != Token.RIGHTCURBRACKET ) {
-				statement();
-			}
+
+			rightList = statementList();
+			//! modifiquei
+			// while ( lexer.token != Token.RIGHTCURBRACKET ) {
+			// 	statement();
+			// }
+
 			check(Token.RIGHTCURBRACKET, "'}' was expected");
 		}
+
+		return new IfStat(expr, leftList, rightList);
 	}
 
 	/**
