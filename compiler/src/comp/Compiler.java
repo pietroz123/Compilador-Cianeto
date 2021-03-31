@@ -257,18 +257,7 @@ public class Compiler {
 		MemberList memberList = new MemberList();
 
 		while ( true ) {
-			ArrayList<Token> qualifierTokens = new ArrayList<>();
-
-			while (
-				lexer.token == Token.PRIVATE || lexer.token == Token.PUBLIC
-				|| lexer.token == Token.OVERRIDE || lexer.token == Token.FINAL
-				|| lexer.token == Token.SHARED
-			) {
-				qualifierTokens.add(lexer.token);
-				next();
-			}
-
-			Qualifier qualifier = qualifierTokens.isEmpty() ? null : new Qualifier(qualifierTokens);
+			Qualifier qualifier = qualifier();
 			Member member = null;
 
 			/**
@@ -984,6 +973,7 @@ public class Compiler {
 		return new LiteralIntExpr(value);
 	}
 
+	//?
 	private static boolean startExpr(Token token) {
 
 		return token == Token.FALSE || token == Token.TRUE
