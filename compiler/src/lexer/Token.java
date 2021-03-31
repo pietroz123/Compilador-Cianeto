@@ -41,6 +41,7 @@ public enum Token {
     OR("||"),
     OVERRIDE("override"),
     PLUS("+"),
+    PLUSPLUS("++"),
     PRIVATE("private"),
     PUBLIC("public"),
     REPEAT("repeat"),
@@ -56,7 +57,6 @@ public enum Token {
     UNTIL("until"),
     VAR("var"),
     WHILE("while"),
-    OPEN("open"),
     NEW("new");
 
 	Token(String name) {

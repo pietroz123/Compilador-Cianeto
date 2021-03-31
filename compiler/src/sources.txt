@@ -45,6 +45,7 @@
 ./comp/CompilerError.java
 ./comp/CompilerOptions.java
 ./comp/ErrorSignaler.java
+./comp/SignalExpr.java
 ./comp/SymbolTable.java
 ./lexer/Lexer.java
 ./lexer/Token.java

@@ -9,6 +9,12 @@ import lexer.Token;
 
 public class CompositeExpr extends Expression {
 
+    public CompositeExpr(Expression left, Token oper, Expression right) {
+        this.left = left;
+        this.oper = oper;
+        this.right = right;
+    }
+
     @Override
     public void genC(PW pw, boolean putParenthesis) {
         // TODO Auto-generated method stub
@@ -35,5 +41,4 @@ public class CompositeExpr extends Expression {
 
     private Expression left, right;
     private Token oper;
-
 }

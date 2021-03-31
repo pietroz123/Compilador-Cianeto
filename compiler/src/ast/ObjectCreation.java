@@ -3,7 +3,7 @@ package ast;
 /**
  * ObjectCreation ::= Id "." "new"
  */
-public class ObjectCreation extends Expression {
+public class ObjectCreation extends PrimaryExpr {
 
     public ObjectCreation(String id) {
         this.id = id;

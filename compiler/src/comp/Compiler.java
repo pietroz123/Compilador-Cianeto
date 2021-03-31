@@ -187,7 +187,7 @@ public class Compiler {
 		this.currentClass = null;
 		Boolean isOpenClass = false;
 
-		if ( lexer.token == Token.OPEN ) {
+		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 			isOpenClass = true;
 		}
@@ -388,6 +388,7 @@ public class Compiler {
         while (lexer.token == Token.COMMA) {
             next();
             formalParamDec.addParam(paramDec());
+			next();
         }
 
         return formalParamDec;
@@ -406,7 +407,6 @@ public class Compiler {
 
         // Id
         String id = lexer.getStringValue();
-        next();
 
         // Adiciona o parâmetro da função na tabela local de variáveis
         Variable var = new Variable(id, type);
@@ -622,22 +622,123 @@ public class Compiler {
 
 	/**
 	 * Expression ::= SimpleExpression [ Relation SimpleExpression ]
-	 *
-	 * SimpleExpression ::= SumSubExpression { "++" SumSubExpression }
-	 * Relation ::= "==" | "<" | ">" | "<=" | ">=" | "! ="
 	 */
 	private Expression expr() {
-		// TODO
-		return null;
+		Expression left = simpleExpression();
+		Token r;
+
+		if ( relation(lexer.token) ) {
+			r = lexer.token;
+			next();
+			Expression right = simpleExpression();
+			left = new CompositeExpr(left, r, right);
+		}
+
+		return left;
 	}
 
 	/**
-	 * Factor ::= BasicValue | "(" Expression ")" | "!" Factor | "nil" | ObjectCreation | PrimaryExpr
+	 * SimpleExpression ::= SumSubExpression { "++" SumSubExpression }
+	 */
+	private Expression simpleExpression() {
+		Expression left = sumSubExpression();
+		Token r;
+
+		while ( lexer.token == Token.PLUSPLUS ) {
+			r = lexer.token;
+			next();
+			Expression right = sumSubExpression();
+			left = new CompositeExpr(left, r, right);
+		}
+
+		return left;
+	}
+
+	/**
+	 * SumSubExpression ::= Term { LowOperator Term }
+	 */
+	private Expression sumSubExpression() {
+		Expression left = term();
+		Token r;
+
+		while ( lowOperator(lexer.token) ) {
+			r = lexer.token;
+			next();
+			Expression right = term();
+			left = new CompositeExpr(left, r, right);
+		}
+
+		return left;
+	}
+
+	/**
+	 * LowOperator ::= +" | "−" | "||"
+	 */
+	private boolean lowOperator(Token token) {
+		return token == Token.PLUS || token == Token.MINUS || token == Token.OR;
+	}
+
+	/**
+	 * Term ::= SignalFactor { HighOperator SignalFactor }
+	 */
+	private Expression term() {
+		Expression left = signalFactor();
+		Token r;
+
+		while ( highOperator(lexer.token) ) {
+			r = lexer.token;
+			next();
+			Expression right = signalFactor();
+			left = new CompositeExpr(left, r, right);
+		}
+
+		return left;
+	}
+
+	/**
+	 * HighOperator ::= "∗" | "/" | "&&"
+	 */
+	private boolean highOperator(Token token) {
+		return token == Token.PLUS || token == Token.DIV || token == Token.AND;
+	}
+
+	/**
+	 * SignalFactor ::= [ Signal ] Factor
+	 */
+	private Expression signalFactor() {
+		Token signal;
+
+		if ( signal(lexer.token) ) {
+			signal = lexer.token;
+			next();
+			return new SignalExpr(signal, factor());
+		}
+		else {
+			return factor();
+		}
+	}
+
+	/**
+	 * Signal ::= "+" | "−"
+	 */
+	private boolean signal(Token token) {
+		return token == Token.PLUS || token == Token.MINUS;
+	}
+
+	/**
+	 * Relation ::= "==" | "<" | ">" | "<=" | ">=" | "!="
+	 */
+	private boolean relation(Token token) {
+		return token == Token.EQ || token == Token.LT || token == Token.LE ||
+			token == Token.GT || token == Token.GE || token == Token.NEQ;
+	}
+
+	/**
+	 * Factor ::= BasicValue | "(" Expression ")" | "!" Factor | "nil" | PrimaryExpr
 	 *
 	 * BasicValue ::= IntValue | BooleanValue | StringValue
-	 * ObjectCreation ::= Id "." "new"
 	 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList | "super" "." Id |
-	 *                  Id | Id "." Id | Id "." IdColon ExpressionList |
+	 *                  Id | Id "." Id | Id "." IdColon ExpressionList | Id "." "new" |
 	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
 	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
 	 */
@@ -686,12 +787,25 @@ public class Compiler {
 				next();
 				return new NullExpr();
 			/**
-			 * Se é Token.ID, pode ser:
-			 *
-			 * ObjectCreation => Id "." "new"
-			 * OU
-			 * PrimaryExpr => Id | Id "." Id | Id "." IdColon ExpressionList
+			 * PrimaryExpr
 			 */
+			default:
+				return primaryExpr();
+		}
+
+	}
+
+	/**
+	 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList |
+	 * 				   	"super" "." Id |
+	 * 				    Id | Id "." Id | Id "." IdColon ExpressionList | Id "." "new" |
+	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
+	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+	 *
+	 * Id já foi coberto em factor()
+	*/
+	private PrimaryExpr primaryExpr() {
+		switch (lexer.token) {
 			case ID:
 				String firstId = lexer.getStringValue();
 				next();
@@ -719,19 +833,56 @@ public class Compiler {
 					 * A partir daqui pode ser:
 					 *
 					 * PrimaryExpr => Id "." Id | Id "." IdColon ExpressionList
+					 *
+					 * Id "." Id => acesso à variável, deve ser pública
+					 * Id "." IdColon ExpressionList => chamada de método da classe, deve ser público
 					 */
-					return primaryExpr(firstId);
+
+					// Verifica "Id" ou "IdColon"
+					if (lexer.token != Token.ID || lexer.token != Token.IDCOLON) {
+						error("An identifier or identifer: was expected after 'func'");
+					}
+
+					String secondId = lexer.getStringValue();
+
+					/**
+					 * Se chegou aqui é porque estamos chamando um método de uma classe,
+					 * necessário então verificar se a classe existe e se o método existe
+					 */
+					// Verifica classe
+					TypeCianetoClass cianetoClass = (TypeCianetoClass) symbolTable.getInGlobal(firstId);
+					if (cianetoClass == null) {
+						error("Class ''" + firstId + "' does not exist");
+					}
+
+					// Verifica método
+					MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
+					if (classMethod == null) {
+						error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
+					}
+
+					// TODO: ExpressionList
+					// ExpressionList exprList = null;
+
+					if (lexer.token == Token.IDCOLON) {
+						// TODO
+					}
 				}
+
+				break;
 			/**
-			 * PrimaryExpr  => 	"super" "." IdColon ExpressionList | "super" "." Id |
-			 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
-			 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+			 * "super" "." IdColon ExpressionList |
+			 * "super" "." Id |
+			 * "self" | "self" "." Id | "self" "." IdColon ExpressionList |
+			 * "self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
 			 */
 			case SUPER:
 			case SELF:
-				return primaryExpr(null);
+				// TODO
+				break;
 
 			default:
+				error("Unexpected token");
 				break;
 		}
 
@@ -739,7 +890,7 @@ public class Compiler {
 	}
 
 	/**
-	 * ObjectCreation ::= Id "." "new"
+	 * ObjectCreation => Id "." "new"
 	 */
 	private ObjectCreation objectCreation(String id) {
 		if (symbolTable.getInGlobal(id) == null) {
@@ -759,68 +910,6 @@ public class Compiler {
 		}
 
 		return new ObjectCreation(id);
-	}
-
-	/**
-	 * PrimaryExpr ::= 	"super" "." IdColon ExpressionList |
-	 * 				   	"super" "." Id |
-	 * 				    Id | Id "." Id | Id "." IdColon ExpressionList |
-	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
-	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
-	 *
-	 * Id já foi coberto em factor()
-	*/
-	private PrimaryExpr primaryExpr(String firstId) {
-		/**
-		 * Id "." Id | Id "." IdColon ExpressionList
-		 *
-		 * Id "." Id => acesso à variável, deve ser pública
-		 * Id "." IdColon ExpressionList => chamada de método da classe, deve ser público
-		 */
-		if (firstId != null)
-		{
-			// Verifica "Id" ou "IdColon"
-			if (lexer.token != Token.ID || lexer.token != Token.IDCOLON) {
-				error("An identifier or identifer: was expected after 'func'");
-			}
-
-			String secondId = lexer.getStringValue();
-
-			/**
-			 * Se chegou aqui é porque estamos chamando um método de uma classe,
-			 * necessário então verificar se a classe existe e se o método existe
-			 */
-			// Verifica classe
-			TypeCianetoClass cianetoClass = (TypeCianetoClass) symbolTable.getInGlobal(firstId);
-			if (cianetoClass == null) {
-				error("Class ''" + firstId + "' does not exist");
-			}
-
-			// Verifica método
-			MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
-			if (classMethod == null) {
-				error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
-			}
-
-			// TODO: ExpressionList
-			// ExpressionList exprList = null;
-
-			if (lexer.token == Token.IDCOLON) {
-				// TODO
-			}
-
-		}
-
-		/**
-		 * "super" "." IdColon ExpressionList |
-		 * "super" "." Id |
-		 * "self" | "self" "." Id | "self" "." IdColon ExpressionList |
-		 * "self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
-		 */
-		// TODO
-
-
-		return null;
 	}
 
 	/**
@@ -857,7 +946,7 @@ public class Compiler {
 		}
 
 		// Coloca os campos na tabela local
-		// TODO?
+		//?
 
 		return new FieldDec(type, idList);
 	}
