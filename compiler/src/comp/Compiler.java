@@ -502,7 +502,7 @@ public class Compiler {
 				 * AssignExpr
 				 */
 				else {
-					expr();
+					s = assignExpr();
 				}
 		}
 
@@ -688,6 +688,21 @@ public class Compiler {
 		ExpressionList exprList = expressionList();
 
 		return new PrintStat(printName, exprList);
+	}
+
+	/**
+	 * AssignExpr ::= Expression [ "=" Expression ]
+	 */
+	private AssignExpr assignExpr() {
+		Expression leftExpr = expr();
+		Expression rightExpr = null;
+
+		if (lexer.token == Token.EQ) {
+			next();
+			rightExpr = expr();
+		}
+
+		return new AssignExpr(leftExpr, rightExpr);
 	}
 
 	/**
