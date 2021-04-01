@@ -96,6 +96,14 @@ public class TypeCianetoClass extends Type {
     }
 
     /**
+     * Insere uma declaração de campo(s)
+     * @param fieldDec
+     */
+    public void addFieldDec(FieldDec fieldDec) {
+        fieldList.add(fieldDec);
+    }
+
+    /**
      * Verifica se um método existe na lista de métodos públicos
      * @param methodId : Identificador do método
      * @return

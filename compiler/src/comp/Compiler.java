@@ -359,7 +359,7 @@ public class Compiler {
 
 		// Verifica "{"
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
-			error("'{' expected");
+			error("'{' expected after method return type");
 		}
 
 		next();
@@ -370,7 +370,7 @@ public class Compiler {
 
 		// Verifica "}"
 		if ( lexer.token != Token.RIGHTCURBRACKET ) {
-			error("'{' expected");
+			error("'}' expected after method return type");
 		}
 		next();
 
@@ -708,7 +708,7 @@ public class Compiler {
 		Expression leftExpr = expr();
 		Expression rightExpr = null;
 
-		if (lexer.token == Token.EQ) {
+		if (lexer.token == Token.ASSIGN) {
 			next();
 			rightExpr = expr();
 		}
@@ -1195,23 +1195,14 @@ public class Compiler {
 
 	/**
 	 * ObjectCreation => Id "." "new"
+	 *
+	 * Id, "." e "new" já foram verificados em primaryExpr()
 	 */
 	private ObjectCreation objectCreation(String id) {
 		if (symbolTable.getInGlobal(id) == null) {
 			error("Class '" + id + "' does not exist");
 		}
-
 		next();
-
-		if (lexer.token != Token.DOT) {
-			error(". expected");
-		}
-
-		next();
-
-		if (lexer.token != Token.NEW) {
-			error("'new' expected. Object initialization is required");
-		}
 
 		return new ObjectCreation(id);
 	}
@@ -1249,10 +1240,12 @@ public class Compiler {
 			}
 		}
 
-		// Coloca os campos na tabela local
-		//?
+		FieldDec fieldDec = new FieldDec(type, idList);
 
-		return new FieldDec(type, idList);
+		// Coloca os campos na tabela local
+		currentClass.addFieldDec(fieldDec);
+
+		return fieldDec;
 	}
 
 	/**
