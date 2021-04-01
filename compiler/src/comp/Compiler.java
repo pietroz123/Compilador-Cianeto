@@ -526,6 +526,7 @@ public class Compiler {
 		next();
 
 		Type type = type();
+
 		IdList idlList = new IdList();
 		Expression expr = null;
 
@@ -1277,6 +1278,8 @@ public class Compiler {
 				error("Type not supported");
 				break;
 		}
+
+		next();
 
 		return type;
 	}
