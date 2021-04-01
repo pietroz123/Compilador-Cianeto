@@ -346,7 +346,6 @@ public class Compiler {
 			next();
 			formalParamDec = formalParamDec();
 			this.currentMethod.setFormalParamDec(formalParamDec);
-			next();
 		}
 
 		// Verifica [ "->" Type ]
@@ -361,7 +360,6 @@ public class Compiler {
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
 			error("'{' expected after method return type");
 		}
-
 		next();
 
 		// StatementList
@@ -391,7 +389,6 @@ public class Compiler {
         while (lexer.token == Token.COMMA) {
             next();
             formalParamDec.addParam(paramDec());
-			next();
         }
 
         return formalParamDec;
@@ -410,6 +407,7 @@ public class Compiler {
 
         // Id
         String id = lexer.getStringValue();
+		next();
 
         // Adiciona o parâmetro da função na tabela local de variáveis
         Variable var = new Variable(id, type);
@@ -514,8 +512,8 @@ public class Compiler {
 
 		if ( checkSemiColon ) {
 			check(Token.SEMICOLON, "';' expected");
+			next();
 		}
-		next();
 
 		return s;
 	}
@@ -666,6 +664,7 @@ public class Compiler {
 		// }
 
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
+		next();
 
 		if ( lexer.token == Token.ELSE ) {
 			next();
@@ -679,6 +678,7 @@ public class Compiler {
 			// }
 
 			check(Token.RIGHTCURBRACKET, "'}' was expected");
+			next();
 		}
 
 		return new IfStat(expr, leftList, rightList);
