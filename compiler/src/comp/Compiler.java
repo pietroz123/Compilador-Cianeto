@@ -515,6 +515,7 @@ public class Compiler {
 		if ( checkSemiColon ) {
 			check(Token.SEMICOLON, "';' expected");
 		}
+		next();
 
 		return s;
 	}
