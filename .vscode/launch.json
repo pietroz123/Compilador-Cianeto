@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Student Tests",
+            "request": "launch",
+            "mainClass": "comp.Comp",
+            "projectName": "krakatoa",
+            "args": "student-made-tests"
+        },
+        {
+            "type": "java",
+            "name": "Code Generation Tests",
+            "request": "launch",
+            "mainClass": "comp.Comp",
+            "projectName": "krakatoa",
+            "args": "code-generation-tests"
+        }
+    ]
+}

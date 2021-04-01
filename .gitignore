@@ -77,7 +77,7 @@ nb-configuration.xml
 ##############################
 ## Visual Studio Code
 ##############################
-.vscode/
+.vscode/*
 .code-workspace
 
 ##############################
@@ -86,4 +86,5 @@ nb-configuration.xml
 .DS_Store
 
 # Exceções
+!.vscode/launch.json
 !bin/report.txt
