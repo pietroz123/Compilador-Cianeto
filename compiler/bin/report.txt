@@ -2,16 +2,16 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  49            I: 11             PI: 28            Exc: 2
-Dev: 0/137/0%      LE: 116/137/84%   SSE: 41/46/89%    
+MI:  9             I: 4              PI: 10            Exc: 0
+ SSE: 17/17/100%   
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 49
-Número de testes 'Importantes' em que o compilador falhou: 11
-Número de testes 'Pouco importantes' em que o compilador falhou: 28
+Número de testes 'Muito importantes' em que o compilador falhou: 9
+Número de testes 'Importantes' em que o compilador falhou: 4
+Número de testes 'Pouco importantes' em que o compilador falhou: 10
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -20,886 +20,111 @@ Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em que o comp
 Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador falhou:
-    typeErrorAssignRightSideNotSubtypeLeftSide
-        ER_SEM04.ci
-        ER_SEM05.ci
-        ER_SEM38.ci
-        ER_SEM39.ci
-        ER_SEM40.ci
-        ER_SEM41.ci
-        ER_SEM42.ci
-        ER_SEM43.ci
-        OK_SEM05.ci
+    inheritance
+        OK_GER16.ci
 
-    typeError
-        ER_SEM08.ci
-        ER_SEM09.ci
-        ER_SEM12.ci
-        ER_SEM14.ci
-        ER_SEM15.ci
-        ER_SEM16.ci
+    polymorphism
+        OK_GER16.ci
 
-    typeErrorSearchMethod
-        ER_SEM07.ci
-        ER_SEM13.ci
-        ER_SEM17.ci
-        ER_SEM37.ci
-        ER_SEM59.ci
-        ER_SEM61.ci
-        ER_SEM68.ci
-        ER_SEM71.ci
+    messageToself
+        OK_GER11.ci
 
-    typeErrorSearchMethodSuper
-        ER_SEM47.ci
-        ER_SEM60.ci
+    fieldAccess
+        OK_GER10.ci
+        OK_GER14.ci
 
-    identifierNotFound
-        ER_SEM62.ci
-        ER_SEM91.ci
+    messagePassingPrivateMethod
+        OK_GER15.ci
 
-    methodFieldEqualNames
-        ER_SEM31.ci
+    super
+        OK_GER09.ci
+        OK_GER12.ci
 
-    methodsEqualNames
-        ER_SEM32.ci
-        ER_SEM33.ci
-
-    methodSearchSuperclass
-        OK_SEM10.ci
-
-    localVarRedeclared
-        ER_SEM28.ci
-
-    missingClassInNew
-        ER_SEM86.ci
-
-    wrongSubclassMethodSignature
-        ER_SEM29.ci
-        ER_SEM30.ci
-        ER_SEM51.ci
-
-    typeNotFound
-        ER_SEM18.ci
-        ER_SEM19.ci
-
-    methodRedefinition
-        ER_SEM70.ci
-
-    typeErrorEqualEqualNotEqual
-        ER_SEM57.ci
-        ER_SEM58.ci
-        OK_SEM03.ci
-        OK_SEM04.ci
-
-    supertypeAssignSelf
-        OK_SEM15.ci
-
-    nilEqualEqualNotEqual
-        OK_SEM14.ci
-
-    missingOverride
-        ER_SEM52.ci
-        ER_SEM53.ci
-        ER_SEM54.ci
-
-    nilAssign
-        OK_SEM14.ci
+    self
+        OK_GER09.ci
 
 
 Testes 'importantes' em que o compilador falhou:
-    superWithoutSuperclass
-        ER_SEM46.ci
+    parameterPassing
+        OK_GER08.ci
 
-    expressionExpected
-        ER_SEM36.ci
+    privateMethod
+        OK_GER15.ci
 
-    scopeLocalVarField
-        OK_SEM06.ci
+    privateMethodRedefinedAsPublic
+        OK_GER13.ci
 
-    breakOutsideWhileRepeatUntil
-        ER_SEM26.ci
-        ER_SEM50.ci
-
-    illegalReturnStatement
-        ER_SEM35.ci
-
-    localVarSameClassName
-        OK_SEM12.ci
-
-    localVarSameMethodName
-        OK_SEM13.ci
-
-    variableRedeclaration
-        ER_SEM03.ci
-
-    typeErrorPlusPlus
-        ER_SEM55.ci
-        ER_SEM56.ci
+    redefinedField
+        OK_GER14.ci
 
 
 Testes 'pouco importantes' em que o compilador falhou
-    missingClassProgram
-        ER_SEM78.ci
-
-    booleanExprRepeatUntil
-        ER_SEM88.ci
-        ER_SEM89.ci
+    comparisonOperators
+        OK_GER01.ci
 
     arithmeticOperators
-        OK_MATH.ci
+        OK_GER02.ci
+        OK_GER06.ci
 
-    while
-        ER_SEM11.ci
-
-    typeErrorOutPrint
-        ER_SEM44.ci
-
-    whileBreak
-        OK_SEM07.ci
-
-    lowerUpperCaseIdentifiers
-        ER_SEM02.ci
-
-    assert
-        OK_SEM17.ci
-
-    selfAsExpression
-        OK_SEM09.ci
-
-    openAsIdentifier
-        OK_SEM11.ci
-
-    if
-        OK_QUEUE.ci
-
-    parametersInMethodRunOfClassProgram
-        ER_SEM82.ci
-
-    missingRunMethodInProgram
-        ER_SEM77.ci
-
-    exprRightHandSideAssignment
-        ER_SEM06.ci
-
-    classExtendsItself
-        ER_SEM27.ci
+    runNotFirstMethodOfProgram
+        OK_GER21.ci
 
     repeatUntil
-        OK_SEM18.ci
+        OK_GER22.ci
 
-    illegalTypeOrIdentifier
-        ER_SEM20.ci
-        ER_SEM21.ci
-        ER_SEM22.ci
-        ER_SEM23.ci
-        ER_SEM24.ci
-        ER_SEM25.ci
-        ER_SEM45.ci
+    while
+        OK_GER04.ci
 
-    methodOverridingSameSignature
-        OK_SEM08.ci
+    logicalOperators
+        OK_GER03.ci
 
-    repeatUntilBreak
-        OK_SEM16.ci
+    zero
+        OK_GER07.ci
 
-    methodReturnValueNotUsed
-        ER_SEM34.ci
-
-    missingReturn
-        ER_SEM01.ci
+    if
+        OK_GER01.ci
+        OK_GER03.ci
 
 
-O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
-    aspecto
-        listas de nomes de arquivos
-Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
-Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
-
-Testes 'pouco importantes' em que o compilador acertou
-    parametersInMethodRunOfClassProgram
-        ER_SEM79.ci
-
-    illegalClassName
-        ER_SEM48.ci
-        ER_SEM49.ci
-
-    returnTypeInMethodRunOfClassProgram
-        ER_SEM80.ci
-
-    privateMethodRunOfClassProgram
-        ER_SEM81.ci
-
-
-2 arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. A maioria delas é provavelmente NullPointerException. Estes arquivos são:
-    ER_SIN15.ci
-    ER_SIN16.ci
 
 _________________________________________________________________________
 
-0 de um total de 137 erros que deveriam ser sinalizados não o foram (0%)
-116 erros foram sinalizados na linha errada (84%)
-41 erros foram sinalizados em 46 arquivos sem erro (89%)
+17 erros foram sinalizados em 17 arquivos sem erro (100%)
 _________________________________________________________________________
-Todos os erros que deveriam ter sido sinalizados o foram
-######################################################
-Erros que foram sinalizados na linha errada:
-
-ER_LEX03.CI
-    correto:    6, literal int out of limits (lexer.Lexer.nextToken())
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_LEX04.CI
-    correto:    21, Unknown character (lexer.Lexer.nextToken())
-    sinalizado: 17, An identifier or identifer: was expected after 'func'
-
-ER_LEX05.CI
-    correto:    8, Identifier starting with underscore (lexer.Lexer.nextToken())
-    sinalizado: 7, An identifier or identifer: was expected after 'func'
-
-ER_LEX06.CI
-    correto:    8, Unknown character (lexer.Lexer.nextToken())
-    sinalizado: 7, An identifier or identifer: was expected after 'func'
-
-ER_LEX08.CI
-    correto:    6, literal int out of limits (lexer.Lexer.nextToken())
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_LEX_EXTRA01.ci
-    correto:    29, ';' expected 
-    sinalizado: 9, A field name was expected
-
-ER_SEM01.ci
-    correto:    18, Missing 'return' statement in method 'm' (comp.Compiler.methodDec())
-    sinalizado: 10, An identifier or identifer: was expected after 'func'
-
-ER_SEM02.ci
-    correto:    9, Variable 'I' was not declared (comp.Compiler.assignExprLocalDec())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SEM03.ci
-    correto:    9, Variable 'i' is being redeclared (comp.Compiler.localDec())
-    sinalizado: 7, An identifier or identifer: was expected after 'func'
-
-ER_SEM04.ci
-    correto:    12, Type error: value of the right-hand side is not subtype of the variable of the left-hand side. (comp.Compiler.assignExprLocalDec())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM05.ci
-    correto:    11, 'int' cannot be assigned to 'boolean' (comp.Compiler.assignExprLocalDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM06.ci
-    correto:    12, 'operator expected' or 'variable expected at the left-hand side of a assignment' 
-    sinalizado: 11, An identifier or identifer: was expected after 'func'
-
-ER_SEM07.ci
-    correto:    15, Message send to a non-object receiver (comp.Compiler.factor())
-    sinalizado: 11, An identifier or identifer: was expected after 'func'
-
-ER_SEM08.ci
-    correto:    13, type boolean does not support operation '+' (comp.Compiler.simpleExpr())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SEM09.ci
-    correto:    15, type 'int' does not support operator '&&' (comp.Compiler.term())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SEM11.ci
-    correto:    15, non-boolean expression in 'while' command (comp.Compiler.whileStatement())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM12.ci
-    correto:    10, operator '+' of 'Int' expects an 'Int' value (comp.Compiler.simpleExpr())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM13.ci
-    correto:    10, Unknown method 'readBoolean' 
-    sinalizado: 7, An identifier or identifer: was expected after 'func'
-
-ER_SEM14.ci
-    correto:    11, Attempt to print a boolean expression 
-    sinalizado: 7, An identifier or identifer: was expected after 'func'
-
-ER_SEM15.ci
-    correto:    10, Operator '!' does not accepts 'int' values (comp.Compiler.factor())
-    sinalizado: 7, An identifier or identifer: was expected after 'func'
-
-ER_SEM16.ci
-    correto:    12, Operator '-' does not accepts 'boolean' expressions (comp.Compiler.signalFactor())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM17.ci
-    correto:    9, Method 'readInt:' was not found (comp.Compiler.readStatement()))
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM18.ci
-    correto:    10, Type 'k' was not found (comp.Compiler.localDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM19.ci
-    correto:    9, Type 'Program' was not found (comp.Compiler.localDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM20.ci
-    correto:    9, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM21.ci
-    correto:    9, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM22.ci
-    correto:    9, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM23.ci
-    correto:    9, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SEM24.ci
-    correto:    15, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SEM25.ci
-    correto:    14, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM26.ci
-    correto:    15, 'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SEM27.ci
-    correto:    11, Class 'A' is inheriting from itself (comp.Compiler.classDec())
-    sinalizado: 16, An identifier or identifer: was expected after 'func'
-
-ER_SEM28.ci
-    correto:    16, Variable 'i' is being redeclared (comp.Compiler.localDec())
-    sinalizado: 14, A field name was expected
-
-ER_SEM29.ci
-    correto:    22, Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A' (comp.Compiler.methodDec() or comp.Compiler.classDec())
-    sinalizado: 11, 'class' expected
-
-ER_SEM30.ci
-    correto:    24, Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A' (comp.Compiler.methodDec())
-    sinalizado: 12, 'class' expected
-
-ER_SEM31.ci
-    correto:    16, Method 'i' has name equal to an instance variable (comp.Compiler.methodDec())
-    sinalizado: 14, A field name was expected
-
-ER_SEM32.ci
-    correto:    18, Method 'm' is being redeclared (comp.Compiler.methodDec())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SEM33.ci
-    correto:    17, Method 'm' is being redeclared (comp.Compiler.methodDec())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SEM34.ci
-    correto:    24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM35.ci
-    correto:    14, Illegal 'return' statement. Method returns 'void' (comp.Compiler.returnStatement())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM36.ci
-    correto:    26, Expression expected in the right-hand side of assignment (comp.Compiler.assignExprLocalDec())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SEM37.ci
-    correto:    26, Method 'set' was not found in class 'A' or its superclasses (comp.Compiler.factor())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SEM38.ci
-    correto:    21, Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side (comp.Compiler.assignExprLocalDec())
-    sinalizado: 11, 'class' expected
-
-ER_SEM39.ci
-    correto:    24, Type error: type of the expression returned is not subclass of the method return type (comp.Compiler.returnStatement())
-    sinalizado: 13, 'class' expected
-
-ER_SEM40.ci
-    correto:    51, Type error: the type of the real parameter is not subclass of the type of the formal parameter (comp.Compiler.factor())
-    sinalizado: 12, 'class' expected
-
-ER_SEM41.ci
-    correto:    23, Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class (comp.Compiler.assignExprLocalDec())
-    sinalizado: 20, An identifier or identifer: was expected after 'func'
-
-ER_SEM42.ci
-    correto:    16, Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class (comp.Compiler.assignExprLocalDec())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM43.ci
-    correto:    12, Type error: 'nil' cannot be assigned to a variable of a basic type (comp.Compiler.assignExprLocalDec())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM44.ci
-    correto:    27, Command 'write' does not accept objects (comp.Compiler.writeStatement())
-    sinalizado: 8, A field name was expected
-
-ER_SEM45.ci
-    correto:    11, Identifier 'run' was not declared 
-    sinalizado: 10, An identifier or identifer: was expected after 'func'
-
-ER_SEM46.ci
-    correto:    10, 'super' used in class 'Program' that does not have a superclass (comp.Compiler.factor())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM47.ci
-    correto:    26, Method 'm' was not found in superclass 'B' or its superclasses (comp.Compiler.factor())
-    sinalizado: 5, 'class' expected
-
-ER_SEM50.ci
-    correto:    19, Command 'break' outside a command 'while' or repeat-until (comp.Compiler.breakStatement())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM51.ci
-    correto:    22, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
-    sinalizado: 11, 'class' expected
-
-ER_SEM52.ci
-    correto:    12, 'override' expected before overridden method 
-    sinalizado: 5, 'class' expected
-
-ER_SEM53.ci
-    correto:    12, 'override' expected before overridden method 
-    sinalizado: 5, 'class' expected
-
-ER_SEM54.ci
-    correto:    13, 'override' expected before overridden method 
-    sinalizado: 5, 'class' expected
-
-ER_SEM55.ci
-    correto:    10, Illegal types with ++, only Int and String are allowed 
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM56.ci
-    correto:    12, Illegal types with ++, only Int and String are allowed 
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM57.ci
-    correto:    26, Incompatible types cannot be compared with '==' because the results will always be 'false' (comp.Compiler.expr())
-    sinalizado: 19, An identifier or identifer: was expected after 'func'
-
-ER_SEM58.ci
-    correto:    26, Incompatible types cannot be compared with '!=' because the result will always be 'false' (comp.Compiler.expr())
-    sinalizado: 19, An identifier or identifer: was expected after 'func'
-
-ER_SEM59.ci
-    correto:    26, Method 'p' was not found in the public interface of 'A' or ts superclasses (comp.Compiler.factor())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM60.ci
-    correto:    25, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
-    sinalizado: 9, 'class' expected
-
-ER_SEM61.ci
-    correto:    37, Method 's' was not found in class 'C' or its superclasses (comp.Compiler.factor())
-    sinalizado: 9, 'class' expected
-
-ER_SEM62.ci
-    correto:    17, Identifier 'a' was not found (comp.Compiler.factor())
-    sinalizado: 11, A field name was expected
-
-ER_SEM68.ci
-    correto:    15, Method 'p' was not found in class 'Program' or its superclasses (comp.Compiler.factor())
-    sinalizado: 11, An identifier or identifer: was expected after 'func'
-
-ER_SEM70.ci
-    correto:    14, Method 'm' is being redefined (comp.Compiler.methodDec())
-    sinalizado: 11, An identifier or identifer: was expected after 'func'
-
-ER_SEM71.ci
-    correto:    21, Method 'set:' was not found in class 'A' or its superclasses (comp.Compiler.factor())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SEM77.ci
-    correto:    16, Method 'run' was not found in class 'Program' (comp.Compiler.classDec())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM78.ci
-    correto:    16, Source code without a class 'Program' (comp.Compiler.program())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SEM82.ci
-    correto:    13,  
-    sinalizado: 11, A field name was expected
-
-ER_SEM86.ci
-    correto:    13, Class 'A' was not found (comp.Compiler.factor())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SEM88.ci
-    correto:    17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SEM89.ci
-    correto:    17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SEM91.ci
-    correto:    12,  
-    sinalizado: 10, A field name was expected
-
-ER_SEM_EXTRA01.CI
-    correto:    13,  
-    sinalizado: 9, A field name was expected
-
-ER_SEM_EXTRA02.CI
-    correto:    36,  
-    sinalizado: 9, A field name was expected
-
-ER_SIN01.CI
-    correto:    11, '{' expected (comp.Compiler.methodDec())
-    sinalizado: 10, An identifier or identifer: was expected after 'func'
-
-ER_SIN02.CI
-    correto:    7, Missing identifier (comp.Compiler.localDec())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN03.CI
-    correto:    11, Identifier expected (comp.Compiler.localDec())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SIN04.CI
-    correto:    11, Statement expected (comp.Compiler.assignExprLocalDec())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SIN05.CI
-    correto:    14, Expression expected (comp.Compiler.factor())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SIN06.CI
-    correto:    7, Expression expected (comp.Compiler.factor())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN07.CI
-    correto:    7, Command 'In.' without arguments (comp.Compiler.readStatement())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN08.CI
-    correto:    7, Command ' Out.print' without arguments (comp.Compiler.writeStatement())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN09.CI
-    correto:    7, '{' expected (comp.Compiler.ifStatement())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN10.CI
-    correto:    7, 'readInt' was not declared (comp.Compiler.readStatement())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN100.CI
-    correto:    10, missing 'return' statement 
-    sinalizado: 8, A field name was expected
-
-ER_SIN11.CI
-    correto:    7, Missing 'Out.' (comp.Compiler.writeStatement())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN12.CI
-    correto:    13, Expression expected (comp.Compiler.factor())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SIN14.ci
-    correto:    16, 'class' expected (comp.Compiler.program())
-    sinalizado: 8, An identifier or identifer: was expected after 'func'
-
-ER_SIN17.ci
-    correto:    10, Missing ';' (comp.Compiler.localDec())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SIN18.CI
-    correto:    8, ';' expected 
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_SIN19.CI
-    correto:    8, ';' missing 
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_SIN20.CI
-    correto:    6, ';' missing 
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_SIN21.CI
-    correto:    9, ';' missing 
-    sinalizado: 4, An identifier or identifer: was expected after 'func'
-
-ER_SIN22.CI
-    correto:    10, ';' missing 
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_SIN23.CI
-    correto:    7, Statement expected (comp.Compiler.statement())
-    sinalizado: 5, An identifier or identifer: was expected after 'func'
-
-ER_SIN24.CI
-    correto:    15, Expression expected OR Unknown sequence of symbols (comp.Compiler.expr() OR lexer.Lexer.nextToken())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SIN25.CI
-    correto:    15, Expression expected OR invalid sequence of symbols (comp.Compiler.expr() OR lexer.Lexer.nextToken())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SIN26.CI
-    correto:    16, Expression expected OR invalid sequence of symbols (comp.Compiler.ifStatement() OR lexer.Lexer.nextToken())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SIN27.CI
-    correto:    15, Expression expected OR Unknown sequence of symbols (comp.Compiler.ifStatement() OR lexer.Lexer.nextToken())
-    sinalizado: 14, An identifier or identifer: was expected after 'func'
-
-ER_SIN30.CI
-    correto:    7, Unknown character '#' (lexer.Lexer.nextToken())
-    sinalizado: 6, An identifier or identifer: was expected after 'func'
-
-ER_SIN37.CI
-    correto:    13, Expression expected (comp.Compiler.factor())
-    sinalizado: 11, An identifier or identifer: was expected after 'func'
-
-ER_SIN38.CI
-    correto:    17, '}' expected (comp.Compiler.classDec())
-    sinalizado: 11, An identifier or identifer: was expected after 'func'
-
-ER_SIN42.ci
-    correto:    10,  
-    sinalizado: 9, A field name was expected
-
-ER_SIN44.CI
-    correto:    16, Attempt to declare public instance variable 'i' (comp.Compiler.classDec())
-    sinalizado: 13, An identifier or identifer: was expected after 'func'
-
-ER_SIN58.CI
-    correto:    15, ')' expected (comp.Compiler.factor())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SIN59.ci
-    correto:    18, statement expected (comp.Compiler.repeatStat())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SIN60.CI
-    correto:    17, ')' unexpected (comp.Compiler.repeatStat())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SIN61.CI
-    correto:    17, ')' expected (comp.Compiler.repeatStat())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SIN62.CI
-    correto:    17, '}' not expected before 'until' (comp.Compiler.repeatStat())
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SIN63.CI
-    correto:    15, ';' expected ()
-    sinalizado: 12, An identifier or identifer: was expected after 'func'
-
-ER_SIN_EXTRA.CI
-    correto:    13, '{' expected (comp.Compiler.methodDec())
-    sinalizado: 9, An identifier or identifer: was expected after 'func'
-
-ER_SIN_EXTRA01.CI
-    correto:    28,  
-    sinalizado: 9, A field name was expected
-
-ER_SIN_EXTRA02.CI
-    correto:    40,  
-    sinalizado: 9, A field name was expected
-
 ######################################################
 Erros que foram sinalizados mas não deveriam ter sido:
 
-OK_CALC.CI, 22, 'class' expected
+OK_GER01.ci, 43, ';' expected
 
-OK_CHK07.CI, 19, A field name was expected
+OK_GER02.ci, 20, ';' expected
 
-OK_FACT.CI, 19, An identifier or identifer: was expected after 'func'
+OK_GER03.ci, 22, ';' expected
 
-OK_FIB.CI, 19, An identifier or identifer: was expected after 'func'
+OK_GER04.ci, 17, A variable name was expected
 
-OK_FIELDDEC.CI, 16, A field name was expected
+OK_GER06.ci, 21, A variable name was expected
 
-OK_LEX02.CI, 15, An identifier or identifer: was expected after 'func'
+OK_GER07.ci, 18, ';' expected
 
-OK_LEX03.CI, 16, An identifier or identifer: was expected after 'func'
+OK_GER08.ci, 20, Identifier expected
 
-OK_LEX04.CI, 14, An identifier or identifer: was expected after 'func'
+OK_GER09.ci, 21, Identifier expected
 
-OK_LEX05.CI, 15, An identifier or identifer: was expected after 'func'
+OK_GER10.ci, 22, A field name was expected
 
-OK_LEX06.CI, 16, An identifier or identifer: was expected after 'func'
+OK_GER11.ci, 24, ';' expected
 
-OK_LEX08.CI, 18, An identifier or identifer: was expected after 'func'
+OK_GER12.ci, 22, ';' expected
 
-OK_LEX10.CI, 17, An identifier or identifer: was expected after 'func'
+OK_GER13.ci, 20, A field name was expected
 
-OK_MATH.ci, 18, An identifier or identifer: was expected after 'func'
+OK_GER14.ci, 22, A field name was expected
 
-OK_QUEUE.ci, 17, A field name was expected
+OK_GER15.ci, 19, A field name was expected
 
-OK_SEM03.ci, 19, An identifier or identifer: was expected after 'func'
+OK_GER16.ci, 20, A field name was expected
 
-OK_SEM04.ci, 14, An identifier or identifer: was expected after 'func'
+OK_GER21.ci, 17, A field name was expected
 
-OK_SEM05.ci, 13, 'class' expected
-
-OK_SEM06.ci, 13, A field name was expected
-
-OK_SEM07.ci, 12, An identifier or identifer: was expected after 'func'
-
-OK_SEM08.ci, 11, 'class' expected
-
-OK_SEM09.ci, 12, An identifier or identifer: was expected after 'func'
-
-OK_SEM10.ci, 11, 'class' expected
-
-OK_SEM11.ci, 13, An identifier or identifer: was expected after 'func'
-
-OK_SEM12.ci, 10, 'class' expected
-
-OK_SEM13.ci, 13, An identifier or identifer: was expected after 'func'
-
-OK_SEM14.ci, 16, 'class' expected
-
-OK_SEM15.ci, 15, 'class' expected
-
-OK_SEM16.ci, 5, An identifier or identifer: was expected after 'func'
-
-OK_SEM17.ci, 9, An identifier or identifer: was expected after 'func'
-
-OK_SEM18.ci, 19, An identifier or identifer: was expected after 'func'
-
-OK_SIN02.CI, 19, An identifier or identifer: was expected after 'func'
-
-OK_SIN03.CI, 18, An identifier or identifer: was expected after 'func'
-
-OK_SIN04.CI, 18, An identifier or identifer: was expected after 'func'
-
-OK_SIN08.CI, 14, An identifier or identifer: was expected after 'func'
-
-OK_SIN09.CI, 17, A field name was expected
-
-OK_SIN10.CI, 12, 'class' expected
-
-OK_SIN11.CI, 14, An identifier or identifer: was expected after 'func'
-
-OK_SIN12.CI, 14, An identifier or identifer: was expected after 'func'
-
-OK_SIN13.CI, 15, An identifier or identifer: was expected after 'func'
-
-OK_SIN14.CI, 17, A field name was expected
-
-OK_SIN16.CI, 18, An identifier or identifer: was expected after 'func'
-
-######################################################
-Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou não sinalizou o erro (quando o teste NÃO tinha erros). Mas é necessário conferir se as mensagens emitidas pelo compilador são compatíveis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
-
-A lista abaixo contém o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
-
-ER_LEX07.CI
-The compiler message was: "Comment opened and not closed"
-The 'cep' message is:      "Comment started in line 5 was not closed"
-
-
-ER_SEM48.ci
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SEM49.ci
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Class expected"
-
-
-ER_SEM79.ci
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "Method 'run:' of class 'Program' cannot take parameters"
-
-
-ER_SEM80.ci
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "Method 'run' of class 'Program' with a return value type"
-
-
-ER_SEM81.ci
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "Method 'run' of class 'Program' cannot be private"
-
-
-ER_SIN101.CI
-The compiler message was: "Type not supported"
-The 'cep' message is:      "Type expected"
-
-
-ER_SIN13.ci
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN28.CI
-The compiler message was: "'class' expected"
-The 'cep' message is:      "'class' expected"
-
-
-ER_SIN29.CI
-The compiler message was: "'end' expected"
-The 'cep' message is:      " Class member OR 'end' expected"
-
-
-ER_SIN31.CI
-The compiler message was: "A field name was expected"
-The 'cep' message is:      "'public', 'private', or '}' expected"
-
-
-ER_SIN32.CI
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "Type expected"
-
-
-ER_SIN33.CI
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN34.CI
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN35.CI
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN36.CI
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN39.CI
-The compiler message was: "An identifier or identifer: was expected after 'func'"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN40.CI
-The compiler message was: "A field name was expected"
-The 'cep' message is:      "Attempt to declare public instance variable 'i'"
-
-
-ER_SIN41.CI
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN43.CI
-The compiler message was: "'end' expected"
-The 'cep' message is:      "function or field declaration expected"
-
-
-ER_SIN57.CI
-The compiler message was: "'end' expected"
-The 'cep' message is:      "'public', 'private' or '}' expected"
-
+OK_GER22.ci, 20, ';' expected
 

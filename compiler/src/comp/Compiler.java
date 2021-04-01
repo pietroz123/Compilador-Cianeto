@@ -325,7 +325,7 @@ public class Compiler {
 		next();
 
 		// Verifica "Id" ou "IdColon"
-		if (lexer.token != Token.ID || lexer.token != Token.IDCOLON) {
+		if (lexer.token != Token.ID && lexer.token != Token.IDCOLON) {
 			error("An identifier or identifer: was expected after 'func'");
 		}
 
