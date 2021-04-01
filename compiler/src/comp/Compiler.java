@@ -190,6 +190,7 @@ public class Compiler {
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 			isOpenClass = true;
+			next();
 		}
 
 		// Verifica token "class"
