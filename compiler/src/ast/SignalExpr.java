@@ -1,8 +1,5 @@
-package comp;
+package ast;
 
-import ast.Expression;
-import ast.PW;
-import ast.Type;
 import lexer.Token;
 
 public class SignalExpr extends Expression {

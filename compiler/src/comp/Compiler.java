@@ -435,10 +435,10 @@ public class Compiler {
 	 * IfStat ::= "if" Expression "{" StatementList "}" [ "else" "{" StatementList "}" ]
 	 * WhileStat ::= "while" Expression "{" StatementList "}"
 	 * ReturnStat ::= "return" Expression
-	 * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
 	 * RepeatStat ::= "repeat" StatementList "until" Expression
 	 * LocalDec ::= "var" Type IdList [ "=" Expression ]
 	 * AssertStat ::= "assert" Expression "," StringValue
+	 * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
 	 * AssignExpr ::= Expression [ "=" Expression ]
 	 */
 	private Statement statement() {
@@ -483,9 +483,15 @@ public class Compiler {
 				assertStat();
 				break;
 			default:
+				/**
+				 * PrintStat
+				 */
 				if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
-					writeStat();
+					s = printStat();
 				}
+				/**
+				 * AssignExpr
+				 */
 				else {
 					expr();
 				}
@@ -647,15 +653,36 @@ public class Compiler {
 	}
 
 	/**
-
+	 * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
 	 */
-	private void writeStat() {
+	private PrintStat printStat() {
 		next();
 		check(Token.DOT, "a '.' was expected after 'Out'");
 		next();
 		check(Token.IDCOLON, "'print:' or 'println:' was expected after 'Out.'");
+
 		String printName = lexer.getStringValue();
-		expr();
+		next();
+
+		ExpressionList exprList = expressionList();
+
+		return new PrintStat(printName, exprList);
+	}
+
+	/**
+	 * Expression { "," Expression }
+	 */
+	private ExpressionList expressionList() {
+		ExpressionList exprList = new ExpressionList();
+
+		exprList.addExpr(expr());
+
+		while (lexer.token == Token.COMMA) {
+			next();
+			exprList.addExpr(expr());
+		}
+
+		return exprList;
 	}
 
 	/**
