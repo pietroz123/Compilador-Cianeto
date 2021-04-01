@@ -461,8 +461,11 @@ public class Compiler {
 				s = whileStat();
 				checkSemiColon = false;
 				break;
+			/**
+			 * ReturnStat
+			 */
 			case RETURN:
-				returnStat();
+				s = returnStat();
 				break;
 			case BREAK:
 				breakStat();
@@ -555,9 +558,9 @@ public class Compiler {
 	/**
 	 * ReturnStat ::= "return" Expression
 	 */
-	private void returnStat() {
+	private ReturnStat returnStat() {
 		next();
-		Expression e = expr();
+		Expression expr = expr();
 
 		// Verifica se o método deve retornar algum valor
 		if ( this.currentMethod.getReturnType() == Type.nullType ) {
@@ -565,9 +568,11 @@ public class Compiler {
 		}
 
 		// Verifica se o método tem retorno correto
-		if ( !e.getType().isCompatible(this.currentMethod.getReturnType()) ) {
+		if ( !expr.getType().isCompatible(this.currentMethod.getReturnType()) ) {
 			error("This expression is not compatible with the method return type");
 		}
+
+		return new ReturnStat(expr);
 	}
 
 	/**
