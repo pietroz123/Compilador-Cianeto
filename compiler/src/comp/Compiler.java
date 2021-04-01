@@ -1273,8 +1273,13 @@ public class Compiler {
 				type = Type.stringType;
 				break;
 			case ID:
-				type = Type.nullType;
-				type.setName(lexer.getStringValue());
+				String id = lexer.getStringValue();
+				TypeCianetoClass cianetoClass = (TypeCianetoClass)  symbolTable.getInGlobal(id);
+				if (cianetoClass == null) {
+					error("Class '" + id + "' does not exist");
+				}
+				type = cianetoClass;
+				break;
 			default:
 				error("Type not supported");
 				break;
