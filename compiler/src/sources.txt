@@ -10,6 +10,9 @@
 ./ast/FormalParamDec.java
 ./ast/IdList.java
 ./ast/IfStat.java
+./ast/KeywordMessagePassingToExpr.java
+./ast/KeywordMessagePassingToSelf.java
+./ast/KeywordMessagePassingToSuper.java
 ./ast/LiteralBooleanExpr.java
 ./ast/LiteralIntExpr.java
 ./ast/LiteralStringExpr.java
@@ -17,6 +20,7 @@
 ./ast/Member.java
 ./ast/MemberList.java
 ./ast/MemberListPair.java
+./ast/MessagePassingToSelf.java
 ./ast/MetaobjectAnnotation.java
 ./ast/MethodDec.java
 ./ast/NullExpr.java
@@ -28,6 +32,7 @@
 ./ast/Program.java
 ./ast/PW.java
 ./ast/Qualifier.java
+./ast/ReadExpr.java
 ./ast/RepeatStat.java
 ./ast/ReturnStat.java
 ./ast/SignalExpr.java
@@ -40,6 +45,9 @@
 ./ast/TypeNull.java
 ./ast/TypeString.java
 ./ast/TypeUndefined.java
+./ast/UnaryMessagePassingToExpr.java
+./ast/UnaryMessagePassingToSelf.java
+./ast/UnaryMessagePassingToSuper.java
 ./ast/Variable.java
 ./ast/VariableExpr.java
 ./ast/WhileStat.java

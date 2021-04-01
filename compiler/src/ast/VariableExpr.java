@@ -10,7 +10,7 @@ package ast;
  */
 public class VariableExpr extends Expression {
 
-    private VariableExpr(Variable var) {
+    public VariableExpr(Variable var) {
         this.var = var;
     }
 
@@ -18,6 +18,7 @@ public class VariableExpr extends Expression {
     public void genC(PW pw, boolean putParenthesis) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void genJava(PW pw) {
         // TODO Auto-generated method stub

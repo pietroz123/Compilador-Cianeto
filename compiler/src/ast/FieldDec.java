@@ -15,6 +15,16 @@ public class FieldDec extends Member {
         this.idList = idList;
     }
 
+    /**
+     * Getters
+     */
+    public Type getType() {
+        return type;
+    }
+    public IdList getIdList() {
+        return idList;
+    }
+
     private Type type;
     private IdList idList;
 }

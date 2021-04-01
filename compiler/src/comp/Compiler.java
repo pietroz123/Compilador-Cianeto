@@ -374,6 +374,8 @@ public class Compiler {
 		}
 		next();
 
+		this.currentClass.addMethod(this.currentMethod);
+
 		return new MethodDec(id, formalParamDec, returnType, statementList);
 	}
 
@@ -807,7 +809,7 @@ public class Compiler {
 	 * HighOperator ::= "∗" | "/" | "&&"
 	 */
 	private boolean highOperator(Token token) {
-		return token == Token.PLUS || token == Token.DIV || token == Token.AND;
+		return token == Token.MULT || token == Token.DIV || token == Token.AND;
 	}
 
 	/**
@@ -851,10 +853,6 @@ public class Compiler {
 	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
 	 */
 	private Expression factor() {
-		Expression expr;
-		// ExpressionList exprList;
-		String messageName, id;
-
 		switch (lexer.token) {
 			/**
 			 * BasicValue
@@ -876,10 +874,8 @@ public class Compiler {
 			 */
 			case LEFTPAR:
 				next();
-				expr = expr();
-
+				Expression expr = expr();
 				if (lexer.token != Token.RIGHTPAR) { error(") expected"); }
-
 				next();
 				return new ParenthesisExpr(expr);
 			/**
@@ -908,30 +904,39 @@ public class Compiler {
 	 * 				   	"super" "." Id |
 	 * 				    Id | Id "." Id | Id "." IdColon ExpressionList | Id "." "new" |
 	 * 				   	"self" | "self" "." Id | "self" "." IdColon ExpressionList |
-	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
+	 * 				   	"self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id |
+	 * 					ReadExpr
 	 *
-	 * Id já foi coberto em factor()
+	 * ReadExpr ::= "In" "." ( "readInt" | "readString" )
 	*/
-	private PrimaryExpr primaryExpr() {
+	private Expression primaryExpr() {
 		switch (lexer.token) {
+			/**
+			 * Id | Id "." Id | Id "." IdColon ExpressionList | Id "." "new"
+			 */
 			case ID:
 				String firstId = lexer.getStringValue();
 				next();
 
+				/**
+				 * Id
+				 */
 				if (lexer.token != Token.DOT) {
-					// PrimaryExpr ::= Id
 					if (symbolTable.getInLocal(firstId) == null) {
 						error("Identifier '" + firstId + "' does not exist");
 					}
 
-					// ...
-					// TODO
+					Variable var = (Variable) symbolTable.getInLocal(firstId);
+					return new VariableExpr(var);
 				}
+				/**
+				 * Id "." Id | Id "." IdColon ExpressionList | Id "." "new"
+				 */
 				else {
 					next();
 
 					/**
-					 * ObjectCreation => Id "." "new"
+					 * Id "." "new" => ObjectCreation
 					 */
 					if (lexer.token == Token.NEW) {
 						return objectCreation(firstId);
@@ -940,61 +945,250 @@ public class Compiler {
 					/**
 					 * A partir daqui pode ser:
 					 *
-					 * PrimaryExpr => Id "." Id | Id "." IdColon ExpressionList
+					 * Id "." Id | Id "." IdColon ExpressionList
 					 *
-					 * Id "." Id => acesso à variável, deve ser pública
-					 * Id "." IdColon ExpressionList => chamada de método da classe, deve ser público
+					 * O primeiro Id é uma classe
 					 */
 
-					// Verifica "Id" ou "IdColon"
-					if (lexer.token != Token.ID || lexer.token != Token.IDCOLON) {
-						error("An identifier or identifer: was expected after 'func'");
-					}
-
-					String secondId = lexer.getStringValue();
-
-					/**
-					 * Se chegou aqui é porque estamos chamando um método de uma classe,
-					 * necessário então verificar se a classe existe e se o método existe
-					 */
-					// Verifica classe
+					// Verifica se existe uma classe com o nome firstId
 					TypeCianetoClass cianetoClass = (TypeCianetoClass) symbolTable.getInGlobal(firstId);
 					if (cianetoClass == null) {
 						error("Class ''" + firstId + "' does not exist");
 					}
 
-					// Verifica método
-					MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
-					if (classMethod == null) {
-						error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
+					// Espera-se "Id" ou "IdColon"
+					if ( !(lexer.token == Token.ID || lexer.token == Token.IDCOLON) ) {
+						error("An identifier or identifer: was expected after 'identifier.'");
 					}
 
-					// TODO: ExpressionList
-					// ExpressionList exprList = null;
+					String secondId = lexer.getStringValue();
 
-					if (lexer.token == Token.IDCOLON) {
-						// TODO
+					/**
+					 * Id "." Id => acesso à variável de instância
+					 */
+					if (lexer.token == Token.ID) {
+						next();
+
+						// Verifica se existe uma variável de instância nessa classe
+						Variable var = (Variable) symbolTable.getInLocal(secondId);
+						if (var == null) {
+							error("Class '" + cianetoClass.getName() + "' does not have an instance variable of name '" + secondId + "'");
+						}
+
+						return new UnaryMessagePassingToExpr(cianetoClass, var);
 					}
+					/**
+					 * Id "." IdColon ExpressionList => chamada de método
+					 */
+					else if (lexer.token == Token.IDCOLON) {
+						next();
+
+						// Verifica se existe um método nessa classe
+						MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
+						if (classMethod == null) {
+							error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
+						}
+
+						ExpressionList exprList = expressionList();
+
+						return new KeywordMessagePassingToExpr(cianetoClass, classMethod, exprList);
+					}
+
 				}
 
-				break;
 			/**
 			 * "super" "." IdColon ExpressionList |
 			 * "super" "." Id |
-			 * "self" | "self" "." Id | "self" "." IdColon ExpressionList |
-			 * "self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id | ReadExpr
 			 */
 			case SUPER:
+				// Verifica se a classe atual tem uma superclasse
+				TypeCianetoClass superclass = currentClass.getSuperclass();
+				if (superclass == null) {
+					error("Class '" + currentClass.getName() + "' does not have a superclass");
+				}
+				next();
+
+				if (lexer.token != Token.DOT) {
+					error("'.' expected after 'super'");
+				}
+				next();
+
+				if ( !(lexer.token == Token.ID || lexer.token == Token.IDCOLON) ) {
+					error("An identifier or identifer: was expected after 'super'");
+				}
+
+				String id = lexer.getStringValue();
+
+				/**
+				 * "super" "." Id => acesso de variável de instância na superclasse da classe atual
+				 */
+				if (lexer.token == Token.ID) {
+					next();
+
+					// Verifica se existe uma variável de instância na superclasse da classe atual
+					Variable var = superclass.searchInstanceVariable(id);
+					if (var == null) {
+						error("Class '" + superclass.getName() + "' does not have an instance variable of name '" + id + "'");
+					}
+
+					return new UnaryMessagePassingToSuper(currentClass, var);
+				}
+				/**
+				 * "super" "." IdColon ExpressionList => chamada de método na superclasse da classe atual
+				 */
+				else if (lexer.token == Token.IDCOLON) {
+					next();
+
+					// Verifica se existe um método na superclasse da classe atual
+					MethodDec superclassMethod = superclass.searchPublicMethod(id);
+					if (superclassMethod == null) {
+						error("Method of class '" + superclass.getName() + "', named '" + id + "', does not exist");
+					}
+
+					ExpressionList expressionList = expressionList();
+
+					return new KeywordMessagePassingToSuper(currentClass, superclassMethod, expressionList);
+				}
+
+
+			/**
+			 * "self" |
+			 * "self" "." IdColon ExpressionList |
+			 * "self" "." Id | "self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id
+			 */
 			case SELF:
-				// TODO
-				break;
+				next();
+
+				if (lexer.token != Token.DOT) {
+					// "self"
+					return new MessagePassingToSelf();
+				}
+				else {
+					next();
+
+					if (lexer.token != Token.ID && lexer.token != Token.IDCOLON) {
+						error("An identifier or identifer: was expected after 'self'");
+					}
+
+					firstId = lexer.getStringValue();
+
+					/**
+					 * "self" "." IdColon ExpressionList => chamada de método de self
+					 */
+					if (lexer.token == Token.IDCOLON) {
+						next();
+
+						// Verifica se existe um método nessa classe
+						MethodDec classMethod = currentClass.searchPublicMethod(firstId);
+						if (classMethod == null) {
+							error("Method of class '" + currentClass.getName() + "', named '" + firstId + "', does not exist");
+						}
+
+						ExpressionList exprList = expressionList();
+
+						return new KeywordMessagePassingToSelf(currentClass, classMethod, exprList);
+					}
+					/**
+					 * "self" "." Id | "self" "." Id "." IdColon ExpressionList | "self" "." Id "." Id
+					 */
+					else if (lexer.token == Token.ID) {
+						next();
+
+						/**
+						 * "self" "." Id => acesso de variável de instância de self
+						 */
+						if ( lexer.token != Token.DOT) {
+							// Verifica se existe uma variável de instância na superclasse da classe atual
+							Variable var = currentClass.searchInstanceVariable(firstId);
+							if (var == null) {
+								error("Class '" + currentClass.getName() + "' does not have an instance variable of name '" + firstId + "'");
+							}
+
+							return new UnaryMessagePassingToSelf(currentClass, var);
+						}
+						else {
+							/**
+							 * Se existe mais um ".", então o primeiro Id é uma classe de self
+							 */
+							// Verifica se essa classe existe
+							TypeCianetoClass cianetoClass = (TypeCianetoClass)  symbolTable.getInGlobal(firstId);
+							if (cianetoClass == null) {
+								error("Class '" + firstId + "' does not exist");
+							}
+
+							next();
+
+							// Espera-se ID ou IDCOLON
+							if (lexer.token != Token.ID && lexer.token != Token.IDCOLON) {
+								error("An identifier or identifer: was expected after 'self.Id.'");
+							}
+
+							String secondId = lexer.getStringValue();
+
+							/**
+							 * "self" "." Id "." IdColon ExpressionList => chamada de método de uma classe de self
+							 */
+							if (lexer.token == Token.IDCOLON) {
+								next();
+
+								// Verifica se existe um método nessa classe de self
+								MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
+								if (classMethod == null) {
+									error("Method of class '" + cianetoClass.getName() + "', named '" + secondId + "', does not exist");
+								}
+
+								ExpressionList expressionList = expressionList();
+
+								return new KeywordMessagePassingToSelf(currentClass, cianetoClass, classMethod, expressionList);
+							}
+							/**
+							 * "self" "." Id "." Id => acesso de variável de instância de uma classe de self
+							 */
+							else if (lexer.token == Token.ID) {
+								next();
+
+								// Verifica se existe uma variável de instância nessa classe de self
+								Variable var = cianetoClass.searchInstanceVariable(secondId);
+								if (var == null) {
+									error("Class '" + cianetoClass.getName() + "' does not have an instance variable of name '" + secondId + "'");
+								}
+
+								return new UnaryMessagePassingToSelf(currentClass, cianetoClass, var);
+							}
+						}
+
+					}
+
+				}
 
 			default:
+				/**
+				 * ReadExpr
+				 */
+				if ( lexer.token == Token.ID && lexer.getStringValue().equals("In") ) {
+					return readExpr();
+				}
+
 				error("Unexpected token");
 				break;
 		}
 
 		return null;
+	}
+
+	/**
+	 * ReadExpr ::= "In" "." ( "readInt" | "readString" )
+	 */
+	private ReadExpr readExpr() {
+		next();
+		check(Token.DOT, "a '.' was expected after 'In'");
+		next();
+		check(Token.ID, "'readInt' or 'readString' was expected after 'In.'");
+
+		String readName = lexer.getStringValue();
+		next();
+
+		return new ReadExpr(readName);
 	}
 
 	/**

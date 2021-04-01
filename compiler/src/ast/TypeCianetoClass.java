@@ -110,6 +110,23 @@ public class TypeCianetoClass extends Type {
         return null;
     }
 
+    /**
+     * Verifica se existe um campo de nome id na lista de campos
+     * @param id
+     * @return
+     */
+    public Variable searchInstanceVariable(String id) {
+        for (FieldDec field : this.fieldList) {
+            for (String fieldId : field.getIdList().getIdList()) {
+                if (fieldId.equals(id)) {
+                    return new Variable(id, field.getType());
+                }
+            }
+        }
+
+        return null;
+    }
+
     private Boolean isOpen = false;
     private String name;
     private TypeCianetoClass superclass;
