@@ -473,8 +473,11 @@ public class Compiler {
 			case SEMICOLON:
 				next();
 				break;
+			/**
+			 * RepeatStat
+			 */
 			case REPEAT:
-				repeatStat();
+				s = repeatStat();
 				break;
 			case VAR:
 				s = localDec();
@@ -548,12 +551,24 @@ public class Compiler {
 		return new LocalDec(type, idlList, expr);
 	}
 
-	private void repeatStat() {
+	/**
+	 * RepeatStat ::= "repeat" StatementList "until" Expression
+	 */
+	private RepeatStat repeatStat() {
 		next();
-		while ( lexer.token != Token.UNTIL && lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			statement();
-		}
+
+		StatementList statementList = statementList();
+		// ! modifiquei
+		// while ( lexer.token != Token.UNTIL && lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+		// 	statement();
+		// }
+
 		check(Token.UNTIL, "missing keyword 'until'");
+		next();
+
+		Expression expr = expr();
+
+		return new RepeatStat(statementList, expr);
 	}
 
 	private void breakStat() {
