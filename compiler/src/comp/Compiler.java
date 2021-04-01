@@ -432,7 +432,6 @@ public class Compiler {
 	/**
 	 * Statement ::= AssignExpr ";" | IfStat | WhileStat | ReturnStat ";" | PrintStat ";" | "break" ";" | ";" | RepeatStat ";" | LocalDec ";" | AssertStat ";"
 	 *
-	 * AssignExpr ::= Expression [ "=" Expression ]
 	 * IfStat ::= "if" Expression "{" StatementList "}" [ "else" "{" StatementList "}" ]
 	 * WhileStat ::= "while" Expression "{" StatementList "}"
 	 * ReturnStat ::= "return" Expression
@@ -440,6 +439,7 @@ public class Compiler {
 	 * RepeatStat ::= "repeat" StatementList "until" Expression
 	 * LocalDec ::= "var" Type IdList [ "=" Expression ]
 	 * AssertStat ::= "assert" Expression "," StringValue
+	 * AssignExpr ::= Expression [ "=" Expression ]
 	 */
 	private Statement statement() {
 		boolean checkSemiColon = true;
@@ -454,6 +454,9 @@ public class Compiler {
 				s = ifStat();
 				checkSemiColon = false;
 				break;
+			/**
+			 * WhileStat
+			 */
 			case WHILE:
 				s = whileStat();
 				checkSemiColon = false;
@@ -573,24 +576,26 @@ public class Compiler {
 	private WhileStat whileStat() {
 		next();
 
+		Expression expr = expr();
+
 		// Conferência de tipo da expressão
-		Expression e = expr();
-		if ( e.getType() != Type.booleanType ) {
+		if ( expr.getType() != Type.booleanType ) {
 			error("Boolean expression expected");
 		}
 
 		check(Token.LEFTCURBRACKET, "missing '{' after the 'while' expression");
 		next();
 
-
-		Statement s = null;
-		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			s = statement();
-		}
+		StatementList statementList = statementList();
+		//! modifiquei
+		// Statement s = null;
+		// while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+		// 	s = statement();
+		// }
 
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 
-		return new WhileStat(e, s);
+		return new WhileStat(expr, statementList);
 	}
 
 	/**

@@ -1,10 +1,13 @@
 package ast;
 
+/**
+ * WhileStat ::= "while" Expression "{" StatementList "}"
+ */
 public class WhileStat extends Statement {
 
-    public WhileStat(Expression e, Statement s) {
+    public WhileStat(Expression e, StatementList s) {
         this.expr = e;
-        this.statement = s;
+        this.statementList = s;
     }
 
     /**
@@ -13,8 +16,8 @@ public class WhileStat extends Statement {
     public Expression getExpr() {
         return expr;
     }
-    public Statement getStatement() {
-        return statement;
+    public StatementList getStatementList() {
+        return statementList;
     }
 
     @Override
@@ -27,5 +30,5 @@ public class WhileStat extends Statement {
     }
 
     private Expression expr;
-    private Statement statement;
+    private StatementList statementList;
 }
