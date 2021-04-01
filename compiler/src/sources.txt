@@ -3,6 +3,7 @@
 ./ast/ClassDec.java
 ./ast/CompositeExpr.java
 ./ast/Expression.java
+./ast/ExpressionList.java
 ./ast/Factor.java
 ./ast/FieldDec.java
 ./ast/FormalParamDec.java
@@ -22,11 +23,13 @@
 ./ast/ParamDec.java
 ./ast/ParenthesisExpr.java
 ./ast/PrimaryExpr.java
+./ast/PrintStat.java
 ./ast/Program.java
 ./ast/PW.java
 ./ast/Qualifier.java
 ./ast/RepeatStat.java
 ./ast/ReturnStat.java
+./ast/SignalExpr.java
 ./ast/Statement.java
 ./ast/StatementList.java
 ./ast/Type.java
@@ -45,7 +48,6 @@
 ./comp/CompilerError.java
 ./comp/CompilerOptions.java
 ./comp/ErrorSignaler.java
-./comp/SignalExpr.java
 ./comp/SymbolTable.java
 ./lexer/Lexer.java
 ./lexer/Token.java

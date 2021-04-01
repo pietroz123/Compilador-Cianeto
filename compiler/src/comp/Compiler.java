@@ -479,11 +479,17 @@ public class Compiler {
 			case REPEAT:
 				s = repeatStat();
 				break;
+			/**
+			 * LocalDec
+			 */
 			case VAR:
 				s = localDec();
 				break;
+			/**
+			 * AssertStat
+			 */
 			case ASSERT:
-				assertStat();
+				s = assertStat();
 				break;
 			default:
 				/**
@@ -1103,28 +1109,29 @@ public class Compiler {
 		return new Qualifier(tokens);
 	}
 	/**
-	 * change this method to 'private'.
-	 * uncomment it
-	 * implement the methods it calls
+	 * AssertStat ::= "assert" Expression "," StringValue
 	 */
-	public Statement assertStat() {
-
+	private AssertStat assertStat() {
 		next();
+
 		int lineNumber = lexer.getLineNumber();
-		expr();
+
+		Expression expr = expr();
+
 		if ( lexer.token != Token.COMMA ) {
 			this.error("',' expected after the expression of the 'assert' statement");
 		}
+
 		next();
+
 		if ( lexer.token != Token.LITERALSTRING ) {
 			this.error("A literal string expected after the ',' of the 'assert' statement");
 		}
+
 		String message = lexer.getLiteralStringValue();
 		next();
-		if ( lexer.token == Token.SEMICOLON )
-			next();
 
-		return null;
+		return new AssertStat(expr, message);
 	}
 
 
