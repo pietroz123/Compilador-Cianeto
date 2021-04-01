@@ -467,8 +467,11 @@ public class Compiler {
 			case RETURN:
 				s = returnStat();
 				break;
+			/**
+			 * "break" ";"
+			 */
 			case BREAK:
-				breakStat();
+				s = breakStat();
 				break;
 			case SEMICOLON:
 				next();
@@ -577,9 +580,12 @@ public class Compiler {
 		return new RepeatStat(statementList, expr);
 	}
 
-	private void breakStat() {
+	/**
+	 * "break" ";"
+	 */
+	private BreakStat breakStat() {
 		next();
-
+		return new BreakStat();
 	}
 
 	/**

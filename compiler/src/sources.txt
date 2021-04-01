@@ -1,5 +1,6 @@
 ./ast/AssertStat.java
 ./ast/AssignExpr.java
+./ast/BreakStat.java
 ./ast/ClassDec.java
 ./ast/CompositeExpr.java
 ./ast/Expression.java
