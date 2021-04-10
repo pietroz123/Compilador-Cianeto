@@ -1,23 +1,23 @@
-Relatório do Compilador
+Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  9             I: 4              PI: 10            Exc: 0
- SSE: 17/17/100%   
+MI:  9             I: 3              PI: 3             Exc: 0
+ SSE: 11/17/64%    
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 9
-Número de testes 'Importantes' em que o compilador falhou: 4
-Número de testes 'Pouco importantes' em que o compilador falhou: 10
+N�mero de testes 'Muito importantes' em que o compilador falhou: 9
+N�mero de testes 'Importantes' em que o compilador falhou: 3
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 3
 
-O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou código errado (se opção -genjava ou -genc foi usada).
-Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou c�digo errado (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador falhou:
     inheritance
@@ -45,9 +45,6 @@ Testes 'Muito importantes' em que o compilador falhou:
 
 
 Testes 'importantes' em que o compilador falhou:
-    parameterPassing
-        OK_GER08.ci
-
     privateMethod
         OK_GER15.ci
 
@@ -59,13 +56,6 @@ Testes 'importantes' em que o compilador falhou:
 
 
 Testes 'pouco importantes' em que o compilador falhou
-    comparisonOperators
-        OK_GER01.ci
-
-    arithmeticOperators
-        OK_GER02.ci
-        OK_GER06.ci
-
     runNotFirstMethodOfProgram
         OK_GER21.ci
 
@@ -75,38 +65,45 @@ Testes 'pouco importantes' em que o compilador falhou
     while
         OK_GER04.ci
 
-    logicalOperators
-        OK_GER03.ci
 
+O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'importantes' em que o compilador acertou:
+    parameterPassing
+        OK_GER08.ci
+
+
+Testes 'pouco importantes' em que o compilador acertou
     zero
         OK_GER07.ci
+
+    comparisonOperators
+        OK_GER01.ci
+
+    arithmeticOperators
+        OK_GER02.ci
+        OK_GER06.ci
 
     if
         OK_GER01.ci
         OK_GER03.ci
 
+    logicalOperators
+        OK_GER03.ci
 
 
 _________________________________________________________________________
 
-17 erros foram sinalizados em 17 arquivos sem erro (100%)
+11 erros foram sinalizados em 17 arquivos sem erro (64%)
 _________________________________________________________________________
 ######################################################
-Erros que foram sinalizados mas não deveriam ter sido:
-
-OK_GER01.ci, 96, Class ''a' does not exist
-
-OK_GER02.ci, 37, Class ''a' does not exist
-
-OK_GER03.ci, 66, Class ''a' does not exist
+Erros que foram sinalizados mas n�o deveriam ter sido:
 
 OK_GER04.ci, 25, 'end' expected
-
-OK_GER06.ci, 47, Class ''a' does not exist
-
-OK_GER07.ci, 28, Class ''a' does not exist
-
-OK_GER08.ci, 48, Class 'A' does not exist
 
 OK_GER09.ci, 31, Method of class 'A', named 'm1:', does not exist
 

@@ -6,9 +6,9 @@ package ast;
 public class UnaryMessagePassingToExpr extends Expression {
 
     private TypeCianetoClass cianetoClass;
-    private Variable var;
+    private MethodDec var;
 
-    public UnaryMessagePassingToExpr(TypeCianetoClass cianetoClass, Variable var) {
+    public UnaryMessagePassingToExpr(TypeCianetoClass cianetoClass, MethodDec var) {
         this.cianetoClass = cianetoClass;
         this.var = var;
     }

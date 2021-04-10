@@ -1,5 +1,8 @@
 package ast;
 
+/**
+ * Id "." IdColon ExpressionList
+ */
 public class KeywordMessagePassingToExpr extends Expression {
 
     private TypeCianetoClass cianetoClass;

@@ -1,5 +1,8 @@
 package ast;
 
+/**
+ * "super" "." IdColon ExpressionList
+ */
 public class KeywordMessagePassingToSuper extends Expression {
 
     private TypeCianetoClass currentClass;

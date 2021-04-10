@@ -1,6 +1,12 @@
 package ast;
 
-public class MessagePassingToSelf extends Expression {
+/**
+ * "self"
+ */
+public class SelfExpression extends Expression {
+
+    public SelfExpression() {
+    }
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {

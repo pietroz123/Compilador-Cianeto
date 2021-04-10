@@ -912,6 +912,8 @@ public class Compiler {
 	 * ReadExpr ::= "In" "." ( "readInt" | "readString" )
 	*/
 	private Expression primaryExpr() {
+		Variable var;
+
 		switch (lexer.token) {
 			/**
 			 * Id | Id "." Id | Id "." IdColon ExpressionList | Id "." "new"
@@ -928,7 +930,7 @@ public class Compiler {
 						error("Identifier '" + firstId + "' does not exist");
 					}
 
-					Variable var = (Variable) symbolTable.getInLocal(firstId);
+					var = (Variable) symbolTable.getInLocal(firstId);
 					return new VariableExpr(var);
 				}
 				/**
@@ -952,11 +954,18 @@ public class Compiler {
 					 * O primeiro Id é uma classe
 					 */
 
-					// Verifica se existe uma classe com o nome firstId
-					TypeCianetoClass cianetoClass = (TypeCianetoClass) symbolTable.getInGlobal(firstId);
-					if (cianetoClass == null) {
-						error("Class ''" + firstId + "' does not exist");
+					// Verifica se existe uma variável
+					var = (Variable) symbolTable.getInLocal(firstId);
+					if (var == null) {
+						error("Identifier '" + firstId + "' was not declared");
 					}
+
+					// Verifica se o tipo dessa variável é do tipo CianetoClass
+					if ( !(var.getType() instanceof TypeCianetoClass) ) {
+						error("Attempt to access member on a variable of basic type");
+					}
+
+					TypeCianetoClass cianetoClass = (TypeCianetoClass) var.getType();
 
 					// Espera-se "Id" ou "IdColon"
 					if ( !(lexer.token == Token.ID || lexer.token == Token.IDCOLON) ) {
@@ -966,18 +975,18 @@ public class Compiler {
 					String secondId = lexer.getStringValue();
 
 					/**
-					 * Id "." Id => acesso à variável de instância
+					 * Id "." Id => chamada de método
 					 */
 					if (lexer.token == Token.ID) {
 						next();
 
-						// Verifica se existe uma variável de instância nessa classe
-						Variable var = (Variable) symbolTable.getInLocal(secondId);
-						if (var == null) {
-							error("Class '" + cianetoClass.getName() + "' does not have an instance variable of name '" + secondId + "'");
+						// Verifica se existe um método nessa classe
+						MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
+						if (classMethod == null) {
+							error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
 						}
 
-						return new UnaryMessagePassingToExpr(cianetoClass, var);
+						return new UnaryMessagePassingToExpr(cianetoClass, classMethod);
 					}
 					/**
 					 * Id "." IdColon ExpressionList => chamada de método
@@ -1022,18 +1031,18 @@ public class Compiler {
 				String id = lexer.getStringValue();
 
 				/**
-				 * "super" "." Id => acesso de variável de instância na superclasse da classe atual
+				 * "super" "." Id => chamada de método na superclasse da classe atual
 				 */
 				if (lexer.token == Token.ID) {
 					next();
 
-					// Verifica se existe uma variável de instância na superclasse da classe atual
-					Variable var = superclass.searchInstanceVariable(id);
-					if (var == null) {
-						error("Class '" + superclass.getName() + "' does not have an instance variable of name '" + id + "'");
+					// Verifica se existe um método na superclasse da classe atual
+					MethodDec superclassMethod = superclass.searchPublicMethod(id);
+					if (superclassMethod == null) {
+						error("Method of class '" + superclass.getName() + "', named '" + id + "', does not exist");
 					}
 
-					return new UnaryMessagePassingToSuper(currentClass, var);
+					return new UnaryMessagePassingToSuper(currentClass, superclassMethod);
 				}
 				/**
 				 * "super" "." IdColon ExpressionList => chamada de método na superclasse da classe atual
@@ -1063,7 +1072,7 @@ public class Compiler {
 
 				if (lexer.token != Token.DOT) {
 					// "self"
-					return new MessagePassingToSelf();
+					return new SelfExpression();
 				}
 				else {
 					next();
@@ -1101,7 +1110,7 @@ public class Compiler {
 						 */
 						if ( lexer.token != Token.DOT) {
 							// Verifica se existe uma variável de instância na superclasse da classe atual
-							Variable var = currentClass.searchInstanceVariable(firstId);
+							var = currentClass.searchInstanceVariable(firstId);
 							if (var == null) {
 								error("Class '" + currentClass.getName() + "' does not have an instance variable of name '" + firstId + "'");
 							}
@@ -1150,7 +1159,7 @@ public class Compiler {
 								next();
 
 								// Verifica se existe uma variável de instância nessa classe de self
-								Variable var = cianetoClass.searchInstanceVariable(secondId);
+								var = cianetoClass.searchInstanceVariable(secondId);
 								if (var == null) {
 									error("Class '" + cianetoClass.getName() + "' does not have an instance variable of name '" + secondId + "'");
 								}

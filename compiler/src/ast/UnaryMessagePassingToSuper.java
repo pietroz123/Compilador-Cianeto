@@ -1,11 +1,14 @@
 package ast;
 
+/**
+ * "super" "." Id
+ */
 public class UnaryMessagePassingToSuper extends Expression {
 
     private TypeCianetoClass currentClass;
-    private Variable var;
+    private MethodDec var;
 
-    public UnaryMessagePassingToSuper(TypeCianetoClass currentClass, Variable var) {
+    public UnaryMessagePassingToSuper(TypeCianetoClass currentClass, MethodDec var) {
         this.currentClass = currentClass;
         this.var = var;
     }

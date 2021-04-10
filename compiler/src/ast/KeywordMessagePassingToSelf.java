@@ -1,5 +1,9 @@
 package ast;
 
+/**
+ * "self" "." IdColon ExpressionList
+ * "self" "." Id "." IdColon ExpressionList
+ */
 public class KeywordMessagePassingToSelf extends Expression {
 
     private TypeCianetoClass currentClass;
@@ -7,14 +11,15 @@ public class KeywordMessagePassingToSelf extends Expression {
     private ExpressionList exprList;
     private TypeCianetoClass cianetoClass;
 
+    // "self" "." IdColon ExpressionList
     public KeywordMessagePassingToSelf(TypeCianetoClass currentClass, MethodDec classMethod, ExpressionList exprList) {
         this.currentClass = currentClass;
         this.classMethod = classMethod;
         this.exprList = exprList;
     }
 
-    public KeywordMessagePassingToSelf(TypeCianetoClass currentClass, TypeCianetoClass cianetoClass,
-            MethodDec classMethod, ExpressionList exprList) {
+    // "self" "." Id "." IdColon ExpressionList
+    public KeywordMessagePassingToSelf(TypeCianetoClass currentClass, TypeCianetoClass cianetoClass, MethodDec classMethod, ExpressionList exprList) {
         this.currentClass = currentClass;
         this.cianetoClass = cianetoClass;
         this.classMethod = classMethod;
