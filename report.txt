@@ -2,15 +2,15 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  4             I: 2              PI: 1             Exc: 0
- SSE: 5/17/29%     
+MI:  2             I: 1              PI: 1             Exc: 0
+ SSE: 3/17/17%     
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 4
-Número de testes 'Importantes' em que o compilador falhou: 2
+Número de testes 'Muito importantes' em que o compilador falhou: 2
+Número de testes 'Importantes' em que o compilador falhou: 1
 Número de testes 'Pouco importantes' em que o compilador falhou: 1
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
@@ -26,19 +26,10 @@ Testes 'Muito importantes' em que o compilador falhou:
     polymorphism
         OK_GER16.ci
 
-    super
-        OK_GER12.ci
-
-    messagePassingPrivateMethod
-        OK_GER15.ci
-
 
 Testes 'importantes' em que o compilador falhou:
     privateMethodRedefinedAsPublic
         OK_GER13.ci
-
-    privateMethod
-        OK_GER15.ci
 
 
 Testes 'pouco importantes' em que o compilador falhou
@@ -60,8 +51,12 @@ Testes 'Muito importantes' em que o compilador acertou:
         OK_GER10.ci
         OK_GER14.ci
 
+    messagePassingPrivateMethod
+        OK_GER15.ci
+
     super
         OK_GER09.ci
+        OK_GER12.ci
 
     self
         OK_GER09.ci
@@ -70,6 +65,9 @@ Testes 'Muito importantes' em que o compilador acertou:
 Testes 'importantes' em que o compilador acertou:
     parameterPassing
         OK_GER08.ci
+
+    privateMethod
+        OK_GER15.ci
 
     redefinedField
         OK_GER14.ci
@@ -102,16 +100,12 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-5 erros foram sinalizados em 17 arquivos sem erro (29%)
+3 erros foram sinalizados em 17 arquivos sem erro (17%)
 _________________________________________________________________________
 ######################################################
 Erros que foram sinalizados mas não deveriam ter sido:
 
-OK_GER12.ci, 40, Method of class 'B', named 'm1', does not exist
-
 OK_GER13.ci, 81, Variable a was already declared
-
-OK_GER15.ci, 147, Method of class 'b', named 'init_A', does not exist
 
 OK_GER16.ci, 53, Class 'B' does not have an instance variable or method named 'get_A'
 

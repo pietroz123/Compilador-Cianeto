@@ -34,6 +34,9 @@ public class TypeCianetoClass extends Type {
     public TypeCianetoClass getSuperclass() {
         return superclass;
     }
+    public ArrayList<MethodDec> getPublicMethodList() {
+        return publicMethodList;
+    }
 
     /**
      * Setters
@@ -112,6 +115,23 @@ public class TypeCianetoClass extends Type {
         for (MethodDec method : this.publicMethodList) {
             if (method.getId().equals(methodId)) {
                 return method;
+            }
+        }
+
+        /**
+         * Verifica os métodos das superclasses
+         */
+        if (superclass != null) {
+            TypeCianetoClass current = this;
+
+            while (current != null) {
+                current = current.getSuperclass();
+
+                for (MethodDec method : current.getPublicMethodList()) {
+                    if (method.getId().equals(methodId)) {
+                        return method;
+                    }
+                }
             }
         }
 
