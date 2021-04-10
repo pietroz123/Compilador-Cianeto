@@ -45,23 +45,23 @@ public class TypeCianetoClass extends Type {
         this.superclass = superclass;
     }
     public void setMemberList(MemberList memberList) {
-        // Coloca os membros nas váriaveis de instância também
-        for (MemberListPair pair : memberList.getMemberList()) {
-            ArrayList<Token> qualifierTokens = pair.getQualifier().getTokens();
+        // // Coloca os membros nas váriaveis de instância também
+        // for (MemberListPair pair : memberList.getMemberList()) {
+        //     ArrayList<Token> qualifierTokens = pair.getQualifier().getTokens();
 
-            // MethodDec
-            if (pair.getMember() instanceof MethodDec) {
-                if (qualifierTokens.contains(Token.PRIVATE)) {
-                    privateMethodList.add((MethodDec) pair.getMember());
-                } else {
-                    publicMethodList.add((MethodDec) pair.getMember());
-                }
-            }
-            // FieldDec
-            if (pair.getMember() instanceof FieldDec) {
-                fieldList.add((FieldDec) pair.getMember());
-            }
-        }
+        //     // MethodDec
+        //     if (pair.getMember() instanceof MethodDec) {
+        //         if (qualifierTokens.contains(Token.PRIVATE)) {
+        //             privateMethodList.add((MethodDec) pair.getMember());
+        //         } else {
+        //             publicMethodList.add((MethodDec) pair.getMember());
+        //         }
+        //     }
+        //     // FieldDec
+        //     if (pair.getMember() instanceof FieldDec) {
+        //         fieldList.add((FieldDec) pair.getMember());
+        //     }
+        // }
 
         this.memberList = memberList;
     }

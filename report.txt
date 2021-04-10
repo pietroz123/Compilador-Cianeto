@@ -2,15 +2,15 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  9             I: 3              PI: 1             Exc: 0
- SSE: 9/17/52%     
+MI:  5             I: 2              PI: 1             Exc: 0
+ SSE: 6/17/35%     
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 9
-Número de testes 'Importantes' em que o compilador falhou: 3
+Número de testes 'Muito importantes' em que o compilador falhou: 5
+Número de testes 'Importantes' em que o compilador falhou: 2
 Número de testes 'Pouco importantes' em que o compilador falhou: 1
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
@@ -30,15 +30,7 @@ Testes 'Muito importantes' em que o compilador falhou:
         OK_GER16.ci
 
     super
-        OK_GER09.ci
         OK_GER12.ci
-
-    fieldAccess
-        OK_GER10.ci
-        OK_GER14.ci
-
-    self
-        OK_GER09.ci
 
     messagePassingPrivateMethod
         OK_GER15.ci
@@ -47,9 +39,6 @@ Testes 'Muito importantes' em que o compilador falhou:
 Testes 'importantes' em que o compilador falhou:
     privateMethodRedefinedAsPublic
         OK_GER13.ci
-
-    redefinedField
-        OK_GER14.ci
 
     privateMethod
         OK_GER15.ci
@@ -66,9 +55,24 @@ O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto
 Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
 Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
+Testes 'Muito importantes' em que o compilador acertou:
+    super
+        OK_GER09.ci
+
+    fieldAccess
+        OK_GER10.ci
+        OK_GER14.ci
+
+    self
+        OK_GER09.ci
+
+
 Testes 'importantes' em que o compilador acertou:
     parameterPassing
         OK_GER08.ci
+
+    redefinedField
+        OK_GER14.ci
 
 
 Testes 'pouco importantes' em que o compilador acertou
@@ -98,22 +102,16 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-9 erros foram sinalizados em 17 arquivos sem erro (52%)
+6 erros foram sinalizados em 17 arquivos sem erro (35%)
 _________________________________________________________________________
 ######################################################
 Erros que foram sinalizados mas não deveriam ter sido:
 
-OK_GER09.ci, 31, Method of class 'A', named 'm1:', does not exist
-
-OK_GER10.ci, 42, Method of class 'A', named 'm1:', does not exist
-
 OK_GER11.ci, 28, Class 'A' does not have an instance variable of name 'm1'
 
-OK_GER12.ci, 33, Method of class 'A', named 'm2:', does not exist
+OK_GER12.ci, 40, Method of class 'B', named 'm1', does not exist
 
-OK_GER13.ci, 45, Method of class 'A', named 'set:', does not exist
-
-OK_GER14.ci, 42, Method of class 'A', named 'init', does not exist
+OK_GER13.ci, 81, Variable a was already declared
 
 OK_GER15.ci, 36, Class 'A' does not have an instance variable of name 'p'
 

@@ -5,8 +5,8 @@ package ast;
  */
 public class ObjectCreation extends PrimaryExpr {
 
-    public ObjectCreation(String id) {
-        this.id = id;
+    public ObjectCreation(TypeCianetoClass cianetoClass) {
+        this.cianetoClass = cianetoClass;
     }
 
     @Override
@@ -16,8 +16,7 @@ public class ObjectCreation extends PrimaryExpr {
 
     @Override
     public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return cianetoClass;
     }
 
     @Override
@@ -25,5 +24,5 @@ public class ObjectCreation extends PrimaryExpr {
         // TODO Auto-generated method stub
     }
 
-    private String id;
+    private TypeCianetoClass cianetoClass;
 }

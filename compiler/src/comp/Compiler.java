@@ -222,11 +222,11 @@ public class Compiler {
 				error("Identifier expected");
 
 			String superclassName = lexer.getStringValue();
-			TypeCianetoClass superclass = new TypeCianetoClass(superclassName);
 
 			// Verificar se a superclasse existe
-			if ( symbolTable.getInGlobal(superclassName) == null ) {
-				error("Superclass does not exist");
+			TypeCianetoClass superclass = (TypeCianetoClass) symbolTable.getInGlobal(superclassName);
+			if (superclass == null) {
+				error("Attempt to inherit inexistent class named '" + superclassName + "'");
 			}
 
 			currentClass.setSuperclass(superclass);
@@ -331,7 +331,7 @@ public class Compiler {
 			error("An identifier or identifer: was expected after 'func'");
 		}
 
-		id = lexer.getStringValue();
+		id = lexer.getStringValue().replace(":", "");
 		this.currentMethod.setId(id);
 
 		// Verifica se o método já não foi declarado
@@ -700,7 +700,7 @@ public class Compiler {
 		next();
 		check(Token.IDCOLON, "'print:' or 'println:' was expected after 'Out.'");
 
-		String printName = lexer.getStringValue();
+		String printName = lexer.getStringValue().replace(":", "");
 		next();
 
 		ExpressionList exprList = expressionList();
@@ -979,7 +979,7 @@ public class Compiler {
 						error("An identifier or identifer: was expected after 'identifier.'");
 					}
 
-					String secondId = lexer.getStringValue();
+					String secondId = lexer.getStringValue().replace(":", "");
 
 					/**
 					 * Id "." Id => chamada de método
@@ -1035,7 +1035,7 @@ public class Compiler {
 					error("An identifier or identifer: was expected after 'super'");
 				}
 
-				String id = lexer.getStringValue();
+				String id = lexer.getStringValue().replace(":", "");
 
 				/**
 				 * "super" "." Id => chamada de método na superclasse da classe atual
@@ -1088,7 +1088,7 @@ public class Compiler {
 						error("An identifier or identifer: was expected after 'self'");
 					}
 
-					firstId = lexer.getStringValue();
+					firstId = lexer.getStringValue().replace(":", "");
 
 					/**
 					 * "self" "." IdColon ExpressionList => chamada de método de self
@@ -1141,7 +1141,7 @@ public class Compiler {
 								error("An identifier or identifer: was expected after 'self.Id.'");
 							}
 
-							String secondId = lexer.getStringValue();
+							String secondId = lexer.getStringValue().replace(":", "");
 
 							/**
 							 * "self" "." Id "." IdColon ExpressionList => chamada de método de uma classe de self
@@ -1215,12 +1215,13 @@ public class Compiler {
 	 * Id, "." e "new" já foram verificados em primaryExpr()
 	 */
 	private ObjectCreation objectCreation(String id) {
-		if (symbolTable.getInGlobal(id) == null) {
-			error("Class '" + id + "' does not exist");
+		TypeCianetoClass cianetoClass = (TypeCianetoClass) symbolTable.getInGlobal(id);
+		if (cianetoClass == null) {
+			error("Class '" + id + "' does not exist for object creation");
 		}
 		next();
 
-		return new ObjectCreation(id);
+		return new ObjectCreation(cianetoClass);
 	}
 
 	/**
