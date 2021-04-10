@@ -20,7 +20,6 @@
 ./ast/Member.java
 ./ast/MemberList.java
 ./ast/MemberListPair.java
-./ast/MessagePassingToSelf.java
 ./ast/MetaobjectAnnotation.java
 ./ast/MethodDec.java
 ./ast/NullExpr.java
@@ -35,6 +34,7 @@
 ./ast/ReadExpr.java
 ./ast/RepeatStat.java
 ./ast/ReturnStat.java
+./ast/SelfExpression.java
 ./ast/SignalExpr.java
 ./ast/Statement.java
 ./ast/StatementList.java

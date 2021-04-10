@@ -355,6 +355,9 @@ public class Compiler {
 			returnType = type();
 			this.currentMethod.setReturnType(returnType);
 		}
+		else {
+			this.currentMethod.setReturnType(Type.nullType);
+		}
 
 		// Verifica "{"
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
@@ -1247,6 +1250,10 @@ public class Compiler {
 				else {
 					break;
 				}
+			}
+
+			if (lexer.token == Token.SEMICOLON) {
+				next();
 			}
 		}
 

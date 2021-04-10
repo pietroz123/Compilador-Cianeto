@@ -31,8 +31,7 @@ public class UnaryMessagePassingToSelf extends Expression {
 
     @Override
     public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return var.getType();
     }
 
     @Override

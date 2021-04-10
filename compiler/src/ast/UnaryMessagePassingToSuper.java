@@ -21,8 +21,7 @@ public class UnaryMessagePassingToSuper extends Expression {
 
     @Override
     public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return var.getReturnType();
     }
 
     @Override

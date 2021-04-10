@@ -1,58 +1,58 @@
-Relat�rio do Compilador
+Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  9             I: 3              PI: 3             Exc: 0
- SSE: 11/17/64%    
+MI:  9             I: 3              PI: 2             Exc: 0
+ SSE: 10/17/58%    
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 9
-N�mero de testes 'Importantes' em que o compilador falhou: 3
-N�mero de testes 'Pouco importantes' em que o compilador falhou: 3
+Número de testes 'Muito importantes' em que o compilador falhou: 9
+Número de testes 'Importantes' em que o compilador falhou: 3
+Número de testes 'Pouco importantes' em que o compilador falhou: 2
 
-O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados s�o aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou c�digo errado (se op��o -genjava ou -genc foi usada).
-Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou código errado (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador falhou:
+    messageToself
+        OK_GER11.ci
+
     inheritance
         OK_GER16.ci
 
     polymorphism
         OK_GER16.ci
 
-    messageToself
-        OK_GER11.ci
+    super
+        OK_GER09.ci
+        OK_GER12.ci
 
     fieldAccess
         OK_GER10.ci
         OK_GER14.ci
 
-    messagePassingPrivateMethod
-        OK_GER15.ci
-
-    super
-        OK_GER09.ci
-        OK_GER12.ci
-
     self
         OK_GER09.ci
 
-
-Testes 'importantes' em que o compilador falhou:
-    privateMethod
+    messagePassingPrivateMethod
         OK_GER15.ci
 
+
+Testes 'importantes' em que o compilador falhou:
     privateMethodRedefinedAsPublic
         OK_GER13.ci
 
     redefinedField
         OK_GER14.ci
+
+    privateMethod
+        OK_GER15.ci
 
 
 Testes 'pouco importantes' em que o compilador falhou
@@ -62,15 +62,12 @@ Testes 'pouco importantes' em que o compilador falhou
     repeatUntil
         OK_GER22.ci
 
-    while
-        OK_GER04.ci
 
-
-O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
-Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'importantes' em que o compilador acertou:
     parameterPassing
@@ -88,6 +85,9 @@ Testes 'pouco importantes' em que o compilador acertou
         OK_GER02.ci
         OK_GER06.ci
 
+    while
+        OK_GER04.ci
+
     if
         OK_GER01.ci
         OK_GER03.ci
@@ -98,30 +98,28 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-11 erros foram sinalizados em 17 arquivos sem erro (64%)
+10 erros foram sinalizados em 17 arquivos sem erro (58%)
 _________________________________________________________________________
 ######################################################
-Erros que foram sinalizados mas n�o deveriam ter sido:
-
-OK_GER04.ci, 25, 'end' expected
+Erros que foram sinalizados mas não deveriam ter sido:
 
 OK_GER09.ci, 31, Method of class 'A', named 'm1:', does not exist
 
-OK_GER10.ci, 22, 'end' expected
+OK_GER10.ci, 42, Method of class 'A', named 'm1:', does not exist
 
 OK_GER11.ci, 28, Class 'A' does not have an instance variable of name 'm1'
 
 OK_GER12.ci, 33, Method of class 'A', named 'm2:', does not exist
 
-OK_GER13.ci, 20, 'end' expected
+OK_GER13.ci, 45, Method of class 'A', named 'set:', does not exist
 
-OK_GER14.ci, 22, 'end' expected
+OK_GER14.ci, 42, Method of class 'A', named 'init', does not exist
 
 OK_GER15.ci, 36, Class 'A' does not have an instance variable of name 'p'
 
-OK_GER16.ci, 20, 'end' expected
+OK_GER16.ci, 29, Class 'A' does not have an instance variable of name 'get_A'
 
-OK_GER21.ci, 17, 'end' expected
+OK_GER21.ci, 25, Class 'a' does not exist
 
 OK_GER22.ci, 25, Unexpected token
 

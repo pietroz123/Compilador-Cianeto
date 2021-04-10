@@ -22,8 +22,7 @@ public class KeywordMessagePassingToSuper extends Expression {
 
     @Override
     public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return superclassMethod.getReturnType();
     }
 
     @Override

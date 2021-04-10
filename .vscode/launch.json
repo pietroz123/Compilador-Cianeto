@@ -6,19 +6,19 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Code Generation Tests",
+            "request": "launch",
+            "mainClass": "comp.Comp",
+            "projectName": "krakatoa",
+            "args": "code-generation-tests"
+        },
+        {
+            "type": "java",
             "name": "Student Tests",
             "request": "launch",
             "mainClass": "comp.Comp",
             "projectName": "krakatoa",
             "args": "student-made-tests"
         },
-        {
-            "type": "java",
-            "name": "Code Generation Tests",
-            "request": "launch",
-            "mainClass": "comp.Comp",
-            "projectName": "krakatoa",
-            "args": "code-generation-tests"
-        }
     ]
 }
