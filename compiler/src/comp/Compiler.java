@@ -241,8 +241,10 @@ public class Compiler {
 		// "end"
 		if ( lexer.token != Token.END)
 			error("'end' expected");
-
 		next();
+
+		// Limpa a tabela local
+		symbolTable.clearLocal();
 
 		return currentClass;
 	}
@@ -333,7 +335,7 @@ public class Compiler {
 		this.currentMethod.setId(id);
 
 		// Verifica se o método já não foi declarado
-		if ( symbolTable.getInLocal(id) != null ) {
+		if ( symbolTable.getInLocal(id) != null && symbolTable.getInLocal(id) instanceof MethodDec ) {
 			error("Duplicate method " + id + "' in type '" + currentClass.getName() + "'");
 		}
 
@@ -375,9 +377,13 @@ public class Compiler {
 		}
 		next();
 
-		this.currentClass.addMethod(this.currentMethod);
+		MethodDec methodDec = new MethodDec(id, formalParamDec, returnType, statementList);
 
-		return new MethodDec(id, formalParamDec, returnType, statementList);
+		// Adiciona o método na tabela local e na classe corrente
+		symbolTable.putInLocal(id, methodDec);
+		this.currentClass.addMethod(methodDec);
+
+		return methodDec;
 	}
 
 	/**
@@ -572,11 +578,10 @@ public class Compiler {
 	private RepeatStat repeatStat() {
 		next();
 
-		StatementList statementList = statementList();
-		// ! modifiquei
-		// while ( lexer.token != Token.UNTIL && lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-		// 	statement();
-		// }
+		StatementList statementList = new StatementList();
+		while ( lexer.token != Token.UNTIL && lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+			statementList.addStatement(statement());
+		}
 
 		check(Token.UNTIL, "missing keyword 'until'");
 		next();
@@ -630,12 +635,10 @@ public class Compiler {
 		check(Token.LEFTCURBRACKET, "missing '{' after the 'while' expression");
 		next();
 
-		StatementList statementList = statementList();
-		//! modifiquei
-		// Statement s = null;
-		// while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-		// 	s = statement();
-		// }
+		StatementList statementList = new StatementList();
+		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+			statementList.addStatement(statement());
+		}
 
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 		next();
@@ -1260,6 +1263,11 @@ public class Compiler {
 		FieldDec fieldDec = new FieldDec(type, idList);
 
 		// Coloca os campos na tabela local
+		for (String id : idList.getIdList()) {
+			symbolTable.putInLocal(id, new Variable(id, type));
+		}
+
+		// Adiciona na classe corrente
 		currentClass.addFieldDec(fieldDec);
 
 		return fieldDec;

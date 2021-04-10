@@ -2,8 +2,8 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  9             I: 3              PI: 2             Exc: 0
- SSE: 10/17/58%    
+MI:  9             I: 3              PI: 1             Exc: 0
+ SSE: 9/17/52%     
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -11,7 +11,7 @@ _________________________________________________________________________
 
 Número de testes 'Muito importantes' em que o compilador falhou: 9
 Número de testes 'Importantes' em que o compilador falhou: 3
-Número de testes 'Pouco importantes' em que o compilador falhou: 2
+Número de testes 'Pouco importantes' em que o compilador falhou: 1
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -59,9 +59,6 @@ Testes 'pouco importantes' em que o compilador falhou
     runNotFirstMethodOfProgram
         OK_GER21.ci
 
-    repeatUntil
-        OK_GER22.ci
-
 
 O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -85,6 +82,9 @@ Testes 'pouco importantes' em que o compilador acertou
         OK_GER02.ci
         OK_GER06.ci
 
+    repeatUntil
+        OK_GER22.ci
+
     while
         OK_GER04.ci
 
@@ -98,7 +98,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-10 erros foram sinalizados em 17 arquivos sem erro (58%)
+9 erros foram sinalizados em 17 arquivos sem erro (52%)
 _________________________________________________________________________
 ######################################################
 Erros que foram sinalizados mas não deveriam ter sido:
@@ -120,6 +120,4 @@ OK_GER15.ci, 36, Class 'A' does not have an instance variable of name 'p'
 OK_GER16.ci, 29, Class 'A' does not have an instance variable of name 'get_A'
 
 OK_GER21.ci, 25, Class 'a' does not exist
-
-OK_GER22.ci, 25, Unexpected token
 
