@@ -7,17 +7,17 @@ package ast;
 public class UnaryMessagePassingToSelf extends Expression {
 
     private TypeCianetoClass currentClass;
-    private Variable var;
+    private Object var; // pode ser um campo ou um método
     private TypeCianetoClass cianetoClass;
 
     // "self" "." Id
-    public UnaryMessagePassingToSelf(TypeCianetoClass currentClass, Variable var) {
+    public UnaryMessagePassingToSelf(TypeCianetoClass currentClass, Object var) {
         this.currentClass = currentClass;
         this.var = var;
     }
 
     // "self" "." Id "." Id
-    public UnaryMessagePassingToSelf(TypeCianetoClass currentClass, TypeCianetoClass cianetoClass, Variable var) {
+    public UnaryMessagePassingToSelf(TypeCianetoClass currentClass, TypeCianetoClass cianetoClass, Object var) {
         this.currentClass = currentClass;
         this.cianetoClass = cianetoClass;
         this.var = var;
@@ -31,7 +31,17 @@ public class UnaryMessagePassingToSelf extends Expression {
 
     @Override
     public Type getType() {
-        return var.getType();
+        if (var instanceof FieldDec) {
+            return ((FieldDec) var).getType();
+        }
+        else if (var instanceof MethodDec) {
+            return ((MethodDec) var).getReturnType();
+        }
+        else if (var instanceof Variable) {
+            return ((Variable) var).getType();
+        }
+
+        return null;
     }
 
     @Override

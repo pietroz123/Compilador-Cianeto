@@ -1113,16 +1113,15 @@ public class Compiler {
 						next();
 
 						/**
-						 * "self" "." Id => acesso de variável de instância de self
+						 * "self" "." Id => acesso de variável de instância de self, ou chamada de método de self
 						 */
 						if ( lexer.token != Token.DOT) {
-							// Verifica se existe uma variável de instância na superclasse da classe atual
-							var = currentClass.searchInstanceVariable(firstId);
-							if (var == null) {
-								error("Class '" + currentClass.getName() + "' does not have an instance variable of name '" + firstId + "'");
+							// Verifica se existe uma variável de instância ou um método na classe atual
+							if (symbolTable.getInLocal(firstId) == null) {
+								error("Class '" + currentClass.getName() + "' does not have an instance variable or method named '" + firstId + "'");
 							}
 
-							return new UnaryMessagePassingToSelf(currentClass, var);
+							return new UnaryMessagePassingToSelf(currentClass, symbolTable.getInLocal(firstId));
 						}
 						else {
 							/**
