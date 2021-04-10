@@ -187,20 +187,20 @@ public class Compiler {
 		this.currentClass = null;
 		Boolean isOpenClass = false;
 
+		// [ "open" ]
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 			isOpenClass = true;
 			next();
 		}
 
-		// Verifica token "class"
+		// "class"
 		if ( lexer.token != Token.CLASS ) {
 			error("'class' expected");
 		}
-
 		next();
 
-		// Verifica "id" da classe
+		// Id
 		if ( lexer.token != Token.ID ) {
 			error("Identifier expected");
 		}
@@ -635,6 +635,7 @@ public class Compiler {
 		// }
 
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
+		next();
 
 		return new WhileStat(expr, statementList);
 	}
