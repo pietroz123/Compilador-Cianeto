@@ -59,7 +59,9 @@ public class MethodDec extends Member {
         pw.printIdent(returnType.getJavaName() + " " + id + "(");
 
         // Parametros
-        // TODO
+        if (formalParamDec != null) {
+            formalParamDec.genJava(pw);
+        }
 
         pw.println(") {");
 

@@ -4,7 +4,7 @@ Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
  SSE: 0/17/0%      
-SwithE: 17
+SwithE: 5
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceï¿½ï¿½es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -96,6 +96,13 @@ O compilador nï¿½o sinalizou nenhum erro que nï¿½o deveria ter sinalizado
 Para os casos de teste que vocï¿½ utilizou, o compilador estï¿½ correto
 
 List of Java or C files with compilation errors: 
+   genJava\OK_GER10.java
+   genJava\OK_GER13.java
+   genJava\OK_GER14.java
+   genJava\OK_GER16.java
+   genJava\OK_GER21.java
+
+List of files with correct Java or C code: 
    genJava\OK_GER01.java
    genJava\OK_GER02.java
    genJava\OK_GER03.java
@@ -104,17 +111,10 @@ List of Java or C files with compilation errors:
    genJava\OK_GER07.java
    genJava\OK_GER08.java
    genJava\OK_GER09.java
-   genJava\OK_GER10.java
    genJava\OK_GER11.java
    genJava\OK_GER12.java
-   genJava\OK_GER13.java
-   genJava\OK_GER14.java
    genJava\OK_GER15.java
-   genJava\OK_GER16.java
-   genJava\OK_GER21.java
    genJava\OK_GER22.java
-
-List of files with correct Java or C code: 
 
 List of files with Java or C code that compiles but was generated incorrectly: 
 

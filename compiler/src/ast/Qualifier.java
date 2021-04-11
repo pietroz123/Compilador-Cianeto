@@ -27,6 +27,15 @@ public class Qualifier {
     }
 
     public void genJava(PW pw) {
+        /**
+         * Em Java existem 2 possibilidades:
+         *      @Override
+         *      metodo
+         * OU
+         *      metodo
+         */
+        tokens.remove(Token.OVERRIDE); // não é necessário printar override
+
         for (Token tk : tokens) {
             pw.printIdent(tk.toString() + " ");
         }

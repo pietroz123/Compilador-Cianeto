@@ -212,13 +212,19 @@ public class TypeCianetoClass extends Type {
     }
 
     public void genJava(PW pw) {
+        pw.printIdent("");
         if (isOpen) {
-            pw.printIdent("public");
+            pw.print("public ");
         }
-        pw.printIdent("class " + name);
+
+        // Program deve ser static para poder chamar run
+        if (name.equals("Program")) {
+            pw.print("static ");
+        }
+        pw.print("class " + name);
 
         if (superclass != null) {
-            pw.printIdent(" extends " + superclass.getName());
+            pw.print(" extends " + superclass.getName());
         }
 
 		pw.println(" {");
