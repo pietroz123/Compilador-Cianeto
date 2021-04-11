@@ -1,3 +1,8 @@
+/**
+ * Integrantes:
+ * Pietro Zuntini Bonfim    RA: 743588
+ */
+
 package comp;
 
 public class CompilerError extends RuntimeException {

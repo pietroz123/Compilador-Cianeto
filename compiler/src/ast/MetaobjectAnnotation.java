@@ -1,6 +1,8 @@
 /**
-
+ * Integrantes:
+ * Pietro Zuntini Bonfim    RA: 743588
  */
+
 package ast;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
  * end <br>
  * </code>
  *
-   @author José
+   @author Josï¿½
 
  */
 public class MetaobjectAnnotation {
