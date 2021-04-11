@@ -315,6 +315,7 @@ public class Compiler {
 	 */
 	private MethodDec methodDec() {
 		this.currentMethod = new MethodDec();
+		this.returnStatCalled = false;
 
 		String id = null;
 		FormalParamDec formalParamDec = null;
@@ -355,7 +356,8 @@ public class Compiler {
 			this.currentMethod.setReturnType(returnType);
 		}
 		else {
-			this.currentMethod.setReturnType(Type.nullType);
+			returnType = Type.nullType;
+			this.currentMethod.setReturnType(returnType);
 		}
 
 		// Verifica "{"
@@ -373,6 +375,11 @@ public class Compiler {
 			error("'}' expected after method return type");
 		}
 		next();
+
+		// Verifica retorno
+		if (returnType != Type.nullType && this.returnStatCalled == false) {
+			error("Missing 'return' statement in method '"+id+"'");
+		}
 
 		MethodDec methodDec = new MethodDec(id, formalParamDec, returnType, statementList);
 
@@ -611,6 +618,8 @@ public class Compiler {
 		if ( !expr.getType().isCompatible(this.currentMethod.getReturnType()) ) {
 			error("This expression is not compatible with the method return type");
 		}
+
+		this.returnStatCalled = true;
 
 		return new ReturnStat(expr);
 	}
@@ -1408,5 +1417,5 @@ public class Compiler {
 	private SymbolTable			symbolTable;
 	private Lexer				lexer;
 	private ErrorSignaler		errorSignaler;
-
+	private Boolean				returnStatCalled;
 }
