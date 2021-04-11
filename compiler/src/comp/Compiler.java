@@ -717,6 +717,12 @@ public class Compiler {
 
 		ExpressionList exprList = expressionList();
 
+		for (Expression expr : exprList.getExprList()) {
+			if (expr.getType() == Type.booleanType) {
+				error("Attempt to print a boolean expression");
+			}
+		}
+
 		return new PrintStat(printName, exprList);
 	}
 

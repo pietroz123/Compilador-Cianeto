@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  22            I: 6              PI: 12            Exc: 7
-Dev: 34/134/25%    LE: 13/134/9%     SSE: 14/49/28%    
+MI:  20            I: 6              PI: 12            Exc: 7
+Dev: 32/134/23%    LE: 13/134/9%     SSE: 14/49/28%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 22
+N�mero de testes 'Muito importantes' em que o compilador falhou: 20
 N�mero de testes 'Importantes' em que o compilador falhou: 6
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
@@ -22,8 +22,6 @@ Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante
 Testes 'Muito importantes' em que o compilador falhou:
     typeError
         ER_SEM12.ci
-        ER_SEM14.ci
-        ER_SEM16.ci
 
     typeErrorAssignRightSideNotSubtypeLeftSide
         ER_SEM04.ci
@@ -123,7 +121,9 @@ Testes 'Muito importantes' em que o compilador acertou:
     typeError
         ER_SEM08.ci
         ER_SEM09.ci
+        ER_SEM14.ci
         ER_SEM15.ci
+        ER_SEM16.ci
 
     typeErrorSearchMethod
         ER_SEM07.ci
@@ -240,7 +240,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-34 de um total de 134 erros que deveriam ser sinalizados n�o o foram (25%)
+32 de um total de 134 erros que deveriam ser sinalizados n�o o foram (23%)
 13 erros foram sinalizados na linha errada (9%)
 14 erros foram sinalizados em 49 arquivos sem erro (28%)
 _________________________________________________________________________
@@ -254,10 +254,6 @@ ER_SEM05.ci, 11, 'int' cannot be assigned to 'boolean' (comp.Compiler.assignExpr
 ER_SEM06.ci, 12, 'operator expected' or 'variable expected at the left-hand side of a assignment'
 
 ER_SEM12.ci, 10, operator '+' of 'Int' expects an 'Int' value (comp.Compiler.simpleExpr())
-
-ER_SEM14.ci, 11, Attempt to print a boolean expression
-
-ER_SEM16.ci, 12, Operator '-' does not accepts 'boolean' expressions (comp.Compiler.signalFactor())
 
 ER_SEM26.ci, 15, 'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))
 
@@ -481,9 +477,19 @@ The compiler message was: "Identifier 'In' was not declared"
 The 'cep' message is:      "Unknown method 'readBoolean'"
 
 
+ER_SEM14.ci
+The compiler message was: "Attempt to print a boolean expression"
+The 'cep' message is:      "Attempt to print a boolean expression"
+
+
 ER_SEM15.ci
 The compiler message was: "Boolean expression expected"
 The 'cep' message is:      "Operator '!' does not accepts 'int' values"
+
+
+ER_SEM16.ci
+The compiler message was: "Attempt to print a boolean expression"
+The 'cep' message is:      "Operator '-' does not accepts 'boolean' expressions"
 
 
 ER_SEM17.ci

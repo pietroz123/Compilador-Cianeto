@@ -14,6 +14,13 @@ public class ExpressionList {
     }
 
     /**
+     * Getters
+     */
+    public ArrayList<Expression> getExprList() {
+        return exprList;
+    }
+
+    /**
      * Adiciona uma Expression na lista
      * @param expr
      */
