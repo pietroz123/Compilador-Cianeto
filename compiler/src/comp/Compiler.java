@@ -721,6 +721,10 @@ public class Compiler {
 		if (lexer.token == Token.ASSIGN) {
 			next();
 			rightExpr = expr();
+
+			if ( !leftExpr.getType().isCompatible(rightExpr.getType()) ) {
+				error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+			}
 		}
 
 		return new AssignExpr(leftExpr, rightExpr);
