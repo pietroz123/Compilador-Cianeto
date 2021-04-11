@@ -362,7 +362,7 @@ public class Compiler {
 
 		// Verifica "{"
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
-			error("'{' expected after method return type");
+			error("'{' expected");
 		}
 		next();
 
@@ -372,7 +372,7 @@ public class Compiler {
 
 		// Verifica "}"
 		if ( lexer.token != Token.RIGHTCURBRACKET ) {
-			error("'}' expected after method return type");
+			error("'}' expected");
 		}
 		next();
 
@@ -669,11 +669,10 @@ public class Compiler {
 		check(Token.LEFTCURBRACKET, "'{' expected after the 'if' expression");
 		next();
 
-		leftList = statementList();
-		//! modifiquei
-		// while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
-		// 	statement();
-		// }
+		leftList = new StatementList();
+		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
+			leftList.addStatement(statement());
+		}
 
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
 		next();
@@ -683,11 +682,10 @@ public class Compiler {
 			check(Token.LEFTCURBRACKET, "'{' expected after 'else'");
 			next();
 
-			rightList = statementList();
-			//! modifiquei
-			// while ( lexer.token != Token.RIGHTCURBRACKET ) {
-			// 	statement();
-			// }
+			rightList = new StatementList();
+			while ( lexer.token != Token.RIGHTCURBRACKET ) {
+				rightList.addStatement(statement());
+			}
 
 			check(Token.RIGHTCURBRACKET, "'}' was expected");
 			next();
@@ -889,7 +887,7 @@ public class Compiler {
 			case LEFTPAR:
 				next();
 				Expression expr = expr();
-				if (lexer.token != Token.RIGHTPAR) { error(") expected"); }
+				if (lexer.token != Token.RIGHTPAR) { error("')' expected"); }
 				next();
 				return new ParenthesisExpr(expr);
 			/**
