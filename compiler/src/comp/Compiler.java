@@ -829,6 +829,11 @@ public class Compiler {
 			r = lexer.token;
 			next();
 			Expression right = signalFactor();
+
+			if (left.getType() == Type.intType && r == Token.AND) {
+				error("type int does not supports operation '" + r + "'");
+			}
+
 			left = new CompositeExpr(left, r, right);
 		}
 

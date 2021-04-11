@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  23            I: 6              PI: 12            Exc: 7
-Dev: 35/134/26%    LE: 13/134/9%     SSE: 14/49/28%    
+MI:  22            I: 6              PI: 12            Exc: 7
+Dev: 34/134/25%    LE: 13/134/9%     SSE: 14/49/28%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 23
+N�mero de testes 'Muito importantes' em que o compilador falhou: 22
 N�mero de testes 'Importantes' em que o compilador falhou: 6
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
@@ -21,7 +21,6 @@ Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante
 
 Testes 'Muito importantes' em que o compilador falhou:
     typeError
-        ER_SEM09.ci
         ER_SEM12.ci
         ER_SEM14.ci
         ER_SEM16.ci
@@ -123,6 +122,7 @@ Testes 'Muito importantes' em que o compilador acertou:
 
     typeError
         ER_SEM08.ci
+        ER_SEM09.ci
         ER_SEM15.ci
 
     typeErrorSearchMethod
@@ -240,7 +240,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-35 de um total de 134 erros que deveriam ser sinalizados n�o o foram (26%)
+34 de um total de 134 erros que deveriam ser sinalizados n�o o foram (25%)
 13 erros foram sinalizados na linha errada (9%)
 14 erros foram sinalizados em 49 arquivos sem erro (28%)
 _________________________________________________________________________
@@ -252,8 +252,6 @@ ER_SEM04.ci, 12, Type error: value of the right-hand side is not subtype of the 
 ER_SEM05.ci, 11, 'int' cannot be assigned to 'boolean' (comp.Compiler.assignExprLocalDec())
 
 ER_SEM06.ci, 12, 'operator expected' or 'variable expected at the left-hand side of a assignment'
-
-ER_SEM09.ci, 15, type 'int' does not support operator '&&' (comp.Compiler.term())
 
 ER_SEM12.ci, 10, operator '+' of 'Int' expects an 'Int' value (comp.Compiler.simpleExpr())
 
@@ -466,6 +464,11 @@ The 'cep' message is:      "Message send to a non-object receiver"
 ER_SEM08.ci
 The compiler message was: "type boolean does not supports operation '+'"
 The 'cep' message is:      "type boolean does not support operation '+'"
+
+
+ER_SEM09.ci
+The compiler message was: "type int does not supports operation '&&'"
+The 'cep' message is:      "type 'int' does not support operator '&&'"
 
 
 ER_SEM11.ci
