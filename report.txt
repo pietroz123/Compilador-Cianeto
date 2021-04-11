@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  27            I: 5              PI: 14            Exc: 6
-Dev: 34/135/25%    LE: 15/135/11%    SSE: 18/48/37%    
+MI:  24            I: 5              PI: 14            Exc: 6
+Dev: 31/135/22%    LE: 15/135/11%    SSE: 18/48/37%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 27
+N�mero de testes 'Muito importantes' em que o compilador falhou: 24
 N�mero de testes 'Importantes' em que o compilador falhou: 5
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 14
 
@@ -45,10 +45,6 @@ Testes 'Muito importantes' em que o compilador falhou:
     methodFieldEqualNames
         ER_SEM31.ci
 
-    methodsEqualNames
-        ER_SEM32.ci
-        ER_SEM33.ci
-
     methodSearchSuperclass
         OK_SEM10.ci
 
@@ -56,9 +52,6 @@ Testes 'Muito importantes' em que o compilador falhou:
         ER_SEM29.ci
         ER_SEM30.ci
         ER_SEM51.ci
-
-    methodRedefinition
-        ER_SEM70.ci
 
     typeErrorEqualEqualNotEqual
         ER_SEM57.ci
@@ -138,10 +131,6 @@ Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o c
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador acertou:
-    typeError
-        ER_SEM09.ci
-        ER_SEM15.ci
-
     typeErrorAssignRightSideNotSubtypeLeftSide
         ER_SEM04.ci
         ER_SEM05.ci
@@ -149,6 +138,10 @@ Testes 'Muito importantes' em que o compilador acertou:
         ER_SEM41.ci
         ER_SEM42.ci
         ER_SEM43.ci
+
+    typeError
+        ER_SEM09.ci
+        ER_SEM15.ci
 
     typeErrorSearchMethod
         ER_SEM07.ci
@@ -162,9 +155,22 @@ Testes 'Muito importantes' em que o compilador acertou:
     typeErrorSearchMethodSuper
         ER_SEM47.ci
 
+    methodsEqualNames
+        ER_SEM32.ci
+        ER_SEM33.ci
+
+    localVarRedeclared
+        ER_SEM28.ci
+
+    missingClassInNew
+        ER_SEM86.ci
+
     typeNotFound
         ER_SEM18.ci
         ER_SEM19.ci
+
+    methodRedefinition
+        ER_SEM70.ci
 
     typeErrorEqualEqualNotEqual
         OK_SEM03.ci
@@ -173,25 +179,19 @@ Testes 'Muito importantes' em que o compilador acertou:
     supertypeAssignSelf
         OK_SEM15.ci
 
-    localVarRedeclared
-        ER_SEM28.ci
-
-    missingClassInNew
-        ER_SEM86.ci
-
 
 Testes 'importantes' em que o compilador acertou:
     superWithoutSuperclass
         ER_SEM46.ci
+
+    expressionExpected
+        ER_SEM36.ci
 
     illegalReturnStatement
         ER_SEM35.ci
 
     localVarSameClassName
         OK_SEM12.ci
-
-    expressionExpected
-        ER_SEM36.ci
 
     localVarSameMethodName
         OK_SEM13.ci
@@ -201,11 +201,24 @@ Testes 'importantes' em que o compilador acertou:
 
 
 Testes 'pouco importantes' em que o compilador acertou
-    repeatUntil
-        OK_SEM18.ci
-
     while
         ER_SEM11.ci
+
+    illegalClassName
+        ER_SEM48.ci
+        ER_SEM49.ci
+
+    whileBreak
+        OK_SEM07.ci
+
+    lowerUpperCaseIdentifiers
+        ER_SEM02.ci
+
+    openAsIdentifier
+        OK_SEM11.ci
+
+    repeatUntil
+        OK_SEM18.ci
 
     illegalTypeOrIdentifier
         ER_SEM20.ci
@@ -222,19 +235,6 @@ Testes 'pouco importantes' em que o compilador acertou
     repeatUntilBreak
         OK_SEM16.ci
 
-    illegalClassName
-        ER_SEM48.ci
-        ER_SEM49.ci
-
-    whileBreak
-        OK_SEM07.ci
-
-    lowerUpperCaseIdentifiers
-        ER_SEM02.ci
-
-    openAsIdentifier
-        OK_SEM11.ci
-
 
 6 arquivos lan�aram exce��es que n�o foram capturadas pelo compilador ou houve algum problema e o m�todo 'compileProgram' retornou 'null'. A maioria delas � provavelmente NullPointerException. Estes arquivos s�o:
     ER_SEM77.ci
@@ -246,7 +246,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-34 de um total de 135 erros que deveriam ser sinalizados n�o o foram (25%)
+31 de um total de 135 erros que deveriam ser sinalizados n�o o foram (22%)
 15 erros foram sinalizados na linha errada (11%)
 18 erros foram sinalizados em 48 arquivos sem erro (37%)
 _________________________________________________________________________
@@ -272,10 +272,6 @@ ER_SEM29.ci, 22, Method 'put' of the subclass 'B' has a signature different from
 ER_SEM30.ci, 24, Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A' (comp.Compiler.methodDec())
 
 ER_SEM31.ci, 16, Method 'i' has name equal to an instance variable (comp.Compiler.methodDec())
-
-ER_SEM32.ci, 18, Method 'm' is being redeclared (comp.Compiler.methodDec())
-
-ER_SEM33.ci, 17, Method 'm' is being redeclared (comp.Compiler.methodDec())
 
 ER_SEM34.ci, 24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
 
@@ -304,8 +300,6 @@ ER_SEM59.ci, 26, Method 'p' was not found in the public interface of 'A' or ts s
 ER_SEM60.ci, 25, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
 
 ER_SEM62.ci, 17, Identifier 'a' was not found (comp.Compiler.factor())
-
-ER_SEM70.ci, 14, Method 'm' is being redefined (comp.Compiler.methodDec())
 
 ER_SEM80.ci, 13, Method 'run' of class 'Program' with a return value type (comp.Compiler.methodDec())
 
@@ -563,6 +557,16 @@ The compiler message was: "Duplicate local variable 'i'"
 The 'cep' message is:      "Variable 'i' is being redeclared"
 
 
+ER_SEM32.ci
+The compiler message was: "Method 'm' is being redeclared"
+The 'cep' message is:      "Method 'm' is being redeclared"
+
+
+ER_SEM33.ci
+The compiler message was: "Method 'm' is being redeclared"
+The 'cep' message is:      "Method 'm' is being redeclared"
+
+
 ER_SEM35.ci
 The compiler message was: "This method cannot return any value"
 The 'cep' message is:      "Illegal 'return' statement. Method returns 'void'"
@@ -631,6 +635,11 @@ The 'cep' message is:      "Method 's' was not found in class 'C' or its supercl
 ER_SEM68.ci
 The compiler message was: "Class 'Program' does not have an instance variable or method named 'p'"
 The 'cep' message is:      "Method 'p' was not found in class 'Program' or its superclasses"
+
+
+ER_SEM70.ci
+The compiler message was: "Method 'm' is being redeclared"
+The 'cep' message is:      "Method 'm' is being redefined"
 
 
 ER_SEM71.ci

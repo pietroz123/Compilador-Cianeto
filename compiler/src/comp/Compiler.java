@@ -243,6 +243,9 @@ public class Compiler {
 			error("'end' expected");
 		next();
 
+		// Finalizada a compilação da classe, podemos limpar a tabela de funções
+		symbolTable.clearFunc();
+
 		return currentClass;
 	}
 
@@ -333,8 +336,8 @@ public class Compiler {
 		this.currentMethod.setId(id);
 
 		// Verifica se o método já não foi declarado
-		if ( symbolTable.getInLocal(id) != null && symbolTable.getInLocal(id) instanceof MethodDec ) {
-			error("Duplicate method " + id + "' in type '" + currentClass.getName() + "'");
+		if ( symbolTable.getInFunc(id) != null ) {
+			error("Method '"+id+"' is being redeclared");
 		}
 
 		if ( lexer.token == Token.ID ) {
@@ -384,6 +387,7 @@ public class Compiler {
 		MethodDec methodDec = new MethodDec(id, formalParamDec, returnType, statementList);
 
 		symbolTable.clearLocal();
+		symbolTable.putInFunc(id, methodDec);
 		this.currentClass.addMethod(methodDec);
 
 		return methodDec;

@@ -18,6 +18,7 @@ public class SymbolTable {
     public SymbolTable() {
         globalTable = new Hashtable<String, Object>();
         localTable = new Hashtable<String, Object>();
+        funcTable = new Hashtable<String, Object>();
     }
 
     /**
