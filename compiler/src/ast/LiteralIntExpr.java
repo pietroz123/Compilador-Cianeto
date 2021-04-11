@@ -19,7 +19,7 @@ public class LiteralIntExpr extends Expression {
     }
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.print("" + value);
     }
 
     public Type getType() {

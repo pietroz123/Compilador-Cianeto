@@ -32,11 +32,12 @@ public class PrintStat extends Statement {
         }
 
         // Expression List
-        pw.print("\"\"");
-        // TODO
-        // if (exprList != null) {
-        //     exprList.genJava(pw);
-        // }
+        if (exprList != null) {
+            exprList.genJava(pw);
+        }
+        else {
+            pw.print("\"\"");
+        }
 
         pw.println(");");
     }

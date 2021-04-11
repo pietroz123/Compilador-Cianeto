@@ -22,8 +22,8 @@ public class ReturnStat extends Statement {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
-
+        pw.printIdent("return ");
+        expr.genJava(pw);
     }
 
     private Expression expr;

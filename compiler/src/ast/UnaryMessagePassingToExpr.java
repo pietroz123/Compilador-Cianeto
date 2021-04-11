@@ -10,12 +10,10 @@ package ast;
  */
 public class UnaryMessagePassingToExpr extends Expression {
 
-    private TypeCianetoClass cianetoClass;
-    private MethodDec var;
-
-    public UnaryMessagePassingToExpr(TypeCianetoClass cianetoClass, MethodDec var) {
-        this.cianetoClass = cianetoClass;
-        this.var = var;
+    public UnaryMessagePassingToExpr(Variable instanceVar, TypeCianetoClass sourceClass, MethodDec methodCalled) {
+        this.instanceVar = instanceVar;
+        this.sourceClass = sourceClass;
+        this.methodCalled = methodCalled;
     }
 
     @Override
@@ -26,13 +24,17 @@ public class UnaryMessagePassingToExpr extends Expression {
 
     @Override
     public Type getType() {
-        return var.getReturnType();
+        return methodCalled.getReturnType();
     }
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
-
+        pw.print(instanceVar.getId());
+        pw.print(".");
+        pw.print(methodCalled.getId() + "()");
     }
 
+    private Variable instanceVar;
+    private TypeCianetoClass sourceClass;
+    private MethodDec methodCalled;
 }

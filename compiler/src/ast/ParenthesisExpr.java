@@ -20,7 +20,9 @@ public class ParenthesisExpr extends Expression {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.print("(");
+        expr.genJava(pw);
+        pw.print(")");
     }
 
     @Override

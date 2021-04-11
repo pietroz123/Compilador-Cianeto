@@ -29,7 +29,7 @@ public class FieldDec extends Member {
 
     @Override
     void genJava(PW pw) {
-        pw.printIdent(type.getJavaName() + " ");
+        pw.printIdent("private " + type.getJavaName() + " ");
 
         Iterator<String> it = idList.getIdList().iterator();
         while (it.hasNext()) {

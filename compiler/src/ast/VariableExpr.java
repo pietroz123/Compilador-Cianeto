@@ -21,7 +21,7 @@ public class VariableExpr extends Expression {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.print(var.getId());
     }
 
     @Override

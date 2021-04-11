@@ -27,8 +27,7 @@ public class SelfExpression extends Expression {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
-
+        pw.printlnIdent("this");
     }
 
 }

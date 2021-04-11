@@ -15,18 +15,17 @@ public class ObjectCreation extends PrimaryExpr {
     }
 
     @Override
-    public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public Type getType() {
         return cianetoClass;
     }
 
     @Override
-    public void genJava(PW pw) {
+    public void genC(PW pw, boolean putParenthesis) {
         // TODO Auto-generated method stub
+    }
+    @Override
+    public void genJava(PW pw) {
+        pw.print("new " + cianetoClass.getName() + "()");
     }
 
     private TypeCianetoClass cianetoClass;

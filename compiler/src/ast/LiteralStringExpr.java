@@ -12,11 +12,11 @@ public class LiteralStringExpr extends Expression {
     }
 
     public void genC( PW pw, boolean putParenthesis ) {
-        pw.print(literalString);
+        pw.print("\"" + literalString + "\"");
     }
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.print(literalString);
     }
 
     public Type getType() {

@@ -23,7 +23,23 @@ public class IfStat extends Statement {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("if (");
+        expr.genJava(pw);
+        pw.println(") {");
+
+        pw.add();
+        leftList.genJava(pw);
+        pw.sub();
+
+        pw.printlnIdent("}");
+
+        if (rightList != null) {
+            pw.println("else {");
+            pw.add();
+            rightList.genJava(pw);
+            pw.sub();
+            pw.println("}");
+        }
     }
 
     Expression expr;

@@ -22,7 +22,15 @@ public class AssignExpr extends Statement {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("");
+        leftExpr.genJava(pw);
+
+        if (rightExpr != null) {
+            pw.print(" = ");
+            rightExpr.genJava(pw);
+        }
+
+        pw.println(";");
     }
 
     private Expression leftExpr, rightExpr;

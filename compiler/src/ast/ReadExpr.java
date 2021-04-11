@@ -5,6 +5,9 @@
 
 package ast;
 
+/**
+ * ReadExpr ::= "In" "." ( "readInt" | "readString" )
+ */
 public class ReadExpr extends Expression {
 
     public ReadExpr(String readName) {

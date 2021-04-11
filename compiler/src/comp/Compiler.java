@@ -1025,7 +1025,7 @@ public class Compiler {
 							error("Method of class '" + firstId + "', named '" + secondId + "', does not exist");
 						}
 
-						return new UnaryMessagePassingToExpr(cianetoClass, classMethod);
+						return new UnaryMessagePassingToExpr(var, cianetoClass, classMethod);
 					}
 					/**
 					 * Id "." IdColon ExpressionList => chamada de método
@@ -1041,7 +1041,7 @@ public class Compiler {
 
 						ExpressionList exprList = expressionList();
 
-						return new KeywordMessagePassingToExpr(cianetoClass, classMethod, exprList);
+						return new KeywordMessagePassingToExpr(var, cianetoClass, classMethod, exprList);
 					}
 
 				}

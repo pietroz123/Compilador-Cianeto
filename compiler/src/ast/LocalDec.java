@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * LocalDec ::= "var" Type IdList [ "=" Expression ]
  */
@@ -23,8 +25,25 @@ public class LocalDec extends Statement {
     }
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("");
+        pw.print(type.getJavaName() + " ");
 
+        Iterator<String> it = idlList.getIdList().iterator();
+        while (it.hasNext()) {
+            String id = it.next();
+            pw.print(id);
+
+            if (it.hasNext()) {
+                pw.print(",");
+            }
+        }
+
+        if (expr != null) {
+            pw.print(" = ");
+            expr.genJava(pw);
+        }
+
+        pw.println(";");
     }
 
     private Type type;

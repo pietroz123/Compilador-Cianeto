@@ -10,13 +10,10 @@ package ast;
  */
 public class KeywordMessagePassingToExpr extends Expression {
 
-    private TypeCianetoClass cianetoClass;
-    private MethodDec classMethod;
-    private ExpressionList exprList;
-
-    public KeywordMessagePassingToExpr(TypeCianetoClass cianetoClass, MethodDec classMethod, ExpressionList exprList) {
-        this.cianetoClass = cianetoClass;
-        this.classMethod = classMethod;
+    public KeywordMessagePassingToExpr(Variable instanceVar, TypeCianetoClass sourceClass, MethodDec methodCalled, ExpressionList exprList) {
+        this.instanceVar = instanceVar;
+        this.sourceClass = sourceClass;
+        this.methodCalled = methodCalled;
         this.exprList = exprList;
     }
 
@@ -27,7 +24,7 @@ public class KeywordMessagePassingToExpr extends Expression {
 
     @Override
     public Type getType() {
-        return classMethod.getReturnType();
+        return methodCalled.getReturnType();
     }
 
     @Override
@@ -35,4 +32,8 @@ public class KeywordMessagePassingToExpr extends Expression {
         // TODO Auto-generated method stub
     }
 
+    private Variable instanceVar;
+    private TypeCianetoClass sourceClass;
+    private MethodDec methodCalled;
+    private ExpressionList exprList;
 }

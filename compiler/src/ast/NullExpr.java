@@ -12,7 +12,7 @@ public class NullExpr extends Expression {
    }
    @Override
    public void genJava(PW pw) {
-      // TODO Auto-generated method stub
+      pw.printIdent("null");
    }
 
    public Type getType() {

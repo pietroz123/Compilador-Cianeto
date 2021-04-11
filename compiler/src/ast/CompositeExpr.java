@@ -21,7 +21,9 @@ public class CompositeExpr extends Expression {
     }
     @Override
 	public void genJava(PW pw) {
-		// TODO Auto-generated method stub
+        left.genJava(pw);
+        pw.print(" " + oper + " ");
+		right.genJava(pw);
 	}
 
     @Override
