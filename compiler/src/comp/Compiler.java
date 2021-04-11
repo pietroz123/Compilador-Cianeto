@@ -1148,7 +1148,7 @@ public class Compiler {
 							 * Se existe mais um ".", então o primeiro Id é uma classe de self
 							 */
 							// Verifica se essa classe existe
-							TypeCianetoClass cianetoClass = (TypeCianetoClass)  symbolTable.getInGlobal(firstId);
+							TypeCianetoClass cianetoClass = (TypeCianetoClass) currentClass.searchInstanceVariable(firstId).getType();
 							if (cianetoClass == null) {
 								error("Class '" + firstId + "' does not exist.");
 							}

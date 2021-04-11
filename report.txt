@@ -3,7 +3,7 @@ Relat�rio do Compilador
 Resumo
 _________________________________________________________________________
 MI:  24            I: 6              PI: 12            Exc: 7
-Dev: 36/134/26%    LE: 13/134/9%     SSE: 16/49/32%    
+Dev: 36/134/26%    LE: 13/134/9%     SSE: 14/49/28%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -242,7 +242,7 @@ _________________________________________________________________________
 
 36 de um total de 134 erros que deveriam ser sinalizados n�o o foram (26%)
 13 erros foram sinalizados na linha errada (9%)
-16 erros foram sinalizados em 49 arquivos sem erro (32%)
+14 erros foram sinalizados em 49 arquivos sem erro (28%)
 _________________________________________________________________________
 
 Erros que deveriam ser sinalizados mas n�o foram:
@@ -379,8 +379,6 @@ Erros que foram sinalizados mas n�o deveriam ter sido:
 
 OK_CALC.CI, 72, Identifier 'In' was not declared
 
-OK_CHK07.CI, 79, Class 'first' does not exist.
-
 OK_FACT.CI, 28, Method of class 'a', named 'fact', does not exist
 
 OK_FIB.CI, 28, Method of class 'a', named 'fib', does not exist
@@ -391,7 +389,7 @@ OK_LEX05.CI, 17, Number out of limits
 
 OK_MATH.ci, 55, Identifier 'In' was not declared
 
-OK_QUEUE.ci, 28, Class 'next' does not exist.
+OK_QUEUE.ci, 28, Method of class 'Node', named 'print', does not exist
 
 OK_SEM06.ci, 16, Variable n was already declared
 
@@ -406,8 +404,6 @@ OK_SIN09.CI, 29, Method of class 'A', named 'm2', does not exist
 OK_SIN10.CI, 31, Identifier 'In' was not declared
 
 OK_SIN11.CI, 20, ';' expected
-
-OK_SIN14.CI, 40, Class 'p' does not exist.
 
 ######################################################
 Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
