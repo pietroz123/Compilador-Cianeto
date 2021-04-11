@@ -36,8 +36,9 @@ public class Qualifier {
          */
         tokens.remove(Token.OVERRIDE); // não é necessário printar override
 
+        pw.printIdent("");
         for (Token tk : tokens) {
-            pw.printIdent(tk.toString() + " ");
+            pw.print(tk.toString() + " ");
         }
     }
 

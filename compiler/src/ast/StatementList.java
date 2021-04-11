@@ -24,5 +24,11 @@ public class StatementList {
         statementList.add(statement);
     }
 
+    public void genJava(PW pw) {
+        for (Statement statement : statementList) {
+            statement.genJava(pw);
+        }
+    }
+
     private ArrayList<Statement> statementList;
 }

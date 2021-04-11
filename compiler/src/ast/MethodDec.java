@@ -56,7 +56,7 @@ public class MethodDec extends Member {
 
     @Override
     void genJava(PW pw) {
-        pw.printIdent(returnType.getJavaName() + " " + id + "(");
+        pw.print(returnType.getJavaName() + " " + id + "(");
 
         // Parametros
         if (formalParamDec != null) {
@@ -66,7 +66,11 @@ public class MethodDec extends Member {
         pw.println(") {");
 
         // Statements
-        // TODO
+        if (statements != null) {
+            pw.add();
+            statements.genJava(pw);
+            pw.sub();
+        }
 
         pw.printlnIdent("}");
     }

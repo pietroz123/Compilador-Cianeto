@@ -28,5 +28,11 @@ public class ExpressionList {
         exprList.add(expr);
     }
 
+    public void genJava(PW pw) {
+        for (Expression expr : exprList) {
+            expr.genJava(pw);
+        }
+    }
+
     ArrayList<Expression> exprList;
 }

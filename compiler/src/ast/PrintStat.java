@@ -5,6 +5,9 @@
 
 package ast;
 
+/**
+ * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
+ */
 public class PrintStat extends Statement {
 
     public PrintStat(String printName, ExpressionList exprList) {
@@ -19,7 +22,23 @@ public class PrintStat extends Statement {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("");
+
+        if (printName.equals("print")) {
+            pw.print("System.out.print(");
+        }
+        else {
+            pw.print("System.out.println(");
+        }
+
+        // Expression List
+        pw.print("\"\"");
+        // TODO
+        // if (exprList != null) {
+        //     exprList.genJava(pw);
+        // }
+
+        pw.println(");");
     }
 
     private String printName;
