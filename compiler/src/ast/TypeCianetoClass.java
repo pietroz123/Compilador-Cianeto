@@ -122,16 +122,15 @@ public class TypeCianetoClass extends Type {
          * Verifica os métodos das superclasses
          */
         if (superclass != null) {
-            TypeCianetoClass current = this;
+            TypeCianetoClass current = this.getSuperclass();
 
             while (current != null) {
-                current = current.getSuperclass();
-
                 for (MethodDec method : current.getPublicMethodList()) {
                     if (method.getId().equals(methodId)) {
                         return method;
                     }
                 }
+                current = current.getSuperclass();
             }
         }
 
