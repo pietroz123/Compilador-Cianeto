@@ -800,6 +800,11 @@ public class Compiler {
 			r = lexer.token;
 			next();
 			Expression right = term();
+
+			if (left.getType() == Type.booleanType && r != Token.OR) {
+				error("type boolean does not supports operation '" + r + "'");
+			}
+
 			left = new CompositeExpr(left, r, right);
 		}
 
