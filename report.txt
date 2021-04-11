@@ -2,16 +2,16 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  24            I: 5              PI: 13            Exc: 6
-Dev: 30/135/22%    LE: 15/135/11%    SSE: 18/48/37%    
+MI:  24            I: 6              PI: 12            Exc: 7
+Dev: 36/134/26%    LE: 13/134/9%     SSE: 16/49/32%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
 N�mero de testes 'Muito importantes' em que o compilador falhou: 24
-N�mero de testes 'Importantes' em que o compilador falhou: 5
-N�mero de testes 'Pouco importantes' em que o compilador falhou: 13
+N�mero de testes 'Importantes' em que o compilador falhou: 6
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
 O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -20,22 +20,21 @@ Os nomes de arquivos listados s�o aqueles que testam 'aspecto' mas em que o co
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador falhou:
-    typeErrorAssignRightSideNotSubtypeLeftSide
-        ER_SEM38.ci
-        ER_SEM40.ci
-        OK_SEM05.ci
-
     typeError
         ER_SEM08.ci
+        ER_SEM09.ci
         ER_SEM12.ci
         ER_SEM14.ci
         ER_SEM16.ci
 
-    typeErrorSearchMethod
-        ER_SEM59.ci
-
-    typeErrorSearchMethodSuper
-        ER_SEM60.ci
+    typeErrorAssignRightSideNotSubtypeLeftSide
+        ER_SEM04.ci
+        ER_SEM05.ci
+        ER_SEM38.ci
+        ER_SEM40.ci
+        ER_SEM41.ci
+        ER_SEM42.ci
+        ER_SEM43.ci
 
     identifierNotFound
         ER_SEM100.ci
@@ -45,37 +44,31 @@ Testes 'Muito importantes' em que o compilador falhou:
     methodFieldEqualNames
         ER_SEM31.ci
 
-    methodSearchSuperclass
-        OK_SEM10.ci
-
-    wrongSubclassMethodSignature
-        ER_SEM29.ci
-        ER_SEM30.ci
-        ER_SEM51.ci
-
     typeErrorEqualEqualNotEqual
         ER_SEM57.ci
         ER_SEM58.ci
-
-    nilEqualEqualNotEqual
-        OK_SEM14.ci
 
     missingOverride
         ER_SEM52.ci
         ER_SEM53.ci
         ER_SEM54.ci
 
-    nilAssign
-        OK_SEM14.ci
+    wrongSubclassMethodSignature
+        ER_SEM29.ci
+        ER_SEM30.ci
+        ER_SEM51.ci
 
 
 Testes 'importantes' em que o compilador falhou:
-    scopeLocalVarField
-        OK_SEM06.ci
-
     breakOutsideWhileRepeatUntil
         ER_SEM26.ci
         ER_SEM50.ci
+
+    expressionExpected
+        ER_SEM36.ci
+
+    scopeLocalVarField
+        OK_SEM06.ci
 
     typeErrorPlusPlus
         ER_SEM55.ci
@@ -83,18 +76,24 @@ Testes 'importantes' em que o compilador falhou:
 
 
 Testes 'pouco importantes' em que o compilador falhou
+    parametersInMethodRunOfClassProgram
+        ER_SEM82.ci
+
     booleanExprRepeatUntil
         ER_SEM88.ci
         ER_SEM89.ci
 
+    exprRightHandSideAssignment
+        ER_SEM06.ci
+
     arithmeticOperators
         OK_MATH.ci
 
+    returnTypeInMethodRunOfClassProgram
+        ER_SEM80.ci
+
     typeErrorOutPrint
         ER_SEM44.ci
-
-    privateMethodRunOfClassProgram
-        ER_SEM81.ci
 
     assert
         OK_SEM17.ci
@@ -102,20 +101,11 @@ Testes 'pouco importantes' em que o compilador falhou
     selfAsExpression
         OK_SEM09.ci
 
-    if
-        OK_QUEUE.ci
-
-    parametersInMethodRunOfClassProgram
-        ER_SEM82.ci
-
-    exprRightHandSideAssignment
-        ER_SEM06.ci
-
-    returnTypeInMethodRunOfClassProgram
-        ER_SEM80.ci
-
     methodReturnValueNotUsed
         ER_SEM34.ci
+
+    if
+        OK_QUEUE.ci
 
     missingReturn
         ER_SEM01.ci
@@ -129,15 +119,10 @@ Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante
 
 Testes 'Muito importantes' em que o compilador acertou:
     typeErrorAssignRightSideNotSubtypeLeftSide
-        ER_SEM04.ci
-        ER_SEM05.ci
         ER_SEM39.ci
-        ER_SEM41.ci
-        ER_SEM42.ci
-        ER_SEM43.ci
+        OK_SEM05.ci
 
     typeError
-        ER_SEM09.ci
         ER_SEM15.ci
 
     typeErrorSearchMethod
@@ -145,16 +130,21 @@ Testes 'Muito importantes' em que o compilador acertou:
         ER_SEM13.ci
         ER_SEM17.ci
         ER_SEM37.ci
+        ER_SEM59.ci
         ER_SEM61.ci
         ER_SEM68.ci
         ER_SEM71.ci
 
     typeErrorSearchMethodSuper
         ER_SEM47.ci
+        ER_SEM60.ci
 
     methodsEqualNames
         ER_SEM32.ci
         ER_SEM33.ci
+
+    methodSearchSuperclass
+        OK_SEM10.ci
 
     localVarRedeclared
         ER_SEM28.ci
@@ -176,13 +166,16 @@ Testes 'Muito importantes' em que o compilador acertou:
     supertypeAssignSelf
         OK_SEM15.ci
 
+    nilEqualEqualNotEqual
+        OK_SEM14.ci
+
+    nilAssign
+        OK_SEM14.ci
+
 
 Testes 'importantes' em que o compilador acertou:
     superWithoutSuperclass
         ER_SEM46.ci
-
-    expressionExpected
-        ER_SEM36.ci
 
     illegalReturnStatement
         ER_SEM35.ci
@@ -236,26 +229,33 @@ Testes 'pouco importantes' em que o compilador acertou
         OK_SEM16.ci
 
 
-6 arquivos lan�aram exce��es que n�o foram capturadas pelo compilador ou houve algum problema e o m�todo 'compileProgram' retornou 'null'. A maioria delas � provavelmente NullPointerException. Estes arquivos s�o:
+7 arquivos lan�aram exce��es que n�o foram capturadas pelo compilador ou houve algum problema e o m�todo 'compileProgram' retornou 'null'. A maioria delas � provavelmente NullPointerException. Estes arquivos s�o:
     ER_SEM77.ci
     ER_SEM78.ci
     ER_SEM79.ci
+    ER_SEM81.ci
     ER_SIN14.ci
     ER_SIN15.ci
     ER_SIN16.ci
 
 _________________________________________________________________________
 
-30 de um total de 135 erros que deveriam ser sinalizados n�o o foram (22%)
-15 erros foram sinalizados na linha errada (11%)
-18 erros foram sinalizados em 48 arquivos sem erro (37%)
+36 de um total de 134 erros que deveriam ser sinalizados n�o o foram (26%)
+13 erros foram sinalizados na linha errada (9%)
+16 erros foram sinalizados em 49 arquivos sem erro (32%)
 _________________________________________________________________________
 
 Erros que deveriam ser sinalizados mas n�o foram:
 
+ER_SEM04.ci, 12, Type error: value of the right-hand side is not subtype of the variable of the left-hand side. (comp.Compiler.assignExprLocalDec())
+
+ER_SEM05.ci, 11, 'int' cannot be assigned to 'boolean' (comp.Compiler.assignExprLocalDec())
+
 ER_SEM06.ci, 12, 'operator expected' or 'variable expected at the left-hand side of a assignment'
 
 ER_SEM08.ci, 13, type boolean does not support operation '+' (comp.Compiler.simpleExpr())
+
+ER_SEM09.ci, 15, type 'int' does not support operator '&&' (comp.Compiler.term())
 
 ER_SEM12.ci, 10, operator '+' of 'Int' expects an 'Int' value (comp.Compiler.simpleExpr())
 
@@ -273,9 +273,17 @@ ER_SEM31.ci, 16, Method 'i' has name equal to an instance variable (comp.Compile
 
 ER_SEM34.ci, 24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
 
+ER_SEM36.ci, 26, Expression expected in the right-hand side of assignment (comp.Compiler.assignExprLocalDec())
+
 ER_SEM38.ci, 21, Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side (comp.Compiler.assignExprLocalDec())
 
 ER_SEM40.ci, 51, Type error: the type of the real parameter is not subclass of the type of the formal parameter (comp.Compiler.factor())
+
+ER_SEM41.ci, 23, Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class (comp.Compiler.assignExprLocalDec())
+
+ER_SEM42.ci, 16, Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class (comp.Compiler.assignExprLocalDec())
+
+ER_SEM43.ci, 12, Type error: 'nil' cannot be assigned to a variable of a basic type (comp.Compiler.assignExprLocalDec())
 
 ER_SEM44.ci, 27, Command 'write' does not accept objects (comp.Compiler.writeStatement())
 
@@ -293,15 +301,13 @@ ER_SEM55.ci, 10, Illegal types with ++, only Int and String are allowed
 
 ER_SEM56.ci, 12, Illegal types with ++, only Int and String are allowed
 
-ER_SEM59.ci, 26, Method 'p' was not found in the public interface of 'A' or ts superclasses (comp.Compiler.factor())
+ER_SEM57.ci, 26, Incompatible types cannot be compared with '==' because the results will always be 'false' (comp.Compiler.expr())
 
-ER_SEM60.ci, 25, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
+ER_SEM58.ci, 26, Incompatible types cannot be compared with '!=' because the result will always be 'false' (comp.Compiler.expr())
 
 ER_SEM62.ci, 17, Identifier 'a' was not found (comp.Compiler.factor())
 
 ER_SEM80.ci, 13, Method 'run' of class 'Program' with a return value type (comp.Compiler.methodDec())
-
-ER_SEM81.ci, 13, Method 'run' of class 'Program' cannot be private (comp.Compiler.methodDec())
 
 ER_SEM88.ci, 17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
 
@@ -323,14 +329,6 @@ ER_SEM01.ci
 ER_SEM100.ci
     correto:    26, Identifer 'error' was not found 
     sinalizado: 25, Identifier 'In' was not declared
-
-ER_SEM57.ci
-    correto:    26, Incompatible types cannot be compared with '==' because the results will always be 'false' (comp.Compiler.expr())
-    sinalizado: 23, Type error: value of the right-hand side is not subtype of the variable of the left-hand side.
-
-ER_SEM58.ci
-    correto:    26, Incompatible types cannot be compared with '!=' because the result will always be 'false' (comp.Compiler.expr())
-    sinalizado: 23, Type error: value of the right-hand side is not subtype of the variable of the left-hand side.
 
 ER_SEM82.ci
     correto:    13,  
@@ -395,19 +393,15 @@ OK_MATH.ci, 55, Identifier 'In' was not declared
 
 OK_QUEUE.ci, 28, Class 'next' does not exist.
 
-OK_SEM05.ci, 63, Type error: value of the right-hand side is not subtype of the variable of the left-hand side.
-
 OK_SEM06.ci, 16, Variable n was already declared
 
-OK_SEM09.ci, 15, Type error: value of the right-hand side is not subtype of the variable of the left-hand side.
-
-OK_SEM10.ci, 52, Type error: value of the right-hand side is not subtype of the variable of the left-hand side.
-
-OK_SEM14.ci, 31, Type error: value of the right-hand side is not subtype of the variable of the left-hand side.
+OK_SEM09.ci, 18, Method of class 'other', named 'm', does not exist
 
 OK_SEM17.ci, 11, Identifier 'In' was not declared
 
 OK_SIN02.CI, 31, ';' expected
+
+OK_SIN09.CI, 29, Method of class 'A', named 'm2', does not exist
 
 OK_SIN10.CI, 31, Identifier 'In' was not declared
 
@@ -470,24 +464,9 @@ The compiler message was: "Variable i was already declared"
 The 'cep' message is:      "Variable 'i' is being redeclared"
 
 
-ER_SEM04.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-
-
-ER_SEM05.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "'int' cannot be assigned to 'boolean'"
-
-
 ER_SEM07.ci
 The compiler message was: "Attempt to access member on a variable of basic type"
 The 'cep' message is:      "Message send to a non-object receiver"
-
-
-ER_SEM09.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "type 'int' does not support operator '&&'"
 
 
 ER_SEM11.ci
@@ -575,11 +554,6 @@ The compiler message was: "This method cannot return any value"
 The 'cep' message is:      "Illegal 'return' statement. Method returns 'void'"
 
 
-ER_SEM36.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "Expression expected in the right-hand side of assignment"
-
-
 ER_SEM37.ci
 The compiler message was: "Method of class 'a', named 'set', does not exist"
 The 'cep' message is:      "Method 'set' was not found in class 'A' or its superclasses"
@@ -588,21 +562,6 @@ The 'cep' message is:      "Method 'set' was not found in class 'A' or its super
 ER_SEM39.ci
 The compiler message was: "This expression is not compatible with the method return type"
 The 'cep' message is:      "Type error: type of the expression returned is not subclass of the method return type"
-
-
-ER_SEM41.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class"
-
-
-ER_SEM42.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class"
-
-
-ER_SEM43.ci
-The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
-The 'cep' message is:      "Type error: 'nil' cannot be assigned to a variable of a basic type"
 
 
 ER_SEM45.ci
@@ -628,6 +587,16 @@ The 'cep' message is:      "Identifier expected"
 ER_SEM49.ci
 The compiler message was: "Identifier expected"
 The 'cep' message is:      "Class expected"
+
+
+ER_SEM59.ci
+The compiler message was: "Method of class 'a', named 'p', does not exist"
+The 'cep' message is:      "Method 'p' was not found in the public interface of 'A' or ts superclasses"
+
+
+ER_SEM60.ci
+The compiler message was: "Method of class 'A', named 'p', does not exist"
+The 'cep' message is:      "Method 'p' was not found in the public interface of 'A' or its superclasses"
 
 
 ER_SEM61.ci

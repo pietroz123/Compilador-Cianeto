@@ -37,6 +37,9 @@ public class TypeCianetoClass extends Type {
     public ArrayList<MethodDec> getPublicMethodList() {
         return publicMethodList;
     }
+    public ArrayList<MethodDec> getPrivateMethodList() {
+        return privateMethodList;
+    }
 
     /**
      * Setters
@@ -90,12 +93,16 @@ public class TypeCianetoClass extends Type {
     /**
      * Insere um método
      *
-     * TODO : Verificar se o método é público ou privado
-     *
      * @param method
+     * @param qualifier
      */
-    public void addMethod(MethodDec method) {
-        publicMethodList.add(method);
+    public void addMethod(MethodDec method, Qualifier qualifier) {
+        if (qualifier.getTokens().contains(Token.PRIVATE)) {
+            privateMethodList.add(method);
+        }
+        else {
+            publicMethodList.add(method);
+        }
     }
 
     /**
@@ -109,7 +116,7 @@ public class TypeCianetoClass extends Type {
     /**
      * Verifica se um método existe na lista de métodos públicos
      * @param methodId : Identificador do método
-     * @return
+     * @return MethodDec
      */
     public MethodDec searchPublicMethod(String methodId) {
         for (MethodDec method : this.publicMethodList) {
@@ -135,6 +142,51 @@ public class TypeCianetoClass extends Type {
         }
 
         return null;
+    }
+    /**
+     * Verifica se um método existe na lista de métodos públicos
+     * @param methodId : Identificador do método
+     * @return MethodDec
+     */
+    public MethodDec searchPrivateMethod(String methodId) {
+        for (MethodDec method : this.privateMethodList) {
+            if (method.getId().equals(methodId)) {
+                return method;
+            }
+        }
+
+        /**
+         * Verifica os métodos das superclasses
+         */
+        if (superclass != null) {
+            TypeCianetoClass current = this.getSuperclass();
+
+            while (current != null) {
+                for (MethodDec method : current.getPrivateMethodList()) {
+                    if (method.getId().equals(methodId)) {
+                        return method;
+                    }
+                }
+                current = current.getSuperclass();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Busca um método em ambas as listas de métodos públicos e privados
+     * @param methodId
+     * @return MethodDec
+     */
+    public MethodDec searchAllMethods(String methodId) {
+        MethodDec m = searchPublicMethod(methodId);
+
+        if (m == null) {
+            m = searchPrivateMethod(methodId);
+        }
+
+        return m;
     }
 
     /**

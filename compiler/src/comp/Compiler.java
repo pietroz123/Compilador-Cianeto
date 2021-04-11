@@ -277,7 +277,7 @@ public class Compiler {
 			 * MethodDec
 			 */
 			else if ( lexer.token == Token.FUNC ) {
-				member = methodDec();
+				member = methodDec(qualifier);
 			}
 			else {
 				break;
@@ -319,8 +319,9 @@ public class Compiler {
 	/**
 	 * MethodDec ::= "func" IdColon FormalParamDec [ "->" Type ] "{" StatementList "}"
 	 * 				 | "func" Id [ "->" Type ] "{" StatementList "}"
+	 * @param qualifier
 	 */
-	private MethodDec methodDec() {
+	private MethodDec methodDec(Qualifier qualifier) {
 		this.currentMethod = new MethodDec();
 		this.returnStatCalled = false;
 
@@ -392,7 +393,7 @@ public class Compiler {
 
 		symbolTable.clearLocal();
 		symbolTable.putInFunc(id, methodDec);
-		this.currentClass.addMethod(methodDec);
+		this.currentClass.addMethod(methodDec, qualifier);
 
 		return methodDec;
 	}
@@ -730,9 +731,9 @@ public class Compiler {
 			next();
 			rightExpr = expr();
 
-			if ( !leftExpr.getType().isCompatible(rightExpr.getType()) ) {
-				error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
-			}
+			// if ( !leftExpr.getType().isCompatible(rightExpr.getType()) ) {
+			// 	error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+			// }
 		}
 
 		return new AssignExpr(leftExpr, rightExpr);
@@ -1134,7 +1135,7 @@ public class Compiler {
 							// Verifica se existe uma variável de instância ou um método na classe atual
 							Member m = currentClass.searchInstanceVariable(firstId);
 							if (m == null) {
-								m = currentClass.searchPublicMethod(firstId);
+								m = currentClass.searchAllMethods(firstId);
 								if (m == null) {
 									error("Class '" + currentClass.getName() + "' does not have an instance variable or method named '" + firstId + "'");
 								}
