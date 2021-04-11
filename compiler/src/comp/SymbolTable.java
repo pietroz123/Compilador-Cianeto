@@ -29,6 +29,9 @@ public class SymbolTable {
     public void putInLocal(String key, Object value) {
         localTable.put(key, value);
     }
+    public void putInFunc(String key, Object value) {
+	    funcTable.put(key, value);
+	}
 
     /**
      * Getters
@@ -39,6 +42,9 @@ public class SymbolTable {
     public Object getInGlobal(Object key) {
         return globalTable.get(key);
     }
+    public Object getInFunc(Object key) {
+		return funcTable.get(key);
+	}
 
     /**
      * Limpeza das tabelas
@@ -46,7 +52,11 @@ public class SymbolTable {
     public void clearLocal() {
         localTable.clear();
     }
+    public void clearFunc() {
+        funcTable.clear();
+    }
 
     private Hashtable<String, Object> globalTable;
     private Hashtable<String, Object> localTable;
+    private Hashtable<String, Object> funcTable;
 }

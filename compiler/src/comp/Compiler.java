@@ -243,9 +243,6 @@ public class Compiler {
 			error("'end' expected");
 		next();
 
-		// Limpa a tabela local
-		symbolTable.clearLocal();
-
 		return currentClass;
 	}
 
@@ -379,8 +376,7 @@ public class Compiler {
 
 		MethodDec methodDec = new MethodDec(id, formalParamDec, returnType, statementList);
 
-		// Adiciona o método na tabela local e na classe corrente
-		symbolTable.putInLocal(id, methodDec);
+		symbolTable.clearLocal();
 		this.currentClass.addMethod(methodDec);
 
 		return methodDec;
@@ -1117,11 +1113,15 @@ public class Compiler {
 						 */
 						if ( lexer.token != Token.DOT) {
 							// Verifica se existe uma variável de instância ou um método na classe atual
-							if (symbolTable.getInLocal(firstId) == null) {
-								error("Class '" + currentClass.getName() + "' does not have an instance variable or method named '" + firstId + "'");
+							Member m = currentClass.searchInstanceVariable(firstId);
+							if (m == null) {
+								m = currentClass.searchPublicMethod(firstId);
+								if (m == null) {
+									error("Class '" + currentClass.getName() + "' does not have an instance variable or method named '" + firstId + "'");
+								}
 							}
 
-							return new UnaryMessagePassingToSelf(currentClass, symbolTable.getInLocal(firstId));
+							return new UnaryMessagePassingToSelf(currentClass, m);
 						}
 						else {
 							/**
@@ -1164,13 +1164,13 @@ public class Compiler {
 							else if (lexer.token == Token.ID) {
 								next();
 
-								// Verifica se existe uma variável de instância nessa classe de self
-								var = cianetoClass.searchInstanceVariable(secondId);
-								if (var == null) {
-									error("Class '" + cianetoClass.getName() + "' does not have an instance variable of name '" + secondId + "'");
+								// Verifica se existe um método nessa classe de self
+								MethodDec classMethod = cianetoClass.searchPublicMethod(secondId);
+								if (classMethod == null) {
+									error("Method of class '" + cianetoClass.getName() + "', named '" + secondId + "', does not exist");
 								}
 
-								return new UnaryMessagePassingToSelf(currentClass, cianetoClass, var);
+								return new UnaryMessagePassingToSelf(currentClass, cianetoClass, classMethod);
 							}
 						}
 
