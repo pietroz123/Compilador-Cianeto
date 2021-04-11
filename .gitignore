@@ -85,6 +85,11 @@ nb-configuration.xml
 ##############################
 .DS_Store
 
+##############################
+## ARQUIVOS
+##############################
+genJava/*.java
+
 # Exceções
 !.vscode/launch.json
 !bin/report.txt

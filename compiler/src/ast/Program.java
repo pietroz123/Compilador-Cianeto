@@ -18,6 +18,29 @@ public class Program {
 	}
 
 	public void genJava(PW pw) {
+
+		// Imports
+		pw.print("import java.util.*;");
+		pw.println();
+
+		pw.println("public class " + mainJavaClassName + " {");
+		pw.add();
+		pw.printlnIdent("public static Scanner input = new Scanner(System.in);");
+		pw.println();
+		pw.printlnIdent("public static void main(String []args) {");
+		pw.add();
+		pw.printlnIdent("new Program().run();");
+		pw.sub();
+		pw.printlnIdent("}");
+		pw.println();
+
+		// Classes
+		for (TypeCianetoClass classDec : this.classList) {
+			classDec.genJava(pw);
+		}
+
+		pw.println("}");
+
 	}
 
 	public void genC(PW pw) {

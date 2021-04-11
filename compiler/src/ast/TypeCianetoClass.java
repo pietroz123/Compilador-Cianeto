@@ -18,6 +18,7 @@ public class TypeCianetoClass extends Type {
     // classe
     public TypeCianetoClass(String name) {
         super(name);
+        this.name = name;
         this.publicMethodList = new ArrayList<>();
         this.privateMethodList = new ArrayList<>();
         this.fieldList = new ArrayList<>();
@@ -204,6 +205,28 @@ public class TypeCianetoClass extends Type {
         }
 
         return null;
+    }
+
+    public void genJava(PW pw) {
+        if (isOpen) {
+            pw.printIdent("public");
+        }
+        pw.printIdent("class " + name);
+
+        if (superclass != null) {
+            pw.printIdent(" extends " + superclass.getName());
+        }
+
+		pw.println(" {");
+		pw.add();
+		pw.println();
+
+        // Corpo da classe
+
+        pw.println();
+		pw.sub();
+		pw.printlnIdent("}");
+		pw.println();
     }
 
     private Boolean isOpen = false;
