@@ -26,5 +26,11 @@ public class Qualifier {
         return tokens;
     }
 
+    public void genJava(PW pw) {
+        for (Token tk : tokens) {
+            pw.printIdent(tk.toString() + " ");
+        }
+    }
+
     private ArrayList<Token> tokens = new ArrayList<Token>();
 }

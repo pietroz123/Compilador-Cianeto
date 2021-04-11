@@ -28,6 +28,10 @@ public class TypeCianetoClass extends Type {
     public String getCname() {
         return getName();
     }
+    @Override
+    public String getJavaName() {
+        return getName();
+    }
 
     /**
      * Getters
@@ -222,6 +226,10 @@ public class TypeCianetoClass extends Type {
 		pw.println();
 
         // Corpo da classe
+        for (MemberListPair member : memberList.getMemberList()) {
+            member.getQualifier().genJava(pw);
+            member.getMember().genJava(pw);
+        }
 
         pw.println();
 		pw.sub();

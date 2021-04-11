@@ -54,6 +54,26 @@ public class MethodDec extends Member {
         this.statements = statements;
     }
 
+    @Override
+    void genJava(PW pw) {
+        pw.printIdent(returnType.getJavaName() + " " + id + "(");
+
+        // Parametros
+        // TODO
+
+        pw.println(") {");
+
+        // Statements
+        // TODO
+
+        pw.printlnIdent("}");
+    }
+
+    @Override
+    void genC(PW pw) {
+        // TODO Auto-generated method stub
+    }
+
     private String id;
     private FormalParamDec formalParamDec;
     private Type returnType;

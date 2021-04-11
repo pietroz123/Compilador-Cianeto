@@ -5,18 +5,18 @@
 
 package ast;
 
-public class TypeBoolean extends Type {
+public class TypeVoid extends Type {
 
-   public TypeBoolean() { super("boolean"); }
+   public TypeVoid() { super("void"); }
 
    @Override
    public String getCname() {
-      return "int";
+      return "void";
    }
 
    @Override
    public String getJavaName() {
-      return "Boolean";
+      return "void";
    }
 
 }

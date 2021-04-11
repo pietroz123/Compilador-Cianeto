@@ -10,8 +10,13 @@ public class TypeUndefined extends Type {
 
    public TypeUndefined() { super("undefined"); }
 
+   @Override
    public String getCname() {
       return "int";
+   }
+   @Override
+   public String getJavaName() {
+      return "naosei";
    }
 
 }

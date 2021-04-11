@@ -364,7 +364,7 @@ public class Compiler {
 			this.currentMethod.setReturnType(returnType);
 		}
 		else {
-			returnType = Type.nullType;
+			returnType = Type.voidType;
 			this.currentMethod.setReturnType(returnType);
 		}
 
@@ -385,7 +385,7 @@ public class Compiler {
 		next();
 
 		// Verifica retorno
-		if (returnType != Type.nullType && this.returnStatCalled == false) {
+		if (returnType != Type.voidType && this.returnStatCalled == false) {
 			error("Missing 'return' statement in method '"+id+"'");
 		}
 

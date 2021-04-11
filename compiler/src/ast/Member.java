@@ -8,6 +8,9 @@ package ast;
 /**
  * Member ::= FieldDec | MethodDec
  */
-public class Member {
+abstract public class Member {
+
+    abstract void genJava(PW pw);
+    abstract void genC(PW pw);
 
 }

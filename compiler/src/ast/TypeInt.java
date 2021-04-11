@@ -11,8 +11,13 @@ public class TypeInt extends Type {
         super("int");
     }
 
-   public String getCname() {
-      return "int";
-   }
+    @Override
+    public String getCname() {
+        return "int";
+    }
+    @Override
+    public String getJavaName() {
+        return "Integer";
+    }
 
 }

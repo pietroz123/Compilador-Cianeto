@@ -15,5 +15,9 @@ public class TypeNull extends Type {
 	public String getCname() {
 		return "NULL";
 	}
+	@Override
+    public String getJavaName() {
+        return "null";
+    }
 
 }
