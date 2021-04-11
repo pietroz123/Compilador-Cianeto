@@ -2,8 +2,8 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  24            I: 5              PI: 14            Exc: 6
-Dev: 31/135/22%    LE: 15/135/11%    SSE: 18/48/37%    
+MI:  24            I: 5              PI: 13            Exc: 6
+Dev: 30/135/22%    LE: 15/135/11%    SSE: 18/48/37%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -11,7 +11,7 @@ _________________________________________________________________________
 
 N�mero de testes 'Muito importantes' em que o compilador falhou: 24
 N�mero de testes 'Importantes' em que o compilador falhou: 5
-N�mero de testes 'Pouco importantes' em que o compilador falhou: 14
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 13
 
 O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -110,9 +110,6 @@ Testes 'pouco importantes' em que o compilador falhou
 
     exprRightHandSideAssignment
         ER_SEM06.ci
-
-    classExtendsItself
-        ER_SEM27.ci
 
     returnTypeInMethodRunOfClassProgram
         ER_SEM80.ci
@@ -217,6 +214,9 @@ Testes 'pouco importantes' em que o compilador acertou
     openAsIdentifier
         OK_SEM11.ci
 
+    classExtendsItself
+        ER_SEM27.ci
+
     repeatUntil
         OK_SEM18.ci
 
@@ -246,7 +246,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-31 de um total de 135 erros que deveriam ser sinalizados n�o o foram (22%)
+30 de um total de 135 erros que deveriam ser sinalizados n�o o foram (22%)
 15 erros foram sinalizados na linha errada (11%)
 18 erros foram sinalizados em 48 arquivos sem erro (37%)
 _________________________________________________________________________
@@ -264,8 +264,6 @@ ER_SEM14.ci, 11, Attempt to print a boolean expression
 ER_SEM16.ci, 12, Operator '-' does not accepts 'boolean' expressions (comp.Compiler.signalFactor())
 
 ER_SEM26.ci, 15, 'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))
-
-ER_SEM27.ci, 11, Class 'A' is inheriting from itself (comp.Compiler.classDec())
 
 ER_SEM29.ci, 22, Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A' (comp.Compiler.methodDec() or comp.Compiler.classDec())
 
@@ -550,6 +548,11 @@ The 'cep' message is:      "Identifier expected"
 ER_SEM25.ci
 The compiler message was: "A variable name was expected"
 The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM27.ci
+The compiler message was: "Class 'A' is inheriting from itself"
+The 'cep' message is:      "Class 'A' is inheriting from itself"
 
 
 ER_SEM28.ci

@@ -223,6 +223,10 @@ public class Compiler {
 
 			String superclassName = lexer.getStringValue();
 
+			if (superclassName.equals(className)) {
+				error("Class '"+className+"' is inheriting from itself");
+			}
+
 			// Verificar se a superclasse existe
 			TypeCianetoClass superclass = (TypeCianetoClass) symbolTable.getInGlobal(superclassName);
 			if (superclass == null) {
