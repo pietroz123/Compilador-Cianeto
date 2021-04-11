@@ -1130,7 +1130,7 @@ public class Compiler {
 							// Verifica se essa classe existe
 							TypeCianetoClass cianetoClass = (TypeCianetoClass)  symbolTable.getInGlobal(firstId);
 							if (cianetoClass == null) {
-								error("Class '" + firstId + "' does not exist");
+								error("Class '" + firstId + "' does not exist.");
 							}
 
 							next();
@@ -1294,7 +1294,7 @@ public class Compiler {
 				String id = lexer.getStringValue();
 				TypeCianetoClass cianetoClass = (TypeCianetoClass)  symbolTable.getInGlobal(id);
 				if (cianetoClass == null) {
-					error("Class '" + id + "' does not exist");
+					error("Class '" + id + "' does not exist for type");
 				}
 				type = cianetoClass;
 				break;
