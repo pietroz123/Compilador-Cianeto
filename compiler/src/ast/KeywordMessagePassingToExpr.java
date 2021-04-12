@@ -29,7 +29,14 @@ public class KeywordMessagePassingToExpr extends Expression {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.print(instanceVar.getId() + "." + methodCalled.getId());
+        pw.print("(");
+
+        if (exprList != null) {
+            exprList.genJava(pw);
+        }
+
+        pw.print(")");
     }
 
     private Variable instanceVar;
