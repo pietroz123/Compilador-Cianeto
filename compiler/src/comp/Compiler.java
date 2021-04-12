@@ -924,7 +924,8 @@ public class Compiler {
 			 */
 			case NOT:
 				next();
-				return factor();
+				expr = expr();
+				return new UnaryExpr(Token.NOT, expr);
 			/**
 			 * "nil"
 			 */

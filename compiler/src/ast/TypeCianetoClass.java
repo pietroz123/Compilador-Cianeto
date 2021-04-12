@@ -217,11 +217,8 @@ public class TypeCianetoClass extends Type {
             pw.print("public ");
         }
 
-        // Program deve ser static para poder chamar run
-        if (name.equals("Program")) {
-            pw.print("static ");
-        }
-        pw.print("class " + name);
+        // static para criação de objetos das classes
+        pw.print("static class " + name);
 
         if (superclass != null) {
             pw.print(" extends " + superclass.getName());

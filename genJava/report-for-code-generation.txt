@@ -1,25 +1,25 @@
-Relatï¿½rio do Compilador
+Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
  SSE: 0/17/0%      
-SwithE: 16
+SwithE: 3
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exceï¿½ï¿½es
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
  SwithE = number of generated files with compilation errors
 _________________________________________________________________________
 
-Nï¿½mero de testes 'Muito importantes' em que o compilador falhou: 0
-Nï¿½mero de testes 'Importantes' em que o compilador falhou: 0
-Nï¿½mero de testes 'Pouco importantes' em que o compilador falhou: 0
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
 
-O compilador obteve sucesso em testar alguns aspectos (construï¿½ï¿½es) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados sï¿½o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou cï¿½digo correto (se opï¿½ï¿½o -genjava ou -genc foi usada).
-Os testes sï¿½o categorizados por importï¿½ncia: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador acertou:
     inheritance
@@ -92,30 +92,30 @@ _________________________________________________________________________
 
 0 erros foram sinalizados em 17 arquivos sem erro (0%)
 _________________________________________________________________________
-O compilador nï¿½o sinalizou nenhum erro que nï¿½o deveria ter sinalizado
-Para os casos de teste que vocï¿½ utilizou, o compilador estï¿½ correto
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+Para os casos de teste que voc� utilizou, o compilador est� correto
 
 List of Java or C files with compilation errors: 
+   genJava\OK_GER08.java
+   genJava\OK_GER10.java
+   genJava\OK_GER22.java
+
+List of files with correct Java or C code: 
    genJava\OK_GER01.java
    genJava\OK_GER02.java
    genJava\OK_GER03.java
    genJava\OK_GER04.java
    genJava\OK_GER06.java
    genJava\OK_GER07.java
-   genJava\OK_GER08.java
-   genJava\OK_GER09.java
-   genJava\OK_GER10.java
    genJava\OK_GER11.java
    genJava\OK_GER12.java
    genJava\OK_GER13.java
    genJava\OK_GER14.java
    genJava\OK_GER15.java
    genJava\OK_GER16.java
-   genJava\OK_GER22.java
-
-List of files with correct Java or C code: 
    genJava\OK_GER21.java
 
 List of files with Java or C code that compiles but was generated incorrectly: 
+   genJava\OK_GER09.java
 
 The compiler could not create the following .java or .c files:
