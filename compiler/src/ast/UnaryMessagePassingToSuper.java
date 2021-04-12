@@ -10,29 +10,26 @@ package ast;
  */
 public class UnaryMessagePassingToSuper extends Expression {
 
-    private TypeCianetoClass currentClass;
-    private MethodDec var;
-
-    public UnaryMessagePassingToSuper(TypeCianetoClass currentClass, MethodDec var) {
+    public UnaryMessagePassingToSuper(TypeCianetoClass currentClass, MethodDec methodCalled) {
         this.currentClass = currentClass;
-        this.var = var;
+        this.methodCalled = methodCalled;
     }
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Type getType() {
-        return var.getReturnType();
     }
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
-
+        pw.print("super." + methodCalled.getId() + "()");
     }
 
+    @Override
+    public Type getType() {
+        return methodCalled.getReturnType();
+    }
+
+    private TypeCianetoClass currentClass;
+    private MethodDec methodCalled;
 }

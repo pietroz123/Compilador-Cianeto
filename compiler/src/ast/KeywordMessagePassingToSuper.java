@@ -10,10 +10,6 @@ package ast;
  */
 public class KeywordMessagePassingToSuper extends Expression {
 
-    private TypeCianetoClass currentClass;
-    private MethodDec superclassMethod;
-    private ExpressionList expressionList;
-
     public KeywordMessagePassingToSuper(TypeCianetoClass currentClass, MethodDec superclassMethod, ExpressionList expressionList) {
         this.currentClass = currentClass;
         this.superclassMethod = superclassMethod;
@@ -26,13 +22,23 @@ public class KeywordMessagePassingToSuper extends Expression {
     }
 
     @Override
+    public void genJava(PW pw) {
+        pw.print("super." + superclassMethod.getId());
+        pw.print("(");
+
+        if (expressionList != null) {
+            expressionList.genJava(pw);
+        }
+
+        pw.print(")");
+    }
+
+    @Override
     public Type getType() {
         return superclassMethod.getReturnType();
     }
 
-    @Override
-    public void genJava(PW pw) {
-        // TODO Auto-generated method stub
-    }
-
+    private TypeCianetoClass currentClass;
+    private MethodDec superclassMethod;
+    private ExpressionList expressionList;
 }
