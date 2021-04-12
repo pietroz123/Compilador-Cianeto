@@ -24,6 +24,7 @@ public class ReturnStat extends Statement {
     public void genJava(PW pw) {
         pw.printIdent("return ");
         expr.genJava(pw);
+        pw.println(";");
     }
 
     private Expression expr;

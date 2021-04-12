@@ -1149,22 +1149,35 @@ public class Compiler {
 						 */
 						if ( lexer.token != Token.DOT) {
 							// Verifica se existe uma variável de instância ou um método na classe atual
-							Member m = currentClass.searchInstanceVariable(firstId);
-							if (m == null) {
-								m = currentClass.searchAllMethods(firstId);
-								if (m == null) {
+							Variable instanceVar;
+							MethodDec methodCalled;
+
+							instanceVar = currentClass.searchInstanceVariable(firstId);
+							if (instanceVar == null) {
+								methodCalled = currentClass.searchAllMethods(firstId);
+								if (methodCalled == null) {
 									error("Class '" + currentClass.getName() + "' does not have an instance variable or method named '" + firstId + "'");
 								}
+								else {
+									return new UnaryMessagePassingToSelf(currentClass, methodCalled);
+								}
 							}
-
-							return new UnaryMessagePassingToSelf(currentClass, m);
+							else {
+								return new UnaryMessagePassingToSelf(currentClass, instanceVar);
+							}
 						}
 						else {
 							/**
-							 * Se existe mais um ".", então o primeiro Id é uma classe de self
+							 * Se existe mais um ".", então o primeiro Id é uma variável de instância, que é uma classe
 							 */
-							// Verifica se essa classe existe
-							TypeCianetoClass cianetoClass = (TypeCianetoClass) currentClass.searchInstanceVariable(firstId).getType();
+							// Verifica se essa variável de instância existe
+							Variable instanceVar = currentClass.searchInstanceVariable(firstId);
+							if (instanceVar == null) {
+								error("Class '" + currentClass.getName() + "' does not have an instance variable called '" + firstId + "'");
+							}
+
+							// Verifica se a classe é válida
+							TypeCianetoClass cianetoClass = (TypeCianetoClass) instanceVar.getType();
 							if (cianetoClass == null) {
 								error("Class '" + firstId + "' does not exist.");
 							}
@@ -1192,7 +1205,7 @@ public class Compiler {
 
 								ExpressionList expressionList = expressionList();
 
-								return new KeywordMessagePassingToSelf(currentClass, cianetoClass, classMethod, expressionList);
+								return new KeywordMessagePassingToSelf(currentClass, instanceVar, classMethod, expressionList);
 							}
 							/**
 							 * "self" "." Id "." Id => acesso de variável de instância de uma classe de self
@@ -1206,7 +1219,7 @@ public class Compiler {
 									error("Method of class '" + cianetoClass.getName() + "', named '" + secondId + "', does not exist");
 								}
 
-								return new UnaryMessagePassingToSelf(currentClass, cianetoClass, classMethod);
+								return new UnaryMessagePassingToSelf(currentClass, instanceVar, classMethod);
 							}
 						}
 

@@ -199,11 +199,11 @@ public class TypeCianetoClass extends Type {
      * @param id
      * @return
      */
-    public FieldDec searchInstanceVariable(String id) {
+    public Variable searchInstanceVariable(String id) {
         for (FieldDec field : this.fieldList) {
             for (String fieldId : field.getIdList().getIdList()) {
                 if (fieldId.equals(id)) {
-                    return field;
+                    return new Variable(fieldId, field.getType());
                 }
             }
         }

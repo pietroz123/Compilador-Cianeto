@@ -11,22 +11,19 @@ package ast;
  */
 public class KeywordMessagePassingToSelf extends Expression {
 
-    private TypeCianetoClass currentClass;
-    private MethodDec classMethod;
-    private ExpressionList exprList;
-    private TypeCianetoClass cianetoClass;
-
     // "self" "." IdColon ExpressionList
     public KeywordMessagePassingToSelf(TypeCianetoClass currentClass, MethodDec classMethod, ExpressionList exprList) {
+        this.messageType = "SELF_METHOD";
         this.currentClass = currentClass;
         this.classMethod = classMethod;
         this.exprList = exprList;
     }
 
     // "self" "." Id "." IdColon ExpressionList
-    public KeywordMessagePassingToSelf(TypeCianetoClass currentClass, TypeCianetoClass cianetoClass, MethodDec classMethod, ExpressionList exprList) {
+    public KeywordMessagePassingToSelf(TypeCianetoClass currentClass, Variable instanceVar, MethodDec classMethod, ExpressionList exprList) {
+        this.messageType = "SELF_INSTANCE_METHOD";
         this.currentClass = currentClass;
-        this.cianetoClass = cianetoClass;
+        this.instanceVar = instanceVar;
         this.classMethod = classMethod;
         this.exprList = exprList;
     }
@@ -34,19 +31,51 @@ public class KeywordMessagePassingToSelf extends Expression {
     @Override
     public void genC(PW pw, boolean putParenthesis) {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        switch (messageType) {
+            case "SELF_METHOD":
+                pw.print("this." + classMethod.getId());
+                pw.print("(");
 
+                if (exprList != null) {
+                    exprList.genJava(pw);
+                }
+
+                pw.print(")");
+                break;
+
+            case "SELF_INSTANCE_METHOD":
+                pw.print("this." + instanceVar.getId() + "." + classMethod.getId());
+                pw.print("(");
+
+                if (exprList != null) {
+                    exprList.genJava(pw);
+                }
+
+                pw.print(")");
+                break;
+        }
     }
 
+    @Override
+    public Type getType() {
+        switch (messageType) {
+            case "SELF_METHOD":
+                return classMethod.getReturnType();
+            case "SELF_INSTANCE_METHOD":
+                return classMethod.getReturnType();
+            default:
+                return null;
+        }
+    }
+
+
+    private String messageType;
+    private TypeCianetoClass currentClass; // currentClass existe para caso seja necessário verificação de tipos
+    private Variable instanceVar; // lembrete: se precisar da classe é só fazer instanceVar.getType()
+    private MethodDec classMethod;
+    private ExpressionList exprList;
 }

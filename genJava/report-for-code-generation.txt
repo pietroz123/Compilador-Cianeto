@@ -4,7 +4,7 @@ Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
  SSE: 0/17/0%      
-SwithE: 17
+SwithE: 16
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceï¿½ï¿½es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -111,10 +111,10 @@ List of Java or C files with compilation errors:
    genJava\OK_GER14.java
    genJava\OK_GER15.java
    genJava\OK_GER16.java
-   genJava\OK_GER21.java
    genJava\OK_GER22.java
 
 List of files with correct Java or C code: 
+   genJava\OK_GER21.java
 
 List of files with Java or C code that compiles but was generated incorrectly: 
 
