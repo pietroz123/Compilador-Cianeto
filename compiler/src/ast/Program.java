@@ -25,7 +25,7 @@ public class Program {
 
 		pw.println("public class " + mainJavaClassName + " {");
 		pw.add();
-		pw.printlnIdent("public static Scanner input = new Scanner(System.in);");
+		pw.printlnIdent("public static Scanner inputScanner = new Scanner(System.in);");
 		pw.println();
 		pw.printlnIdent("public static void main(String []args) {");
 		pw.add();

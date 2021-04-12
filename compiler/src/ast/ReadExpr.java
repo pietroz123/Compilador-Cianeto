@@ -27,7 +27,12 @@ public class ReadExpr extends Expression {
 
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        if (readName.equals("readString")) {
+            pw.print("inputScanner.next()");
+        }
+        else if (readName.equals("readInt")) {
+            pw.print("inputScanner.nextInt()");
+        }
     }
 
     private String readName;

@@ -1111,7 +1111,7 @@ public class Compiler {
 
 				if (lexer.token != Token.DOT) {
 					// "self"
-					return new SelfExpression();
+					return new SelfExpression(currentClass);
 				}
 				else {
 					next();

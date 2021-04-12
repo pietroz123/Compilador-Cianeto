@@ -10,24 +10,24 @@ package ast;
  */
 public class SelfExpression extends Expression {
 
-    public SelfExpression() {
+    public SelfExpression(TypeCianetoClass currentClass) {
+        this.currentClass = currentClass;
     }
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
     public void genJava(PW pw) {
-        pw.printlnIdent("this");
+        pw.print("this");
     }
 
+    @Override
+    public Type getType() {
+        return currentClass;
+    }
+
+    private TypeCianetoClass currentClass;
 }

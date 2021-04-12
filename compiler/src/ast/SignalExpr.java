@@ -24,7 +24,11 @@ public class SignalExpr extends Expression {
     }
     @Override
     public void genJava(PW pw) {
-        // TODO Auto-generated method stub
+        pw.print(signal.toString());
+
+        if (factor != null) {
+            factor.genJava(pw);
+        }
     }
 
     private Token signal;

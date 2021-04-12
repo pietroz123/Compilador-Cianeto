@@ -34,11 +34,11 @@ public class IfStat extends Statement {
         pw.printlnIdent("}");
 
         if (rightList != null) {
-            pw.println("else {");
+            pw.printlnIdent("else {");
             pw.add();
             rightList.genJava(pw);
             pw.sub();
-            pw.println("}");
+            pw.printlnIdent("}");
         }
     }
 

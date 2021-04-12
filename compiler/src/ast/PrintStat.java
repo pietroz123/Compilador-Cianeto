@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
  */
@@ -33,7 +35,25 @@ public class PrintStat extends Statement {
 
         // Expression List
         if (exprList != null) {
-            exprList.genJava(pw);
+
+            Iterator<Expression> it = exprList.getExprList().iterator();
+            while (it.hasNext()) {
+                Expression expr = it.next();
+
+                if (expr.getType() == Type.stringType) {
+                    pw.print("\"");
+                    expr.genJava(pw);
+                    pw.print("\"");
+                }
+                else {
+                    expr.genJava(pw);
+                }
+
+                if (it.hasNext()) {
+                    pw.print(" + ");
+                }
+            }
+
         }
         else {
             pw.print("\"\"");
