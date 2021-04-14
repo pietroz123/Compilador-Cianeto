@@ -16,7 +16,6 @@ public class NullExpr extends Expression {
    }
 
    public Type getType() {
-      //# corrija
-      return null;
+      return Type.nullType;
    }
 }

@@ -624,7 +624,7 @@ public class Compiler {
 		}
 
 		// Verifica se o método tem retorno correto
-		if ( !expr.getType().isCompatible(this.currentMethod.getReturnType()) ) {
+		if ( !this.currentMethod.getReturnType().isCompatible(expr.getType()) ) {
 			error("This expression is not compatible with the method return type");
 		}
 
@@ -737,9 +737,9 @@ public class Compiler {
 			next();
 			rightExpr = expr();
 
-			// if ( !leftExpr.getType().isCompatible(rightExpr.getType()) ) {
-			// 	error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
-			// }
+			if ( !leftExpr.getType().isCompatible(rightExpr.getType()) ) {
+				error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+			}
 		}
 
 		return new AssignExpr(leftExpr, rightExpr);

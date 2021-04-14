@@ -50,7 +50,13 @@ abstract public class Type {
             return false;
         }
         else if ( this instanceof TypeCianetoClass ) {
-            return this == other || ((TypeCianetoClass) this).isSubclassOf(other);
+            if ( other == Type.nullType ) {
+                return true;
+            }
+            if ( ! (other instanceof TypeCianetoClass) ) {
+                return false;
+            }
+            return ((TypeCianetoClass ) other).isSubclassOf(this);
         }
         else {
             return false;
