@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  14            I: 5              PI: 12            Exc: 7
-Dev: 25/134/18%    LE: 13/134/9%     SSE: 14/49/28%    
+MI:  11            I: 5              PI: 12            Exc: 7
+Dev: 22/134/16%    LE: 13/134/9%     SSE: 14/49/28%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 14
+N�mero de testes 'Muito importantes' em que o compilador falhou: 11
 N�mero de testes 'Importantes' em que o compilador falhou: 5
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
@@ -37,11 +37,6 @@ Testes 'Muito importantes' em que o compilador falhou:
     typeErrorEqualEqualNotEqual
         ER_SEM57.ci
         ER_SEM58.ci
-
-    missingOverride
-        ER_SEM52.ci
-        ER_SEM53.ci
-        ER_SEM54.ci
 
     wrongSubclassMethodSignature
         ER_SEM29.ci
@@ -166,6 +161,11 @@ Testes 'Muito importantes' em que o compilador acertou:
     nilEqualEqualNotEqual
         OK_SEM14.ci
 
+    missingOverride
+        ER_SEM52.ci
+        ER_SEM53.ci
+        ER_SEM54.ci
+
     nilAssign
         OK_SEM14.ci
 
@@ -240,7 +240,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-25 de um total de 134 erros que deveriam ser sinalizados n�o o foram (18%)
+22 de um total de 134 erros que deveriam ser sinalizados n�o o foram (16%)
 13 erros foram sinalizados na linha errada (9%)
 14 erros foram sinalizados em 49 arquivos sem erro (28%)
 _________________________________________________________________________
@@ -268,12 +268,6 @@ ER_SEM44.ci, 27, Command 'write' does not accept objects (comp.Compiler.writeSta
 ER_SEM50.ci, 19, Command 'break' outside a command 'while' or repeat-until (comp.Compiler.breakStatement())
 
 ER_SEM51.ci, 22, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
-
-ER_SEM52.ci, 12, 'override' expected before overridden method
-
-ER_SEM53.ci, 12, 'override' expected before overridden method
-
-ER_SEM54.ci, 13, 'override' expected before overridden method
 
 ER_SEM55.ci, 10, Illegal types with ++, only Int and String are allowed
 
@@ -616,6 +610,21 @@ The 'cep' message is:      "Identifier expected"
 ER_SEM49.ci
 The compiler message was: "Identifier expected"
 The 'cep' message is:      "Class expected"
+
+
+ER_SEM52.ci
+The compiler message was: "'override' expected before overridden method"
+The 'cep' message is:      "'override' expected before overridden method"
+
+
+ER_SEM53.ci
+The compiler message was: "'override' expected before overridden method"
+The 'cep' message is:      "'override' expected before overridden method"
+
+
+ER_SEM54.ci
+The compiler message was: "'override' expected before overridden method"
+The 'cep' message is:      "'override' expected before overridden method"
 
 
 ER_SEM59.ci

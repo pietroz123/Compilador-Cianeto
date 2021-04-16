@@ -14,6 +14,10 @@ public class ParamDec {
         this.var = var;
     }
 
+    public Variable getVar() {
+        return var;
+    }
+
     public void genJava(PW pw) {
         pw.print(var.getType().getJavaName() + " " + var.getId());
     }

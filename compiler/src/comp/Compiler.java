@@ -368,6 +368,15 @@ public class Compiler {
 			this.currentMethod.setReturnType(returnType);
 		}
 
+		// Verifica se o método é uma sobrecarga
+		if (
+			currentClass.getSuperclass() != null &&
+			this.currentMethod.isOverride(qualifier, this.currentMethod, currentClass.getSuperclass()) &&
+			!qualifier.getTokens().contains(Token.OVERRIDE)
+		) {
+			error("'override' expected before overridden method");
+		}
+
 		// Verifica "{"
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
 			error("'{' expected");

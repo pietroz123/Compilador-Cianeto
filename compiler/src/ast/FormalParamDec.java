@@ -16,6 +16,10 @@ public class FormalParamDec {
         this.paramList = new ArrayList<>();
     }
 
+    public ArrayList<ParamDec> getParamList() {
+        return paramList;
+    }
+
     public void addParam(ParamDec paramDec) {
         this.paramList.add(paramDec);
     }
