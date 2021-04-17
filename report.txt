@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  11            I: 5              PI: 12            Exc: 7
-Dev: 22/134/16%    LE: 13/134/9%     SSE: 14/49/28%    
+MI:  10            I: 5              PI: 12            Exc: 7
+Dev: 21/134/15%    LE: 13/134/9%     SSE: 14/49/28%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 11
+N�mero de testes 'Muito importantes' em que o compilador falhou: 10
 N�mero de testes 'Importantes' em que o compilador falhou: 5
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
@@ -30,9 +30,6 @@ Testes 'Muito importantes' em que o compilador falhou:
         ER_SEM100.ci
         ER_SEM62.ci
         ER_SEM91.ci
-
-    methodFieldEqualNames
-        ER_SEM31.ci
 
     typeErrorEqualEqualNotEqual
         ER_SEM57.ci
@@ -130,6 +127,9 @@ Testes 'Muito importantes' em que o compilador acertou:
     typeErrorSearchMethodSuper
         ER_SEM47.ci
         ER_SEM60.ci
+
+    methodFieldEqualNames
+        ER_SEM31.ci
 
     methodsEqualNames
         ER_SEM32.ci
@@ -240,7 +240,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-22 de um total de 134 erros que deveriam ser sinalizados n�o o foram (16%)
+21 de um total de 134 erros que deveriam ser sinalizados n�o o foram (15%)
 13 erros foram sinalizados na linha errada (9%)
 14 erros foram sinalizados em 49 arquivos sem erro (28%)
 _________________________________________________________________________
@@ -256,8 +256,6 @@ ER_SEM26.ci, 15, 'break' statement found outside a 'while' or 'repeat-until' sta
 ER_SEM29.ci, 22, Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A' (comp.Compiler.methodDec() or comp.Compiler.classDec())
 
 ER_SEM30.ci, 24, Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A' (comp.Compiler.methodDec())
-
-ER_SEM31.ci, 16, Method 'i' has name equal to an instance variable (comp.Compiler.methodDec())
 
 ER_SEM34.ci, 24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
 
@@ -535,6 +533,11 @@ The 'cep' message is:      "Class 'A' is inheriting from itself"
 ER_SEM28.ci
 The compiler message was: "Duplicate local variable 'i'"
 The 'cep' message is:      "Variable 'i' is being redeclared"
+
+
+ER_SEM31.ci
+The compiler message was: "Method 'i' has name equal to an instance variable"
+The 'cep' message is:      "Method 'i' has name equal to an instance variable"
 
 
 ER_SEM32.ci

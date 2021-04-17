@@ -345,6 +345,12 @@ public class Compiler {
 			error("Method '"+id+"' is being redeclared");
 		}
 
+		// Verifica se o nome do método é igual ao de uma variável de instância
+		Variable instanceVar = currentClass.searchInstanceVariable(id);
+		if ( instanceVar != null) {
+			error("Method '"+id+"' has name equal to an instance variable");
+		}
+
 		if ( lexer.token == Token.ID ) {
 			// unary method
 			next();
