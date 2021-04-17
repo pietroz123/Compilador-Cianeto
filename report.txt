@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  10            I: 5              PI: 12            Exc: 7
-Dev: 21/134/15%    LE: 13/134/9%     SSE: 14/49/28%    
+MI:  9             I: 5              PI: 12            Exc: 7
+Dev: 19/134/14%    LE: 13/134/9%     SSE: 15/49/30%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 10
+N�mero de testes 'Muito importantes' em que o compilador falhou: 9
 N�mero de testes 'Importantes' em que o compilador falhou: 5
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
@@ -32,8 +32,7 @@ Testes 'Muito importantes' em que o compilador falhou:
         ER_SEM91.ci
 
     typeErrorEqualEqualNotEqual
-        ER_SEM57.ci
-        ER_SEM58.ci
+        OK_SEM03.ci
 
     wrongSubclassMethodSignature
         ER_SEM29.ci
@@ -152,7 +151,8 @@ Testes 'Muito importantes' em que o compilador acertou:
         ER_SEM70.ci
 
     typeErrorEqualEqualNotEqual
-        OK_SEM03.ci
+        ER_SEM57.ci
+        ER_SEM58.ci
         OK_SEM04.ci
 
     supertypeAssignSelf
@@ -240,9 +240,9 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-21 de um total de 134 erros que deveriam ser sinalizados n�o o foram (15%)
+19 de um total de 134 erros que deveriam ser sinalizados n�o o foram (14%)
 13 erros foram sinalizados na linha errada (9%)
-14 erros foram sinalizados em 49 arquivos sem erro (28%)
+15 erros foram sinalizados em 49 arquivos sem erro (30%)
 _________________________________________________________________________
 
 Erros que deveriam ser sinalizados mas n�o foram:
@@ -270,10 +270,6 @@ ER_SEM51.ci, 22, Method 'put' is being redefined in subclass 'B' with a signatur
 ER_SEM55.ci, 10, Illegal types with ++, only Int and String are allowed
 
 ER_SEM56.ci, 12, Illegal types with ++, only Int and String are allowed
-
-ER_SEM57.ci, 26, Incompatible types cannot be compared with '==' because the results will always be 'false' (comp.Compiler.expr())
-
-ER_SEM58.ci, 26, Incompatible types cannot be compared with '!=' because the result will always be 'false' (comp.Compiler.expr())
 
 ER_SEM62.ci, 17, Identifier 'a' was not found (comp.Compiler.factor())
 
@@ -360,6 +356,8 @@ OK_LEX05.CI, 17, Number out of limits
 OK_MATH.ci, 55, Identifier 'In' was not declared
 
 OK_QUEUE.ci, 28, Method of class 'Node', named 'print', does not exist
+
+OK_SEM03.ci, 24, Incompatible types cannot be compared with '==' because the result will always be 'false'
 
 OK_SEM06.ci, 16, Variable n was already declared
 
@@ -628,6 +626,16 @@ The 'cep' message is:      "'override' expected before overridden method"
 ER_SEM54.ci
 The compiler message was: "'override' expected before overridden method"
 The 'cep' message is:      "'override' expected before overridden method"
+
+
+ER_SEM57.ci
+The compiler message was: "Incompatible types cannot be compared with '==' because the result will always be 'false'"
+The 'cep' message is:      "Incompatible types cannot be compared with '==' because the results will always be 'false'"
+
+
+ER_SEM58.ci
+The compiler message was: "Incompatible types cannot be compared with '!=' because the result will always be 'false'"
+The 'cep' message is:      "Incompatible types cannot be compared with '!=' because the result will always be 'false'"
 
 
 ER_SEM59.ci

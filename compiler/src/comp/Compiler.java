@@ -787,6 +787,12 @@ public class Compiler {
 			r = lexer.token;
 			next();
 			Expression right = simpleExpression();
+
+			// Verifica se os tipos são compatíveis com operadores de "==" e "!="
+			if ( (r == Token.EQ || r == Token.NEQ) && (!left.getType().isCompatible(right.getType()) && !right.getType().isCompatible(left.getType())) ) {
+				error("Incompatible types cannot be compared with '" + r + "' because the result will always be 'false'");
+			}
+
 			left = new CompositeExpr(left, r, right);
 		}
 
