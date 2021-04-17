@@ -39,15 +39,7 @@ public class PrintStat extends Statement {
             Iterator<Expression> it = exprList.getExprList().iterator();
             while (it.hasNext()) {
                 Expression expr = it.next();
-
-                if (expr.getType() == Type.stringType) {
-                    pw.print("\"");
-                    expr.genJava(pw);
-                    pw.print("\"");
-                }
-                else {
-                    expr.genJava(pw);
-                }
+                expr.genJava(pw);
 
                 if (it.hasNext()) {
                     pw.print(" + ");

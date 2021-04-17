@@ -16,7 +16,7 @@ public class LiteralStringExpr extends Expression {
     }
     @Override
     public void genJava(PW pw) {
-        pw.print(literalString);
+        pw.print("\"" + literalString + "\"");
     }
 
     public Type getType() {

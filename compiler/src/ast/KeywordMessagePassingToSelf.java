@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * "self" "." IdColon ExpressionList
  * "self" "." Id "." IdColon ExpressionList
@@ -35,29 +37,31 @@ public class KeywordMessagePassingToSelf extends Expression {
 
     @Override
     public void genJava(PW pw) {
+        Iterator<Expression> it;
+
         switch (messageType) {
             case "SELF_METHOD":
                 pw.print("this." + classMethod.getId());
-                pw.print("(");
-
-                if (exprList != null) {
-                    exprList.genJava(pw);
-                }
-
-                pw.print(")");
                 break;
 
             case "SELF_INSTANCE_METHOD":
                 pw.print("this." + instanceVar.getId() + "." + classMethod.getId());
-                pw.print("(");
-
-                if (exprList != null) {
-                    exprList.genJava(pw);
-                }
-
-                pw.print(")");
                 break;
         }
+
+        pw.print("(");
+
+        it = exprList.getExprList().iterator();
+        while (it.hasNext()) {
+            Expression expr = it.next();
+            expr.genJava(pw);
+
+            if (it.hasNext()) {
+                pw.print(", ");
+            }
+        }
+
+        pw.print(")");
     }
 
     @Override

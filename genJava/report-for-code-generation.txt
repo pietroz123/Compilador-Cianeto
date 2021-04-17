@@ -4,7 +4,7 @@ Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
  SSE: 0/17/0%      
-SwithE: 3
+SwithE: 1
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -96,8 +96,6 @@ O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para os casos de teste que voc� utilizou, o compilador est� correto
 
 List of Java or C files with compilation errors: 
-   genJava\OK_GER08.java
-   genJava\OK_GER10.java
    genJava\OK_GER22.java
 
 List of files with correct Java or C code: 
@@ -107,6 +105,9 @@ List of files with correct Java or C code:
    genJava\OK_GER04.java
    genJava\OK_GER06.java
    genJava\OK_GER07.java
+   genJava\OK_GER08.java
+   genJava\OK_GER09.java
+   genJava\OK_GER10.java
    genJava\OK_GER11.java
    genJava\OK_GER12.java
    genJava\OK_GER13.java
@@ -116,6 +117,5 @@ List of files with correct Java or C code:
    genJava\OK_GER21.java
 
 List of files with Java or C code that compiles but was generated incorrectly: 
-   genJava\OK_GER09.java
 
 The compiler could not create the following .java or .c files:

@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * "super" "." IdColon ExpressionList
  */
@@ -26,8 +28,14 @@ public class KeywordMessagePassingToSuper extends Expression {
         pw.print("super." + superclassMethod.getId());
         pw.print("(");
 
-        if (expressionList != null) {
-            expressionList.genJava(pw);
+        Iterator<Expression> it = expressionList.getExprList().iterator();
+        while (it.hasNext()) {
+            Expression expr = it.next();
+            expr.genJava(pw);
+
+            if (it.hasNext()) {
+                pw.print(", ");
+            }
         }
 
         pw.print(")");

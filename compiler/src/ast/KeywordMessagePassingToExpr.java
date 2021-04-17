@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * Id "." IdColon ExpressionList
  */
@@ -32,8 +34,14 @@ public class KeywordMessagePassingToExpr extends Expression {
         pw.print(instanceVar.getId() + "." + methodCalled.getId());
         pw.print("(");
 
-        if (exprList != null) {
-            exprList.genJava(pw);
+        Iterator<Expression> it = exprList.getExprList().iterator();
+        while (it.hasNext()) {
+            Expression expr = it.next();
+            expr.genJava(pw);
+
+            if (it.hasNext()) {
+                pw.print(", ");
+            }
         }
 
         pw.print(")");

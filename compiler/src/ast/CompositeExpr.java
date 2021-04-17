@@ -22,7 +22,13 @@ public class CompositeExpr extends Expression {
     @Override
 	public void genJava(PW pw) {
         left.genJava(pw);
-        pw.print(" " + oper + " ");
+
+        if (oper == Token.PLUSPLUS) {
+            pw.print(" + ");
+        } else {
+            pw.print(" " + oper + " ");
+        }
+
 		right.genJava(pw);
 	}
 
