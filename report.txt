@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  9             I: 5              PI: 12            Exc: 7
-Dev: 19/134/14%    LE: 13/134/9%     SSE: 15/49/30%    
+MI:  6             I: 5              PI: 12            Exc: 7
+Dev: 16/134/11%    LE: 13/134/9%     SSE: 15/49/30%    
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 9
+N�mero de testes 'Muito importantes' em que o compilador falhou: 6
 N�mero de testes 'Importantes' em que o compilador falhou: 5
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 12
 
@@ -33,11 +33,6 @@ Testes 'Muito importantes' em que o compilador falhou:
 
     typeErrorEqualEqualNotEqual
         OK_SEM03.ci
-
-    wrongSubclassMethodSignature
-        ER_SEM29.ci
-        ER_SEM30.ci
-        ER_SEM51.ci
 
 
 Testes 'importantes' em que o compilador falhou:
@@ -143,6 +138,11 @@ Testes 'Muito importantes' em que o compilador acertou:
     missingClassInNew
         ER_SEM86.ci
 
+    wrongSubclassMethodSignature
+        ER_SEM29.ci
+        ER_SEM30.ci
+        ER_SEM51.ci
+
     typeNotFound
         ER_SEM18.ci
         ER_SEM19.ci
@@ -240,7 +240,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-19 de um total de 134 erros que deveriam ser sinalizados n�o o foram (14%)
+16 de um total de 134 erros que deveriam ser sinalizados n�o o foram (11%)
 13 erros foram sinalizados na linha errada (9%)
 15 erros foram sinalizados em 49 arquivos sem erro (30%)
 _________________________________________________________________________
@@ -253,10 +253,6 @@ ER_SEM12.ci, 10, operator '+' of 'Int' expects an 'Int' value (comp.Compiler.sim
 
 ER_SEM26.ci, 15, 'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))
 
-ER_SEM29.ci, 22, Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A' (comp.Compiler.methodDec() or comp.Compiler.classDec())
-
-ER_SEM30.ci, 24, Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A' (comp.Compiler.methodDec())
-
 ER_SEM34.ci, 24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
 
 ER_SEM40.ci, 51, Type error: the type of the real parameter is not subclass of the type of the formal parameter (comp.Compiler.factor())
@@ -264,8 +260,6 @@ ER_SEM40.ci, 51, Type error: the type of the real parameter is not subclass of t
 ER_SEM44.ci, 27, Command 'write' does not accept objects (comp.Compiler.writeStatement())
 
 ER_SEM50.ci, 19, Command 'break' outside a command 'while' or repeat-until (comp.Compiler.breakStatement())
-
-ER_SEM51.ci, 22, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
 
 ER_SEM55.ci, 10, Illegal types with ++, only Int and String are allowed
 
@@ -533,6 +527,16 @@ The compiler message was: "Duplicate local variable 'i'"
 The 'cep' message is:      "Variable 'i' is being redeclared"
 
 
+ER_SEM29.ci
+The compiler message was: "Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A'"
+The 'cep' message is:      "Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A'"
+
+
+ER_SEM30.ci
+The compiler message was: "Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A'"
+The 'cep' message is:      "Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A'"
+
+
 ER_SEM31.ci
 The compiler message was: "Method 'i' has name equal to an instance variable"
 The 'cep' message is:      "Method 'i' has name equal to an instance variable"
@@ -611,6 +615,11 @@ The 'cep' message is:      "Identifier expected"
 ER_SEM49.ci
 The compiler message was: "Identifier expected"
 The 'cep' message is:      "Class expected"
+
+
+ER_SEM51.ci
+The compiler message was: "Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A'"
+The 'cep' message is:      "Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A'"
 
 
 ER_SEM52.ci

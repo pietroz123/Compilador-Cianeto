@@ -80,37 +80,77 @@ public class MethodDec extends Member {
         // TODO Auto-generated method stub
     }
 
-    public Boolean isOverride(Qualifier qualifier, MethodDec methodDec, TypeCianetoClass superclass) {
-        MethodDec superclassMethod = superclass.searchPublicMethod(methodDec.getId());
+    /**
+     * Verifica se um método é uma sobrecarga (override) de algum outro em uma superclasse
+     *
+     * Um método tem uma sobrecarga em uma superclasse se:
+     *  - existe um método
+     *      > com mesmo nome
+     *      > com mesma quantidade de parâmetros
+     *      > com parâmetros com tipos na mesma ordem:  m1(Int a, String b) -> m1(Int c, String d)
+     *      > com mesmo tipo de retorno
+     *
+     * @param superclass
+     * @return Boolean : true-sim, false-não
+     */
+    public Boolean isOverride(TypeCianetoClass superclass) {
+        MethodDec superclassMethod = superclass.searchPublicMethod(this.getId());
         if (superclassMethod == null) {
             return false;
         }
 
-        if (superclassMethod.getFormalParamDec() == null && methodDec.getFormalParamDec() == null) {
-            return true;
+        Boolean hasSameSignature = this.hasSameSignature(superclassMethod);
+
+        if (!hasSameSignature) {
+            return false;
         }
-        else {
-            // Verifica se tem a mesma quantidade de parâmetros
-            Boolean hasSameParameters = true;
-            if (superclassMethod.getFormalParamDec() != null && methodDec.getFormalParamDec() != null && superclassMethod.getFormalParamDec().getParamList().size() != methodDec.getFormalParamDec().getParamList().size()) {
-                Integer size = superclassMethod.getFormalParamDec().getParamList().size();
+
+        return true;
+    }
+
+    /**
+     * Verifica se o método tem a mesma assinatura (signature)
+     * @param other : outro método para comparação
+     * @return Boolean : true-sim, false-não
+     */
+    public Boolean hasSameSignature(MethodDec other) {
+        /**
+         * Verifica se tem os mesmos parâmetros
+         */
+        Boolean hasSameParameters = true;
+
+        // Se os métodos têm parâmetros, precisamos verificar se estes tem mesma quantidade de parâmetros
+        // e se tem parâmetros com tipos na mesma ordem
+        if ( !(this.getFormalParamDec() == null && other.getFormalParamDec() == null) ) {
+
+            // Verifica mesma quantidade
+            if (this.getFormalParamDec().getParamList().size() != other.getFormalParamDec().getParamList().size()) {
+                hasSameParameters = false;
+            }
+            else {
+                // Verifica se os tipos estão na mesma ordem nos dois métodos
+                Integer size = this.getFormalParamDec().getParamList().size();
                 Integer i = 0;
 
-                ParamDec p1 = methodDec.getFormalParamDec().getParamList().get(i);
-                ParamDec p2 = superclassMethod.getFormalParamDec().getParamList().get(i);
+                while (i < size) {
+                    ParamDec p1 = this.getFormalParamDec().getParamList().get(i);
+                    ParamDec p2 = other.getFormalParamDec().getParamList().get(i);
 
-                while (i != size) {
-                    if ( !(p1.getVar().getId() == p2.getVar().getId() && p1.getVar().getType() == p2.getVar().getType()) ) {
+                    if ( !(p1.getVar().getType() == p2.getVar().getType()) ) {
                         hasSameParameters = false;
                         break;
                     }
+
                     i++;
                 }
             }
+        }
 
-            if (hasSameParameters == false) {
-                return false;
-            }
+        // Verifica se tem mesmo tipo de retorno
+        Boolean hasSameReturnType = this.getReturnType() == other.getReturnType();
+
+        if (!hasSameParameters || !hasSameReturnType) {
+            return false;
         }
 
         return true;

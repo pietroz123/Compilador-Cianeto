@@ -374,13 +374,22 @@ public class Compiler {
 			this.currentMethod.setReturnType(returnType);
 		}
 
-		// Verifica se o método é uma sobrecarga
-		if (
-			currentClass.getSuperclass() != null &&
-			this.currentMethod.isOverride(qualifier, this.currentMethod, currentClass.getSuperclass()) &&
-			!qualifier.getTokens().contains(Token.OVERRIDE)
-		) {
-			error("'override' expected before overridden method");
+		Boolean hasSuperclass = currentClass.getSuperclass() != null;
+
+		if (hasSuperclass) {
+			Boolean hasOverrideToken = qualifier.getTokens().contains(Token.OVERRIDE);
+			Boolean isOverride = this.currentMethod.isOverride(currentClass.getSuperclass());
+
+			// Verifica se o método é uma sobrecarga mas não tem o token "override"
+			if ( isOverride && !hasOverrideToken ) {
+				error("'override' expected before overridden method");
+			}
+
+			// Verifica se o método é uma sobrecarga porém não tem a signature correta
+			if ( hasOverrideToken && !isOverride ) {
+				error("Method '"+id+"' of the subclass '"+currentClass.getName()+"' has a signature different "
+					+ "from the same method of superclass '"+currentClass.getSuperclass().getName()+"'");
+			}
 		}
 
 		// Verifica "{"
