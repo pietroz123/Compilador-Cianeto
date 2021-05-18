@@ -44,6 +44,70 @@ public class Program {
 	}
 
 	public void genC(PW pw) {
+
+		// Headers
+		pw.println("/* deve-se incluir alguns headers porque algumas funções da biblioteca padrão de C são utilizadas na tradução. */");
+		pw.println("#include <malloc.h>");
+		pw.println("#include <stdlib.h>");
+		pw.println("#include <stdio.h>");
+		pw.println();
+
+		// Tipo Boolean
+		pw.println("/* define o tipo boolean */");
+		pw.println("typedef int boolean;");
+		pw.println("#define true 1");
+		pw.println("#define false 0");
+		pw.println();
+
+		// Funções readInt e readString
+		pw.println("// crie funções readInt e readString");
+
+		// readInt
+		pw.println("int readInt() {");
+		pw.add();
+		pw.printlnIdent("int n;");
+		pw.printlnIdent("char __s[512];");
+		pw.printlnIdent("gets(__s);");
+		pw.printlnIdent("sscanf(__s, \"%d\", &_n);");
+		pw.printlnIdent("return n;");
+		pw.sub();
+		pw.println("}");
+		pw.println();
+
+		// readString
+		pw.println("char *readString() {");
+		pw.add();
+		pw.printlnIdent("char s[512];");
+		pw.printlnIdent("gets(s);");
+		pw.printlnIdent("char *ret = malloc(strlen(s) + 1);");
+		pw.printlnIdent("strcpy(ret, s);");
+		pw.printlnIdent("return ret;");
+		pw.sub();
+		pw.println("}");
+		pw.println();
+
+		// Tipo Func
+		pw.println("/* define um tipo Func que é um ponteiro para função */");
+		pw.println("typedef void (*Func)();");
+		pw.println();
+
+		// Classes
+		for (TypeCianetoClass classDec : this.classList) {
+			classDec.genC(pw);
+		}
+
+		// Main
+		pw.println("int main() {");
+
+		pw.add();
+		pw.printlnIdent("_class_Program *program;");
+		pw.printlnIdent("program = new_Program();");
+		pw.printlnIdent("_Program_run(program);");
+		pw.printlnIdent("return 0;");
+		pw.sub();
+
+		pw.println("}");
+
 	}
 
 	public ArrayList<TypeCianetoClass> getClassList() {

@@ -30,11 +30,11 @@
         },
         {
             "type": "java",
-            "name": "Student Tests JAVA",
+            "name": "Code Generation Tests C",
             "request": "launch",
             "mainClass": "comp.Comp",
             "projectName": "krakatoa",
-            "args": "student-made-tests -genJava genJava"
+            "args": "code-generation-tests -genC genC"
         },
     ]
 }

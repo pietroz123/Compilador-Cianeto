@@ -240,6 +240,10 @@ public class TypeCianetoClass extends Type {
 		pw.println();
     }
 
+    public void genC(PW pw) {
+
+    }
+
     private Boolean isOpen = false;
     private String name;
     private TypeCianetoClass superclass;

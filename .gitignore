@@ -89,6 +89,7 @@ nb-configuration.xml
 ## ARQUIVOS
 ##############################
 genJava/*.java
+genC/*.c
 
 # Exceções
 !.vscode/launch.json
