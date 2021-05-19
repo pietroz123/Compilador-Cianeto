@@ -241,7 +241,52 @@ public class TypeCianetoClass extends Type {
     }
 
     public void genC(PW pw) {
+        /**
+         * struct da classe
+         */
+        pw.println("typedef struct _St_" + this.name + " {");
+        pw.add();
+        pw.printlnIdent("Func *vt; /* ponteiro para um vetor de métodos da classe */");
 
+        // Variáveis de instância
+        for (FieldDec fieldDec : this.fieldList) {
+            for (String id : fieldDec.getIdList().getIdList()) {
+                pw.printlnIdent(fieldDec.getType().getCname() + " _" + this.name + "_" + id + ";");
+            }
+        }
+
+        pw.sub();
+        pw.println("} _class_" + this.name + ";");
+        pw.println();
+
+        // Método de construção da "classe"
+        pw.println("_class_" + this.name + " *new_" + this.name + "();");
+        pw.println();
+
+        /**
+         * Declarações dos métodos
+         */
+        for (MethodDec methodDec : this.publicMethodList) {
+            // Tipo de retorno
+            pw.print(methodDec.getReturnType().getCname() + " ");
+
+            // Nome do método
+            pw.print("_" + this.name + "_" + methodDec.getId() + " (");
+
+            // Parâmetros da função
+            pw.print("_class_" + this.name + " *self"); // o primeiro parâmetro sempre é um ponteiro para self
+
+            pw.println(") {");
+            pw.add();
+
+            // Corpo do método
+
+            // Fechamento
+            pw.sub();
+            pw.println("}");
+        }
+
+        pw.println();
     }
 
     private Boolean isOpen = false;
