@@ -322,7 +322,7 @@ public class Compiler {
 	 * @param qualifier
 	 */
 	private MethodDec methodDec(Qualifier qualifier) {
-		this.currentMethod = new MethodDec();
+		this.currentMethod = new MethodDec(this.currentClass);
 		this.returnStatCalled = false;
 
 		String id = null;
@@ -413,13 +413,11 @@ public class Compiler {
 			error("Missing 'return' statement in method '"+id+"'");
 		}
 
-		MethodDec methodDec = new MethodDec(id, formalParamDec, returnType, statementList);
-
 		symbolTable.clearLocal();
-		symbolTable.putInFunc(id, methodDec);
-		this.currentClass.addMethod(methodDec, qualifier);
+		symbolTable.putInFunc(id, this.currentMethod);
+		this.currentClass.addMethod(this.currentMethod, qualifier);
 
-		return methodDec;
+		return this.currentMethod;
 	}
 
 	/**
@@ -1340,7 +1338,7 @@ public class Compiler {
 			}
 		}
 
-		FieldDec fieldDec = new FieldDec(type, idList);
+		FieldDec fieldDec = new FieldDec(this.currentClass, type, idList);
 
 		// Coloca os campos na tabela local
 		for (String id : idList.getIdList()) {

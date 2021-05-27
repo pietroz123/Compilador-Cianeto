@@ -19,7 +19,8 @@ public class MethodDec extends Member {
         this.statements = statements;
     }
 
-    public MethodDec() {
+    public MethodDec(TypeCianetoClass currentClass) {
+        this.currentClass = currentClass;
     }
 
     /**
@@ -77,7 +78,28 @@ public class MethodDec extends Member {
 
     @Override
     void genC(PW pw) {
-        // TODO Auto-generated method stub
+        // Tipo de retorno
+        if (this.returnType instanceof TypeCianetoClass) {
+            pw.print("_class_" + this.getReturnType().getName() + " ");
+        } else {
+            pw.print(this.getReturnType().getCname() + " ");
+        }
+
+        // Nome do método
+        pw.print("_" + this.currentClass.getName() + "_" + this.getId() + " (");
+
+        // Parâmetros da função
+        pw.print("_class_" + this.currentClass.getName() + " *self"); // o primeiro parâmetro sempre é um ponteiro para self
+
+        pw.println(") {");
+        pw.add();
+
+        // Corpo do método
+
+
+        // Fechamento
+        pw.sub();
+        pw.println("}");
     }
 
     /**
@@ -156,6 +178,7 @@ public class MethodDec extends Member {
         return true;
     }
 
+    private TypeCianetoClass currentClass;
     private String id;
     private FormalParamDec formalParamDec;
     private Type returnType;

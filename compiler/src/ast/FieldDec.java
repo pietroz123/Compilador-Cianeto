@@ -12,7 +12,8 @@ import java.util.Iterator;
  */
 public class FieldDec extends Member {
 
-    public FieldDec(Type type, IdList idList) {
+    public FieldDec(TypeCianetoClass currentClass, Type type, IdList idList) {
+        this.currentClass = currentClass;
         this.type = type;
         this.idList = idList;
     }
@@ -46,9 +47,26 @@ public class FieldDec extends Member {
 
     @Override
     void genC(PW pw) {
-        // TODO Auto-generated method stub
+        if (this.type instanceof TypeCianetoClass) {
+            pw.printIdent("_class_" + this.getType().getName() + " ");
+        } else {
+            pw.printIdent(this.getType().getCname() + " ");
+        }
+
+        Iterator<String> it = idList.getIdList().iterator();
+        while (it.hasNext()) {
+            String id = it.next();
+            pw.print("_" + this.currentClass.getName() + "_" + id);
+
+            if (it.hasNext()) {
+                pw.print(",");
+            }
+        }
+
+        pw.println(";");
     }
 
+    private TypeCianetoClass currentClass;
     private Type type;
     private IdList idList;
 }
