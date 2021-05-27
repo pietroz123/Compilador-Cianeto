@@ -50,6 +50,7 @@ public class Program {
 		pw.println("#include <malloc.h>");
 		pw.println("#include <stdlib.h>");
 		pw.println("#include <stdio.h>");
+		pw.println("#include <string.h>");
 		pw.println();
 
 		// Tipo Boolean
@@ -68,7 +69,7 @@ public class Program {
 		pw.printlnIdent("int n;");
 		pw.printlnIdent("char __s[512];");
 		pw.printlnIdent("gets(__s);");
-		pw.printlnIdent("sscanf(__s, \"%d\", &_n);");
+		pw.printlnIdent("sscanf(__s, \"%d\", &n);");
 		pw.printlnIdent("return n;");
 		pw.sub();
 		pw.println("}");

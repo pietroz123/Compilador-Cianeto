@@ -6,6 +6,7 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import lexer.Token;
 
@@ -281,11 +282,50 @@ public class TypeCianetoClass extends Type {
 
             // Corpo do método
 
+
             // Fechamento
             pw.sub();
             pw.println("}");
         }
 
+        pw.println();
+
+        /**
+         * Tabela de métodos da classe
+         */
+        pw.println("// tabela de métodos da classe " + this.name + " -- virtual table");
+        pw.println("Func VTclass_" + this.name + "[] = {");
+        pw.add();
+
+        Iterator<MethodDec> it = this.publicMethodList.iterator();
+        while (it.hasNext()) {
+            MethodDec methodDec = it.next();
+            pw.printIdent("( void (*)() ) _" + this.name + "_" + methodDec.getId());
+
+            if (it.hasNext()) {
+                pw.print(",");
+            }
+            pw.println();
+        }
+
+        pw.sub();
+        pw.println("};");
+        pw.println();
+
+        /**
+         * Construtor da classe
+         */
+        pw.println("_class_" + this.name + " *new_" + this.name + "() {");
+        pw.add();
+        pw.printlnIdent("_class_" + this.name + " *t;");
+        pw.println();
+        pw.printlnIdent("if ( (t = malloc(sizeof(_class_" + this.name + "))) != NULL )");
+        pw.add();
+        pw.printlnIdent("t->vt = VTclass_" + this.name + ";");
+        pw.sub();
+        pw.printlnIdent("return t;");
+        pw.sub();
+        pw.println("}");
         pw.println();
     }
 
