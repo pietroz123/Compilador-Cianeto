@@ -20,7 +20,11 @@ public class UnaryExpr extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        if (token == Token.NOT) {
+            pw.print("!");
+        }
+
+        expr.genC(pw);
     }
 
     @Override

@@ -17,7 +17,15 @@ public class CompositeExpr extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        left.genC(pw);
+
+        if (oper == Token.PLUSPLUS) {
+            pw.print(" + ");
+        } else {
+            pw.print(" " + oper + " ");
+        }
+
+		right.genC(pw);
     }
     @Override
 	public void genJava(PW pw) {

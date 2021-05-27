@@ -30,5 +30,11 @@ public class StatementList {
         }
     }
 
+    public void genC(PW pw) {
+        for (Statement statement : statementList) {
+            statement.genC(pw);
+        }
+    }
+
     private ArrayList<Statement> statementList;
 }

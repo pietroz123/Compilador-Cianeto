@@ -24,6 +24,17 @@ public class FormalParamDec {
         this.paramList.add(paramDec);
     }
 
+    public void genC(PW pw) {
+        Iterator<ParamDec> it = paramList.iterator();
+        while (it.hasNext()) {
+            ParamDec paramDec = it.next();
+            paramDec.genC(pw);
+
+            if (it.hasNext()) {
+                pw.print(", ");
+            }
+        }
+    }
     public void genJava(PW pw) {
         Iterator<ParamDec> it = paramList.iterator();
         while (it.hasNext()) {

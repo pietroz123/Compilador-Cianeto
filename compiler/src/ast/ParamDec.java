@@ -18,6 +18,13 @@ public class ParamDec {
         return var;
     }
 
+    public void genC(PW pw) {
+        if (var.getType() instanceof TypeCianetoClass) {
+            pw.print("_class_" + var.getType().getCname() + " _" + var.getId());
+        } else {
+            pw.print(var.getType().getCname() + " _" + var.getId());
+        }
+    }
     public void genJava(PW pw) {
         pw.print(var.getType().getJavaName() + " " + var.getId());
     }

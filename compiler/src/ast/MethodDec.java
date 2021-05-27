@@ -90,15 +90,22 @@ public class MethodDec extends Member {
 
         // Parâmetros da função
         pw.print("_class_" + this.currentClass.getName() + " *self"); // o primeiro parâmetro sempre é um ponteiro para self
+        // Outros parâmetros
+        if (formalParamDec != null) {
+            pw.print(", ");
+            formalParamDec.genC(pw);
+        }
 
         pw.println(") {");
-        pw.add();
 
         // Corpo do método
-
+        if (statements != null) {
+            pw.add();
+            this.statements.genC(pw);
+            pw.sub();
+        }
 
         // Fechamento
-        pw.sub();
         pw.println("}");
     }
 

@@ -15,13 +15,19 @@ public class SignalExpr extends Expression {
     }
 
     @Override
-    public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
-    }
-    @Override
     public Type getType() {
         return factor.getType();
     }
+
+    @Override
+    public void genC(PW pw, boolean putParenthesis) {
+        pw.print(signal.toString());
+
+        if (factor != null) {
+            factor.genC(pw);
+        }
+    }
+
     @Override
     public void genJava(PW pw) {
         pw.print(signal.toString());

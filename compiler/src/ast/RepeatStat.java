@@ -17,7 +17,19 @@ public class RepeatStat extends Statement {
 
     @Override
     public void genC(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printlnIdent("do {");
+		pw.add();
+
+		if (statementList != null) {
+			statementList.genC(pw);
+		}
+
+		pw.sub();
+		pw.printIdent("} while (");
+
+		expr.genC(pw);
+
+		pw.println(");");
     }
     @Override
     public void genJava(PW pw) {

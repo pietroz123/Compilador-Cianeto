@@ -16,8 +16,9 @@ public class ReturnStat extends Statement {
 
     @Override
     public void genC(PW pw) {
-        // TODO Auto-generated method stub
-
+        pw.printIdent("return ");
+        expr.genC(pw);
+        pw.println(";");
     }
 
     @Override

@@ -18,7 +18,23 @@ public class IfStat extends Statement {
 
     @Override
     public void genC(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("if (");
+        expr.genC(pw);
+        pw.println(") {");
+
+        pw.add();
+        leftList.genC(pw);
+        pw.sub();
+
+        pw.printlnIdent("}");
+
+        if (rightList != null) {
+            pw.printlnIdent("else {");
+            pw.add();
+            rightList.genC(pw);
+            pw.sub();
+            pw.printlnIdent("}");
+        }
     }
 
     @Override

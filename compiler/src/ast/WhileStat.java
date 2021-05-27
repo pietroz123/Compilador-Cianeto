@@ -27,7 +27,17 @@ public class WhileStat extends Statement {
 
     @Override
     public void genC(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("while (");
+
+        expr.genC(pw);
+
+        pw.println(") {");
+
+        pw.add();
+        statementList.genC(pw);
+        pw.sub();
+
+        pw.printlnIdent("}");
     }
     @Override
     public void genJava(PW pw) {
