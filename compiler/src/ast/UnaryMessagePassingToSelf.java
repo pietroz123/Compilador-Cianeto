@@ -33,7 +33,20 @@ public class UnaryMessagePassingToSelf extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        switch (messageType) {
+            case "SELF_INSTANCE":
+                pw.print("self->_" + currentClass.getName() + "_" + instanceVar.getId());
+                break;
+
+            case "SELF_METHOD":
+                Integer idx = methodCalled.getCTableIndex();
+                pw.print("( ("+methodCalled.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *) ) self->vt["+idx+"] )(self)");
+                break;
+
+            case "SELF_INSTANCE_METHOD":
+                pw.print("self->_" + instanceVar.getId() + "." + methodCalled.getId() + "()");
+                break;
+        }
     }
 
     @Override

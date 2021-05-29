@@ -18,7 +18,13 @@ public class AssertStat extends Statement {
 
     @Override
     public void genC(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("if ( !( ");
+		expr.genC(pw);
+		pw.println(" ) ) {");
+		pw.add();
+		pw.printlnIdent("puts(\"" + message +  "\");");
+		pw.sub();
+		pw.printlnIdent("}");
     }
 
     @Override

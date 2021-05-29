@@ -185,6 +185,22 @@ public class MethodDec extends Member {
         return true;
     }
 
+    /**
+     * Método de utilidade para retornar o índice do método
+     * na tabela de métodos em C. O índice será a posição em ordem dos métodos - 1
+     * @return
+     */
+    public Integer getCTableIndex() {
+        Integer i = 0;
+        for (MethodDec method : currentClass.getPublicMethodList()) {
+            if (method.getId().equals(this.id)) {
+                return i;
+            }
+            i++;
+        }
+        return null;
+    }
+
     private TypeCianetoClass currentClass;
     private String id;
     private FormalParamDec formalParamDec;
