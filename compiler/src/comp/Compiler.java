@@ -964,6 +964,12 @@ public class Compiler {
 			 * PrimaryExpr
 			 */
 			default:
+				/**
+				 * ReadExpr
+				 */
+				if ( lexer.token == Token.ID && lexer.getStringValue().equals("In") ) {
+					return readExpr();
+				}
 				return primaryExpr();
 		}
 
@@ -1257,13 +1263,6 @@ public class Compiler {
 				}
 
 			default:
-				/**
-				 * ReadExpr
-				 */
-				if ( lexer.token == Token.ID && lexer.getStringValue().equals("In") ) {
-					return readExpr();
-				}
-
 				error("Unexpected token");
 				break;
 		}

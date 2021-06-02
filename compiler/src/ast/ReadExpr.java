@@ -21,8 +21,11 @@ public class ReadExpr extends Expression {
 
     @Override
     public Type getType() {
-        // TODO Auto-generated method stub
-        return null;
+        if (readName.equals("readString")) {
+            return Type.stringType;
+        }
+
+        return Type.intType;
     }
 
     @Override
