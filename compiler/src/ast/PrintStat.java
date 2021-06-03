@@ -36,6 +36,9 @@ public class PrintStat extends Statement {
                     pw.print(" ");
                 }
             }
+            if (printName.equals("println")) {
+                pw.print("\\n");
+            }
             pw.print("\"");
 
             pw.print(",");
