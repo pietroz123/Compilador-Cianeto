@@ -1,0 +1,29 @@
+class Program
+    func run {
+        var Int i, b;
+        var Boolean primo;
+        var String msg;
+        Out.println: "Ola, este e o meu primeiro programa";
+        Out.println: "Digite um numero: ";
+        b = In.readInt;
+        // um meio super ineficiente de verificar se um numero e primo
+        primo = true;
+        i = 2;
+        while i < b {
+            if b/i == 0 {
+                primo = false;
+                break;
+            }
+            else {
+                i = i + 1;
+            }
+        }
+        if primo {
+            msg = "Este numero e primo";
+        }
+        else {
+            msg = "Este numero nao e primo";
+        }
+        Out.println: msg;
+    }
+end

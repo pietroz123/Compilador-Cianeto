@@ -15,17 +15,17 @@ public class ReadExpr extends Expression {
     }
 
     @Override
-    public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public Type getType() {
         if (readName.equals("readString")) {
             return Type.stringType;
         }
 
         return Type.intType;
+    }
+
+    @Override
+    public void genC(PW pw, boolean putParenthesis) {
+        pw.print(""+ readName +"()");
     }
 
     @Override

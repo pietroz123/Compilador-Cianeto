@@ -19,7 +19,28 @@ public class PrintStat extends Statement {
 
     @Override
     public void genC(PW pw) {
-        // TODO Auto-generated method stub
+        pw.printIdent("");
+        pw.print("puts(");
+
+        // Expression List
+        if (exprList != null) {
+
+            Iterator<Expression> it = exprList.getExprList().iterator();
+            while (it.hasNext()) {
+                Expression expr = it.next();
+                expr.genC(pw);
+
+                if (it.hasNext()) {
+                    pw.print(" + ");
+                }
+            }
+
+        }
+        else {
+            pw.print("\"\"");
+        }
+
+        pw.println(");");
     }
 
     @Override

@@ -80,7 +80,7 @@ public class MethodDec extends Member {
     void genC(PW pw) {
         // Tipo de retorno
         if (this.returnType instanceof TypeCianetoClass) {
-            pw.print("_class_" + this.getReturnType().getName() + " ");
+            pw.print("_class_" + this.getReturnType().getName() + "* ");
         } else {
             pw.print(this.getReturnType().getCname() + " ");
         }

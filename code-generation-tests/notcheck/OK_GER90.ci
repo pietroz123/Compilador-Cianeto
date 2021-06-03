@@ -1,6 +1,0 @@
-class Program
-    func run {
-        var Int b;
-        b = In.readInt;
-    }
-end
