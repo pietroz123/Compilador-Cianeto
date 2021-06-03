@@ -21,7 +21,24 @@ public class KeywordMessagePassingToExpr extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        pw.print("_"+this.sourceClass.getName()+"_"+this.methodCalled.getId());
+        pw.print("(_"+this.instanceVar.getId()+"");
+
+        if (!this.exprList.getExprList().isEmpty()) {
+            pw.print(", ");
+        }
+
+        Iterator<Expression> it = exprList.getExprList().iterator();
+        while (it.hasNext()) {
+            Expression expr = it.next();
+            expr.genC(pw);
+
+            if (it.hasNext()) {
+                pw.print(", ");
+            }
+        }
+
+        pw.print(")");
     }
 
     @Override

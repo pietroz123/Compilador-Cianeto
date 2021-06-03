@@ -17,14 +17,13 @@ public class UnaryMessagePassingToExpr extends Expression {
     }
 
     @Override
-    public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
-
+    public Type getType() {
+        return methodCalled.getReturnType();
     }
 
     @Override
-    public Type getType() {
-        return methodCalled.getReturnType();
+    public void genC(PW pw, boolean putParenthesis) {
+        pw.print("_"+this.sourceClass.getName()+"_"+this.methodCalled.getId()+"(_"+this.instanceVar.getId()+")");
     }
 
     @Override
