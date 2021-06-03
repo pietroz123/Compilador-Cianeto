@@ -17,7 +17,9 @@ public class UnaryMessagePassingToSuper extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        // pw.print("UnaryMessagePassingToSuper");
+        // pw.print("_SUPERCLASSNAME_SUPERMETHOD((_class_SUPER*) CURRENTCLASS)");
+        pw.print("_"+this.currentClass.getSuperclass().getName()+"_"+this.methodCalled.getId()+"((_class_"+this.currentClass.getSuperclass().getName()+"*) self)");
     }
 
     @Override

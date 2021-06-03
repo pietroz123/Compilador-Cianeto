@@ -39,12 +39,15 @@ public class UnaryMessagePassingToSelf extends Expression {
                 break;
 
             case "SELF_METHOD":
-                Integer idx = methodCalled.getCTableIndex();
-                pw.print("( ("+methodCalled.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *) ) self->vt["+idx+"] )(self)");
+                pw.print("_"+this.currentClass.getName()+"_"+this.methodCalled.getId()+"(self)");
+                // Integer idx = methodCalled.getCTableIndex();
+                // pw.print("( ("+methodCalled.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *) ) self->vt["+idx+"] )(self)");
                 break;
 
             case "SELF_INSTANCE_METHOD":
-                pw.print("self->_" + instanceVar.getId() + "." + methodCalled.getId() + "()");
+                // pw.print("SELF_INSTANCE_METHOD");
+                pw.print("_"+this.instanceVar.getType().getName()+"_"+this.methodCalled.getId()+"(self)");
+                // pw.print("self->_" + instanceVar.getId() + "." + methodCalled.getId() + "()");
                 break;
         }
     }

@@ -20,7 +20,7 @@ public class ParamDec {
 
     public void genC(PW pw) {
         if (var.getType() instanceof TypeCianetoClass) {
-            pw.print("_class_" + var.getType().getCname() + " _" + var.getId());
+            pw.print("_class_" + var.getType().getCname() + " *_" + var.getId());
         } else {
             pw.print(var.getType().getCname() + " _" + var.getId());
         }

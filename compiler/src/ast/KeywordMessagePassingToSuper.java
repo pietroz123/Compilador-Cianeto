@@ -20,7 +20,23 @@ public class KeywordMessagePassingToSuper extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        pw.print("_"+this.currentClass.getSuperclass().getName()+"_"+this.superclassMethod.getId()+"( (_class_"+this.currentClass.getSuperclass().getName()+"*) self");
+
+        if (!this.expressionList.getExprList().isEmpty()) {
+            pw.print(",");
+        }
+
+        Iterator<Expression> it = expressionList.getExprList().iterator();
+        while (it.hasNext()) {
+            Expression expr = it.next();
+            expr.genC(pw);
+
+            if (it.hasNext()) {
+                pw.print(", ");
+            }
+        }
+
+        pw.print(")");
     }
 
     @Override

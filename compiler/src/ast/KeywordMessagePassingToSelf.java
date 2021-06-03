@@ -32,7 +32,47 @@ public class KeywordMessagePassingToSelf extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // TODO Auto-generated method stub
+        switch (messageType) {
+            case "SELF_METHOD":
+                // Integer idx = classMethod.getCTableIndex();
+
+                // pw.print("( ");
+                // pw.print("("+classMethod.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *))"); // cast
+                // pw.print("self->vt["+idx+"]"); // chamada
+                // pw.print(" )");
+
+                pw.print("_"+this.currentClass.getName()+"_"+this.classMethod.getId()+"(self");
+
+                break;
+
+            case "SELF_INSTANCE_METHOD":
+                // pw.print("SELF_INSTANCE_METHOD");
+                // pw.print("_CLASSVARDESELF_Method(VARDESELF)");
+                pw.print("_"+this.instanceVar.getType().getName()+"_"+this.classMethod.getId()+"(_"+this.instanceVar.getId());
+                // pw.print("self." + instanceVar.getId() + "." + classMethod.getId());
+                break;
+        }
+
+        // Parâmetros
+        if (exprList.getExprList().isEmpty()) {
+            pw.print(")");
+        }
+        else {
+            pw.print(", ");
+
+            Iterator<Expression> it = exprList.getExprList().iterator();
+            while (it.hasNext()) {
+                Expression expr = it.next();
+                expr.genC(pw);
+
+                if (it.hasNext()) {
+                    pw.print(", ");
+                }
+            }
+
+            pw.print(")");
+        }
+
     }
 
     @Override
