@@ -13,10 +13,13 @@ public class TypeBoolean extends Type {
    public String getCname() {
       return "boolean";
    }
-
    @Override
    public String getJavaName() {
       return "Boolean";
+   }
+   @Override
+   public String getCspecifier() {
+      return "%d";
    }
 
 }

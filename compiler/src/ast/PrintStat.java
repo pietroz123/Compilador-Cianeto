@@ -20,18 +20,34 @@ public class PrintStat extends Statement {
     @Override
     public void genC(PW pw) {
         pw.printIdent("");
-        pw.print("puts(");
+        pw.print("printf(");
 
         // Expression List
         if (exprList != null) {
 
+            // Especificadores de formato
+            pw.print("\"");
             Iterator<Expression> it = exprList.getExprList().iterator();
+            while (it.hasNext()) {
+                Expression expr = it.next();
+                pw.print(expr.getType().getCspecifier());
+
+                if (it.hasNext()) {
+                    pw.print(" ");
+                }
+            }
+            pw.print("\"");
+
+            pw.print(",");
+
+            // Variáveis
+            it = exprList.getExprList().iterator();
             while (it.hasNext()) {
                 Expression expr = it.next();
                 expr.genC(pw);
 
                 if (it.hasNext()) {
-                    pw.print(" + ");
+                    pw.print(",");
                 }
             }
 

@@ -18,5 +18,9 @@ public class TypeUndefined extends Type {
    public String getJavaName() {
       return "naosei";
    }
+   @Override
+   public String getCspecifier() {
+      return "";
+   }
 
 }

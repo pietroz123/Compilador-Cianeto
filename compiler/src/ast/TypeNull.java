@@ -19,5 +19,9 @@ public class TypeNull extends Type {
     public String getJavaName() {
         return "null";
     }
+	@Override
+    public String getCspecifier() {
+        return "";
+    }
 
 }

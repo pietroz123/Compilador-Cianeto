@@ -18,5 +18,9 @@ public class TypeVoid extends Type {
    public String getJavaName() {
       return "void";
    }
+   @Override
+   public String getCspecifier() {
+      return "";
+   }
 
 }

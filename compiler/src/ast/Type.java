@@ -25,6 +25,7 @@ abstract public class Type {
         this.name = name;
     }
 
+    abstract public String getCspecifier();
     abstract public String getCname();
     abstract public String getJavaName();
 
