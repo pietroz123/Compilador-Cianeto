@@ -22,6 +22,11 @@ public class AssignExpr extends Statement {
 
         if (rightExpr != null) {
             pw.print(" = ");
+
+            if (leftExpr.getType() instanceof TypeCianetoClass && rightExpr.getType() instanceof TypeCianetoClass) {
+                pw.print("(_class_"+leftExpr.getType().getName()+" *) ");
+            }
+
             rightExpr.genC(pw);
         }
 

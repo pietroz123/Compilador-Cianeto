@@ -20,7 +20,7 @@ public class CompositeExpr extends Expression {
         left.genC(pw);
 
         if (oper == Token.PLUSPLUS) {
-            pw.print(" + ");
+            pw.print(",");
         } else {
             pw.print(" " + oper + " ");
         }
