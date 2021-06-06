@@ -3,8 +3,8 @@ Relat�rio do Compilador
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
- SSE: 0/17/0%      
-SwithE: 17
+ SSE: 0/16/0%      
+SwithE: 5
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -71,9 +71,6 @@ Testes 'pouco importantes' em que o compilador acertou
     runNotFirstMethodOfProgram
         OK_GER21.ci
 
-    repeatUntil
-        OK_GER22.ci
-
     while
         OK_GER04.ci
 
@@ -90,12 +87,19 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-0 erros foram sinalizados em 17 arquivos sem erro (0%)
+0 erros foram sinalizados em 16 arquivos sem erro (0%)
 _________________________________________________________________________
 O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para os casos de teste que voc� utilizou, o compilador est� correto
 
 List of Java or C files with compilation errors: 
+   genC\OK_GER12.c
+   genC\OK_GER13.c
+   genC\OK_GER15.c
+   genC\OK_GER16.c
+   genC\OK_GER21.c
+
+List of files with correct Java or C code: 
    genC\OK_GER01.c
    genC\OK_GER02.c
    genC\OK_GER03.c
@@ -105,17 +109,11 @@ List of Java or C files with compilation errors:
    genC\OK_GER08.c
    genC\OK_GER09.c
    genC\OK_GER10.c
-   genC\OK_GER11.c
-   genC\OK_GER12.c
-   genC\OK_GER13.c
-   genC\OK_GER14.c
-   genC\OK_GER15.c
-   genC\OK_GER16.c
-   genC\OK_GER21.c
-   genC\OK_GER22.c
-
-List of files with correct Java or C code: 
 
 List of files with Java or C code that compiles but was generated incorrectly: 
+   genC\OK_GER09.c
+   genC\OK_GER10.c
+   genC\OK_GER11.c
+   genC\OK_GER14.c
 
 The compiler could not create the following .java or .c files:

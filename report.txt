@@ -3,7 +3,7 @@ Relat�rio do Compilador
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
- SSE: 0/17/0%      
+ SSE: 0/16/0%      
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -69,9 +69,6 @@ Testes 'pouco importantes' em que o compilador acertou
     runNotFirstMethodOfProgram
         OK_GER21.ci
 
-    repeatUntil
-        OK_GER22.ci
-
     while
         OK_GER04.ci
 
@@ -88,7 +85,7 @@ Testes 'pouco importantes' em que o compilador acertou
 
 _________________________________________________________________________
 
-0 erros foram sinalizados em 17 arquivos sem erro (0%)
+0 erros foram sinalizados em 16 arquivos sem erro (0%)
 _________________________________________________________________________
 O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para os casos de teste que voc� utilizou, o compilador est� correto
