@@ -7,6 +7,8 @@ package ast;
 
 import java.util.Iterator;
 
+import lexer.Token;
+
 /**
  * PrintStat ::= "Out" "." ( "print:" | "println:" ) Expression { "," Expression }
  */
@@ -30,7 +32,12 @@ public class PrintStat extends Statement {
             Iterator<Expression> it = exprList.getExprList().iterator();
             while (it.hasNext()) {
                 Expression expr = it.next();
-                pw.print(expr.getType().getCspecifier());
+                if (expr instanceof CompositeExpr && ((CompositeExpr) expr).getOper() == Token.PLUSPLUS) {
+                    pw.print("%s");
+                }
+                else {
+                    pw.print(expr.getType().getCspecifier());
+                }
 
                 if (it.hasNext()) {
                     pw.print(" ");

@@ -15,17 +15,27 @@ public class CompositeExpr extends Expression {
         this.right = right;
     }
 
+    // Getters
+    public Token getOper() {
+        return oper;
+    }
+
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        left.genC(pw);
-
         if (oper == Token.PLUSPLUS) {
-            pw.print(",");
+            char first = left.getType().getName().toLowerCase().charAt(0);
+            char second = right.getType().getName().toLowerCase().charAt(0);
+            String funcName = "plusplus_" + first + second;
+            pw.print(funcName + "(");
+            left.genC(pw);
+            pw.print(", ");
+            right.genC(pw);
+            pw.print(")");
         } else {
+            left.genC(pw);
             pw.print(" " + oper + " ");
+            right.genC(pw);
         }
-
-		right.genC(pw);
     }
     @Override
 	public void genJava(PW pw) {
