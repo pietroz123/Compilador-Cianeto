@@ -38,6 +38,9 @@ public class MethodDec extends Member {
     public StatementList getStatements() {
         return statements;
     }
+    public TypeCianetoClass getCurrentClass() {
+        return currentClass;
+    }
 
     /**
      * Setters

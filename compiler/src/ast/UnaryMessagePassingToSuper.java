@@ -17,9 +17,17 @@ public class UnaryMessagePassingToSuper extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        // pw.print("UnaryMessagePassingToSuper");
-        // pw.print("_SUPERCLASSNAME_SUPERMETHOD((_class_SUPER*) CURRENTCLASS)");
-        pw.print("_"+this.currentClass.getSuperclass().getName()+"_"+this.methodCalled.getId()+"((_class_"+this.currentClass.getSuperclass().getName()+"*) self)");
+        String methodToCall = this.methodCalled.getId();
+
+        TypeCianetoClass current = this.currentClass.getSuperclass();
+        MethodDec theMethod;
+
+        // Sobe na hierarquia de classes até achar a classe com o método
+        while ((theMethod = current.searchPublicMethod(methodToCall)) == null) {
+            current = current.getSuperclass();
+        }
+
+        pw.print("_"+theMethod.getCurrentClass().getName()+"_"+theMethod.getId()+"((_class_"+theMethod.getCurrentClass().getName()+"*) self)");
     }
 
     @Override
