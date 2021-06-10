@@ -33,6 +33,10 @@ public class TypeCianetoClass extends Type {
     public String getJavaName() {
         return getName();
     }
+    @Override
+    public String getCspecifier() {
+        return "";
+    }
 
     /**
      * Getters
