@@ -23,7 +23,7 @@ public class UnaryMessagePassingToSuper extends Expression {
         MethodDec theMethod;
 
         // Sobe na hierarquia de classes até achar a classe com o método
-        while ((theMethod = current.searchPublicMethod(methodToCall)) == null) {
+        while ((theMethod = current.searchAllMethods(methodToCall)) == null) {
             current = current.getSuperclass();
         }
 
