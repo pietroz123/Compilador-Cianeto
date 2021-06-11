@@ -270,6 +270,9 @@ public class TypeCianetoClass extends Type {
         /**
          * Declarações dos métodos
          */
+        for (MethodDec methodDec : this.privateMethodList) {
+            methodDec.genC(pw);
+        }
         for (MethodDec methodDec : this.publicMethodList) {
             methodDec.genC(pw);
         }

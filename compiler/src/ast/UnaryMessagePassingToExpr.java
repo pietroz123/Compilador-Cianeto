@@ -23,7 +23,20 @@ public class UnaryMessagePassingToExpr extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        pw.print("_"+this.sourceClass.getName()+"_"+this.methodCalled.getId()+"(_"+this.instanceVar.getId()+")");
+        String methodToCall = this.methodCalled.getId();
+
+        TypeCianetoClass current = this.sourceClass;
+        MethodDec theMethod;
+
+        // Sobe na hierarquia de classes até achar a classe com o método
+        while ((theMethod = current.searchPublicMethod(methodToCall)) == null) {
+            current = current.getSuperclass();
+        }
+
+        pw.print("_"+theMethod.getCurrentClass().getName()+"_"+this.methodCalled.getId()+"(_"+this.instanceVar.getId()+")");
+
+        // // Antes
+        // pw.print("_"+theMethod.getCurrentClass().getName()+"_"+theMethod.getId()+"((_class_"+theMethod.getCurrentClass().getName()+"*) self)");
     }
 
     @Override

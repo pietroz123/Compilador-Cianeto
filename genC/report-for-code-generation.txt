@@ -4,7 +4,7 @@ Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
  SSE: 0/16/0%      
-SwithE: 2
+SwithE: 1
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -93,7 +93,6 @@ O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para os casos de teste que voc� utilizou, o compilador est� correto
 
 List of Java or C files with compilation errors: 
-   genC\OK_GER15.c
    genC\OK_GER16.c
 
 List of files with correct Java or C code: 
@@ -113,5 +112,6 @@ List of files with Java or C code that compiles but was generated incorrectly:
    genC\OK_GER11.c
    genC\OK_GER13.c
    genC\OK_GER14.c
+   genC\OK_GER15.c
 
 The compiler could not create the following .java or .c files:
