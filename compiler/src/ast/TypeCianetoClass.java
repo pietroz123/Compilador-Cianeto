@@ -249,7 +249,8 @@ public class TypeCianetoClass extends Type {
         /**
          * struct da classe
          */
-        pw.println("typedef struct _St_" + this.name + " {");
+        pw.println("typedef struct _St_" + this.name + " _class_" + this.name + ";"); // forward declaration
+        pw.println("struct _St_" + this.name + " {");
         pw.add();
         pw.printlnIdent("Func *vt; /* ponteiro para um vetor de métodos da classe */");
 
@@ -259,7 +260,7 @@ public class TypeCianetoClass extends Type {
         }
 
         pw.sub();
-        pw.println("} _class_" + this.name + ";");
+        pw.println("};");
         pw.println();
 
         // Método de construção da "classe"

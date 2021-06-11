@@ -58,45 +58,44 @@ public class PWHelper {
 		pw.println();
 
         // Funções plusplus
+        pw.println("void nullTest(void *p) {");
+        pw.println("   if (p == NULL) {");
+        pw.println("      puts(\"Out of memory!\");");
+        pw.println("      exit(1);");
+        pw.println("   }");
+        pw.println("}");
         pw.println("char *plusplus_is(int n, char *s) {");
         pw.println("   char *r;");
-        pw.println("   if ((r = malloc(strlen(s) + 20)) != NULL) {");
-        pw.println("      itoa(n, r, 10);");
-        pw.println("   }");
+        pw.println("   r = malloc(strlen(s) + 20);");
+        pw.println("   nullTest(r);");
+        pw.println("   itoa(n, r, 10);");
         pw.println("   strcpy(r + strlen(r), s);");
         pw.println("   return r;");
         pw.println("}");
-
         pw.println("char *plusplus_si(char *s, int n) {");
         pw.println("   char *r;");
-        pw.println("   if ((r = malloc(strlen(s) + 20)) != NULL) {");
-        pw.println("      strcpy(r, s);");
-        pw.println("   }");
+        pw.println("   r = malloc(strlen(s) + 20);");
+        pw.println("   nullTest(r);");
+        pw.println("   strcpy(r, s);");
         pw.println("   itoa(n, r + strlen(s), 10);");
         pw.println("   return r;");
         pw.println("}");
-
         pw.println("char *plusplus_ii(int n, int last) {");
         pw.println("   char *r;");
-        pw.println("   if ((r = malloc(40)) != NULL) {");
-        pw.println("      itoa(n, r, 10);");
-        pw.println("   }");
+        pw.println("   r = malloc(40);");
+        pw.println("   nullTest(r);");
+        pw.println("   itoa(n, r, 10);");
         pw.println("   itoa(last, r + strlen(r), 10);");
         pw.println("   return r;");
         pw.println("}");
-
         pw.println("char *plusplus_ss(char *first, char *second) {");
         pw.println("   char *r;");
-        pw.println("   if ((r = malloc(strlen(first) + strlen(second))) != NULL) {");
-        pw.println("      strcpy(r, first);");
-        pw.println("      strcpy(r + strlen(r), second);");
-        pw.println("      return r;");
-        pw.println("   } else {");
-        pw.println("      puts(\"Erro: não há memória suficiente\");");
-        pw.println("      return NULL;");
-        pw.println("   }");
+        pw.println("   r = malloc(strlen(first) + strlen(second));");
+        pw.println("   nullTest(r);");
+        pw.println("   strcpy(r, first);");
+        pw.println("   strcpy(r + strlen(r), second);");
+        pw.println("   return r;");
         pw.println("}");
-        pw.println();
 
 		// Tipo Func
 		pw.println("/* define um tipo Func que é um ponteiro para função */");

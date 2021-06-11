@@ -47,7 +47,8 @@ public class FieldDec extends Member {
 
     @Override
     void genC(PW pw) {
-        if (this.type instanceof TypeCianetoClass) {
+        Boolean isClass = this.type instanceof TypeCianetoClass;
+        if (isClass) {
             pw.printIdent("_class_" + this.getType().getName() + " ");
         } else {
             pw.printIdent(this.getType().getCname() + " ");
@@ -56,6 +57,7 @@ public class FieldDec extends Member {
         Iterator<String> it = idList.getIdList().iterator();
         while (it.hasNext()) {
             String id = it.next();
+            pw.print(isClass ? "*" : ""); // necessário colocar ponteiro para classes
             pw.print("_" + this.currentClass.getName() + "_" + id);
 
             if (it.hasNext()) {
