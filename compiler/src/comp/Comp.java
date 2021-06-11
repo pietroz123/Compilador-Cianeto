@@ -1060,6 +1060,7 @@ public class Comp {
 				catch( Throwable e ) {
 					System.out.println("Exception '" + e.getClass().getName() + "' thrown while calling method 'genC' on file '"
 							+ sourceFilename + "'");
+					e.printStackTrace();
 					this.filesCompilerDidNotProducedCode_Java_or_C.add(sourceFilename);
 					return ;
 				}

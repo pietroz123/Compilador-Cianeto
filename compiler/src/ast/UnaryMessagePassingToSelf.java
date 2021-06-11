@@ -39,7 +39,18 @@ public class UnaryMessagePassingToSelf extends Expression {
                 break;
 
             case "SELF_METHOD":
-                pw.print("_"+this.currentClass.getName()+"_"+this.methodCalled.getId()+"(self)");
+                String methodToCall = this.methodCalled.getId();
+
+                TypeCianetoClass current = this.currentClass;
+                MethodDec theMethod;
+
+                // Sobe na hierarquia de classes até achar a classe com o método
+                while ((theMethod = current.searchAllMethods(methodToCall)) == null) {
+                    current = current.getSuperclass();
+                }
+
+                pw.print("_"+theMethod.getCurrentClass().getName()+"_"+theMethod.getId()+"((_class_"+theMethod.getCurrentClass().getName()+"*) self)");
+
                 // Integer idx = methodCalled.getCTableIndex();
                 // pw.print("( ("+methodCalled.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *) ) self->vt["+idx+"] )(self)");
                 break;
