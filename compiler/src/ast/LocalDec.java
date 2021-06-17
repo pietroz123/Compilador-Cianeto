@@ -23,11 +23,7 @@ public class LocalDec extends Statement {
         pw.printIdent("");
 
         Boolean isClass = type instanceof TypeCianetoClass;
-        if (isClass) {
-            pw.print("_class_" + type.getCname() + " ");
-        } else {
-            pw.print(type.getCname() + " ");
-        }
+        pw.print(type.getCname() + " ");
 
         Iterator<String> it = idlList.getIdList().iterator();
         while (it.hasNext()) {

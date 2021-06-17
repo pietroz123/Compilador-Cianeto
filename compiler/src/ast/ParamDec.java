@@ -19,11 +19,14 @@ public class ParamDec {
     }
 
     public void genC(PW pw) {
+        pw.print(var.getType().getCname() + " ");
+
+        // necessário ponteiro em variáveis de classes
         if (var.getType() instanceof TypeCianetoClass) {
-            pw.print("_class_" + var.getType().getCname() + " *_" + var.getId());
-        } else {
-            pw.print(var.getType().getCname() + " _" + var.getId());
+            pw.print("*");
         }
+
+        pw.print("_" + var.getId());
     }
     public void genJava(PW pw) {
         pw.print(var.getType().getJavaName() + " " + var.getId());

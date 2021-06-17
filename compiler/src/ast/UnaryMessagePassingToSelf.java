@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * "self" "." Id
  * "self" "." Id "." Id
@@ -39,20 +41,13 @@ public class UnaryMessagePassingToSelf extends Expression {
                 break;
 
             case "SELF_METHOD":
-                String methodToCall = this.methodCalled.getId();
+                Pairs.MethodIndex methodIndex = this.currentClass.searchMethodInVirtualTable(this.methodCalled.getId());
+                pw.print("( ");
+                methodIndex.method.printCSignature(pw);
+                pw.print(" self->vt[" + methodIndex.index + "]");
+                pw.print(" )");
 
-                TypeCianetoClass current = this.currentClass;
-                MethodDec theMethod;
-
-                // Sobe na hierarquia de classes até achar a classe com o método
-                while ((theMethod = current.searchAllMethods(methodToCall)) == null) {
-                    current = current.getSuperclass();
-                }
-
-                pw.print("_"+theMethod.getCurrentClass().getName()+"_"+theMethod.getId()+"((_class_"+theMethod.getCurrentClass().getName()+"*) self)");
-
-                // Integer idx = methodCalled.getCTableIndex();
-                // pw.print("( ("+methodCalled.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *) ) self->vt["+idx+"] )(self)");
+                pw.print("(self)");
                 break;
 
             case "SELF_INSTANCE_METHOD":

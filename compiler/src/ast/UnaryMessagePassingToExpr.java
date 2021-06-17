@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * Id "." Id
  */
@@ -23,20 +25,13 @@ public class UnaryMessagePassingToExpr extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
-        String methodToCall = this.methodCalled.getId();
+        Pairs.MethodIndex methodIndex = this.sourceClass.searchMethodInVirtualTable(this.methodCalled.getId());
+        pw.print("( ");
+        methodIndex.method.printCSignature(pw);
+        pw.print(" _"+this.instanceVar.getId()+"->vt[" + methodIndex.index + "]");
+        pw.print(" )");
 
-        TypeCianetoClass current = this.sourceClass;
-        MethodDec theMethod;
-
-        // Sobe na hierarquia de classes até achar a classe com o método
-        while ((theMethod = current.searchAllMethods(methodToCall)) == null) {
-            current = current.getSuperclass();
-        }
-
-        pw.print("_"+theMethod.getCurrentClass().getName()+"_"+this.methodCalled.getId()+"(_"+this.instanceVar.getId()+")");
-
-        // // Antes
-        // pw.print("_"+theMethod.getCurrentClass().getName()+"_"+theMethod.getId()+"((_class_"+theMethod.getCurrentClass().getName()+"*) self)");
+        pw.print("(_"+this.instanceVar.getId()+")");
     }
 
     @Override

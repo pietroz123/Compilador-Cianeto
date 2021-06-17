@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * MethodDec ::= "func" IdColon FormalParamDec [ "->" Type ]
  * "{" StatementList "}" |
@@ -110,6 +112,40 @@ public class MethodDec extends Member {
 
         // Fechamento
         pw.println("}");
+    }
+
+    /**
+     * Imprime a assinatura de uma função
+     * ex:
+     *  - Cianeto:  func m3 : Int n
+     *  - C:        (void (*)(_class_C *,int))
+     * @param pw
+     */
+    void printCSignature(PW pw) {
+        pw.print("(");
+        pw.print(this.getReturnType().getCname() + " (*)"); // cast retorno
+
+        // cast parâmetros
+        pw.print("(");
+        pw.print(this.getCurrentClass().getCname()+" *");
+
+        if (this.getFormalParamDec() != null) {
+            pw.print(", ");
+
+            Iterator<ParamDec> it = this.getFormalParamDec().getParamList().iterator();
+            while (it.hasNext()) {
+                ParamDec paramDec = it.next();
+                pw.print(paramDec.getVar().getType().getCname());
+                pw.print(paramDec.getVar().getType() instanceof TypeCianetoClass ? "*" : "");
+
+                if (it.hasNext()) {
+                    pw.print(", ");
+                }
+            }
+        }
+
+        pw.print(")"); // fecha cast parâmetros
+        pw.print(")"); // fecha assinatura
     }
 
     /**

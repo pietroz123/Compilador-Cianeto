@@ -34,14 +34,13 @@ public class KeywordMessagePassingToSelf extends Expression {
     public void genC(PW pw, boolean putParenthesis) {
         switch (messageType) {
             case "SELF_METHOD":
-                // Integer idx = classMethod.getCTableIndex();
+                Pairs.MethodIndex methodIndex = this.currentClass.searchMethodInVirtualTable(this.classMethod.getId());
+                pw.print("( ");
+                methodIndex.method.printCSignature(pw);
+                pw.print(" self->vt[" + methodIndex.index + "]");
+                pw.print(" )");
 
-                // pw.print("( ");
-                // pw.print("("+classMethod.getReturnType().getCname()+" (*)(_class_"+currentClass.getName()+" *))"); // cast
-                // pw.print("self->vt["+idx+"]"); // chamada
-                // pw.print(" )");
-
-                pw.print("_"+this.currentClass.getName()+"_"+this.classMethod.getId()+"(self");
+                pw.print("(self");
 
                 break;
 

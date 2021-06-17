@@ -233,6 +233,9 @@ public class Compiler {
 				error("Attempt to inherit inexistent class named '" + superclassName + "'");
 			}
 
+			// Iguala Virtual Table a da superclasse
+			currentClass.setVirtualTable(new ArrayList<MethodDec>(superclass.getVirtualTable()));
+
 			currentClass.setSuperclass(superclass);
 
 			next();

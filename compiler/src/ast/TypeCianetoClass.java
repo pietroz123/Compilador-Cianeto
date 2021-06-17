@@ -7,6 +7,7 @@ package ast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Stack;
 
 import lexer.Token;
 
@@ -22,12 +23,13 @@ public class TypeCianetoClass extends Type {
         this.name = name;
         this.publicMethodList = new ArrayList<>();
         this.privateMethodList = new ArrayList<>();
+        this.virtualTable = new ArrayList<>();
         this.fieldList = new ArrayList<>();
     }
 
     @Override
     public String getCname() {
-        return getName();
+        return "_class_" + this.name;
     }
     @Override
     public String getJavaName() {
@@ -49,6 +51,9 @@ public class TypeCianetoClass extends Type {
     }
     public ArrayList<MethodDec> getPrivateMethodList() {
         return privateMethodList;
+    }
+    public ArrayList<MethodDec> getVirtualTable() {
+        return virtualTable;
     }
 
     /**
@@ -81,6 +86,10 @@ public class TypeCianetoClass extends Type {
 
         this.memberList = memberList;
     }
+    public void setVirtualTable(ArrayList<MethodDec> virtualTable) {
+        this.virtualTable = virtualTable;
+    }
+
 
     /**
      * Verifica se é subclasse
@@ -112,6 +121,21 @@ public class TypeCianetoClass extends Type {
         }
         else {
             publicMethodList.add(method);
+        }
+
+        if (!qualifier.getTokens().contains(Token.PRIVATE) && qualifier.getTokens().contains(Token.OVERRIDE)) {
+            Integer i = 0;
+
+            for  (MethodDec theMethod : virtualTable) {
+                if (method.getId().equals(theMethod.getId())) {
+                    virtualTable.set(i, method);
+                    return; // já encontrou
+                }
+                i++;
+            }
+        }
+        else {
+            virtualTable.add(method);
         }
     }
 
@@ -200,6 +224,24 @@ public class TypeCianetoClass extends Type {
     }
 
     /**
+     *
+     * @param methodId
+     * @return
+     */
+    public Pairs.MethodIndex searchMethodInVirtualTable(String methodId) {
+        Integer index = 0;
+
+        for (MethodDec method : this.virtualTable) {
+            if (method.getId().equals(methodId)) {
+                return new Pairs.MethodIndex(method, index);
+            }
+            index++;
+        }
+
+        return null;
+    }
+
+    /**
      * Verifica se existe um campo de nome id na lista de campos
      * @param id
      * @return
@@ -216,6 +258,14 @@ public class TypeCianetoClass extends Type {
         return null;
     }
 
+    // =====================
+    // Geração de Código
+    // =====================
+
+    /**
+     * GERAÇÃO DE CÓDIGO EM JAVA
+     * @param pw
+     */
     public void genJava(PW pw) {
         pw.printIdent("");
         if (isOpen) {
@@ -245,6 +295,10 @@ public class TypeCianetoClass extends Type {
 		pw.println();
     }
 
+    /**
+     * GERAÇÃO DE CÓDIGO EM C
+     * @param pw
+     */
     public void genC(PW pw) {
         /**
          * struct da classe
@@ -254,10 +308,23 @@ public class TypeCianetoClass extends Type {
         pw.add();
         pw.printlnIdent("Func *vt; /* ponteiro para um vetor de métodos da classe */");
 
-        // Variáveis de instância
-        for (FieldDec fieldDec : this.fieldList) {
-            fieldDec.genC(pw);
+        // Adiciona as variáveis das superclasses também
+        TypeCianetoClass current = this;
+        Stack<TypeCianetoClass> cs = new Stack<>();
+        while ( current != null ) { // empilha todos
+            cs.push(current);
+            current = current.getSuperclass();
         }
+        while ( !cs.empty() ) {
+            current = cs.pop();
+            for (FieldDec f : current.fieldList ) {
+                f.genC(pw);
+            }
+        }
+        // // Variáveis de instância
+        // for (FieldDec fieldDec : this.fieldList) {
+        //     fieldDec.genC(pw);
+        // }
 
         pw.sub();
         pw.println("};");
@@ -286,10 +353,17 @@ public class TypeCianetoClass extends Type {
         pw.println("Func VTclass_" + this.name + "[] = {");
         pw.add();
 
-        Iterator<MethodDec> it = this.publicMethodList.iterator();
+        // System.out.print("virtual table de "+this.name+": ");
+        // for (Iterator<MethodDec> it = this.virtualTable.iterator(); it.hasNext(); ) {
+        //     MethodDec m = it.next();
+        //     System.out.print("{"+m.getCurrentClass().getName()+", "+m.getId()+"}");
+        // }
+        // System.out.println();
+
+        Iterator<MethodDec> it = this.virtualTable.iterator();
         while (it.hasNext()) {
             MethodDec methodDec = it.next();
-            pw.printIdent("( void (*)() ) _" + this.name + "_" + methodDec.getId());
+            pw.printIdent("( Func ) _" + methodDec.getCurrentClass().getName() + "_" + methodDec.getId());
 
             if (it.hasNext()) {
                 pw.print(",");
@@ -323,5 +397,6 @@ public class TypeCianetoClass extends Type {
     private TypeCianetoClass superclass;
     private MemberList memberList;
     private ArrayList<MethodDec> publicMethodList, privateMethodList;
+    private ArrayList<MethodDec> virtualTable;
     private ArrayList<FieldDec> fieldList;
 }

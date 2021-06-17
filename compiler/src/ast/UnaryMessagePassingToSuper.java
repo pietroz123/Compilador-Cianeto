@@ -5,6 +5,8 @@
 
 package ast;
 
+import java.util.Iterator;
+
 /**
  * "super" "." Id
  */
@@ -17,6 +19,16 @@ public class UnaryMessagePassingToSuper extends Expression {
 
     @Override
     public void genC(PW pw, boolean putParenthesis) {
+        // Pairs.MethodIndex methodIndex = this.currentClass.searchMethodInVirtualTable(this.methodCalled.getId());
+        // pw.print("( ");
+        // methodIndex.method.printCSignature(pw);
+        // pw.print(" self->vt[" + methodIndex.index + "]");
+        // pw.print(" )");
+
+        // pw.print("(self)");
+
+        // ANTES
+
         String methodToCall = this.methodCalled.getId();
 
         TypeCianetoClass current = this.currentClass.getSuperclass();
