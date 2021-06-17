@@ -59,6 +59,9 @@ public class CompositeExpr extends Expression {
         else if (oper == Token.AND || oper == Token.OR) {
             return Type.booleanType;
         }
+        else if (oper == Token.PLUSPLUS) {
+            return Type.stringType;
+        }
         else {
             return Type.intType;
         }
